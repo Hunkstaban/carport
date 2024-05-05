@@ -9,10 +9,18 @@
 
 <body>
 
+<!--Global header needed with links to customer order page and account info-->
+
 <h1>Fog Carport</h1>
 
 <p>This is your first web application in this world</p>
+<a th:href="@{/loginPage}">Login</a>
+<form method="get"> <button formaction="myOrders">My Orders</button></form>
 
+<form method="post">
 
+</form>
+
+<button th:action="@{inquiryNext}"></button>
 </body>
 </html>
