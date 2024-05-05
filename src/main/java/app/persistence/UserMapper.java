@@ -1,4 +1,4 @@
 package app.persistence;
 
-public class TestMapper {
+public class UserMapper {
 }
