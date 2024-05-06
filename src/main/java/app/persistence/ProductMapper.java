@@ -15,6 +15,48 @@ public class ProductMapper {
 
 
 
+    public static List<Product> filterByType(ConnectionPool connectionPool, int filterID) {
+
+        String sql = "SELECT * FROM public.view_all_products WHERE type_id = ?";
+        List<Product> filteredList = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1,filterID);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                int productID = rs.getInt("product_id");
+                String name = rs.getString("product_name");
+                String description = rs.getString("description");
+                int height = rs.getInt("height");
+                int width = rs.getInt("width");
+                int length = rs.getInt("length");
+                int unitID = rs.getInt("unit_id");
+                String unitName = rs.getString("unit_name");
+                int typeID = rs.getInt("type_id");
+                String typeName = rs.getString("type_name");
+                int price = rs.getInt("price");
+                int costPrice = rs.getInt("cost_price");
+                int quantity = rs.getInt("quantity");
+
+                Unit unit = new Unit(unitID, unitName);
+                Type type = new Type(typeID, typeName);
+
+                filteredList.add(new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity));
+            }
+            return filteredList;
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public static List<Product> loadProducts(ConnectionPool connectionPool) {
 
 

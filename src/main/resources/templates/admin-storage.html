@@ -1,52 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="../public/css/adminStorageStyle.css" th:href="@{/css/adminStorageStyle.css}">
 </head>
 <body>
-<button th:action="@{viewInquiries}"></button>
-<button th:action="@{viewOrders}"></button>
-<button th:action="@{viewStorage}"></button>
 
 
 <div id="page">
     <div class="centerpage">
+
+
+        <div class="filter-menu">
+
+            <form method="post">
+                <button type="submit" name="filter" value="" formaction="storagePage">Alle</button>
+                <button type="submit" name="filter" value="1" formaction="filterByType">Brædder</button>
+                <button type="submit" name="filter" value="2" formaction="filterByType">Pæle</button>
+                <button type="submit" name="filter" value="3" formaction="filterByType">Brædder</button>
+                <button type="submit" name="filter" value="4" formaction="filterByType">Tag panel</button>
+            </form>
+        </div>
+
         <div class="table-container">
 
-            <table class="products-table">
+                <table class="products-table">
+                    <thead>
+                    <tr>
+                        <th>Vare Nr.</th>
+                        <th>Navn</th>
+                        <th>Vare type</th>
+                        <th>Bredde</th>
+                        <th>Højde</th>
+                        <th>Længde</th>
+                        <th>Enhed</th>
+                        <th>Enhed Pris</th>
+                        <th>Lagerbeholdning</th>
+                    </tr>
+                    </thead>
 
-                <thead>
-                <tr>
-                    <th>Vare Nr.</th>
-                    <th>Navn</th>
-                    <th>Vare type</th>
-                    <th>Bredde</th>
-                    <th>Højde</th>
-                    <th>Længde</th>
-                    <th>Enhed</th>
-                    <th>Enhed Pris</th>
-                    <th>Lagerbeholdning</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr th:each="product : ${productList}">
-                    <td th:text="${product.productID}"></td>
-                    <td th:text="${product.name}"></td>
-                    <td th:text="${product.type.name}"></td>
-                    <td th:text="${product.width}"></td>
-                    <td th:text="${product.height}"></td>
-                    <td th:text="${product.length}"></td>
-                    <td th:text="${product.unit.name}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td th:text="${product.quantity}"></td>
-                </tr>
-                </tbody>
-
-            </table>
-
+                    <tbody>
+                    <tr th:each="product : ${productList}">
+                        <td th:text="${product.productID}"></td>
+                        <td th:text="${product.name}"></td>
+                        <td th:text="${product.type.name}"></td>
+                        <td th:text="${product.width}"></td>
+                        <td th:text="${product.height}"></td>
+                        <td th:text="${product.length}"></td>
+                        <td th:text="${product.unit.name}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.quantity}"></td>
+                    </tr>
+                    </tbody>
+                </table>
         </div>
     </div>
 </div>
