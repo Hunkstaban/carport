@@ -11,8 +11,9 @@ public class Product {
     private int typeID;
     private int price;
     private int costPrice;
+    private int quantity;
 
-    public Product(int productID, String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice) {
+    public Product(int productID, String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice, int quantity) {
         this.productID = productID;
         this.name = name;
         this.description = description;
@@ -23,10 +24,11 @@ public class Product {
         this.typeID = typeID;
         this.price = price;
         this.costPrice = costPrice;
+        this.quantity = quantity;
     }
 
     // Height, width, and length is allowed to be null
-    public Product(int productID, String name, String description, int unitID, int typeID, int price, int costPrice) {
+    public Product(int productID, String name, String description, int unitID, int typeID, int price, int costPrice, int quantity) {
         this.productID = productID;
         this.name = name;
         this.description = description;
@@ -34,6 +36,7 @@ public class Product {
         this.typeID = typeID;
         this.price = price;
         this.costPrice = costPrice;
+        this.quantity = quantity;
     }
 
     public int getProductID() {
@@ -74,5 +77,9 @@ public class Product {
 
     public int getCostPrice() {
         return costPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }
