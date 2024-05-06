@@ -13,7 +13,7 @@ public class UserController {
 
         app.get("create", ctx -> createUser(ctx, connectionPool));
         app.post("login", ctx -> login(ctx, connectionPool));
-
+        app.get("logout", ctx -> logout(ctx));
 
     }
 
