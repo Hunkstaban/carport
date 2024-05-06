@@ -1,0 +1,27 @@
+
+#page {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.centerpage {
+
+    width: 50%;
+}
+
+.products-table {
+
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.products-table th, td {
+
+    padding: 10px;
+    text-align: center;
+
+}

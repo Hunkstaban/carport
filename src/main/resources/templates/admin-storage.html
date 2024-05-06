@@ -3,11 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../public/css/adminStorageStyle.css" th:href="@{/css/adminStorageStyle.css}">
 </head>
 <body>
 <button th:action="@{viewInquiries}"></button>
 <button th:action="@{viewOrders}"></button>
 <button th:action="@{viewStorage}"></button>
+
+
+<div id="page">
+    <div class="centerpage">
+        <div class="table-container">
+
+            <table class="products-table">
+
+                <thead>
+                <tr>
+                    <th>Vare Nr.</th>
+                    <th>Navn</th>
+                    <th>Vare type</th>
+                    <th>Bredde</th>
+                    <th>Højde</th>
+                    <th>Længde</th>
+                    <th>Enhed</th>
+                    <th>Enhed Pris</th>
+                    <th>Lagerbeholdning</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="product : ${productList}">
+                    <td th:text="${product.productID}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.type.name}"></td>
+                    <td th:text="${product.width}"></td>
+                    <td th:text="${product.height}"></td>
+                    <td th:text="${product.length}"></td>
+                    <td th:text="${product.unit.name}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.quantity}"></td>
+                </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
