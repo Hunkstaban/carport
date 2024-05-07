@@ -39,6 +39,19 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public Product(String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice, int quantity) {
+        this.name = name;
+        this.description = description;
+        this.height = height;
+        this.width = width;
+        this.length = length;
+        this.unitID = unitID;
+        this.typeID = typeID;
+        this.price = price;
+        this.costPrice = costPrice;
+        this.quantity = quantity;
+    }
+
     public int getProductID() {
         return productID;
     }
