@@ -3,6 +3,7 @@ package app;
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
 import app.controllers.TestController;
+import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -29,5 +30,6 @@ public class Main {
         app.get("/", ctx ->  ctx.render("index.html"));
 
         TestController.addRoute(app, connectionPool);
+        UserController.addRoute(app, connectionPool);
     }
 }

@@ -7,14 +7,28 @@ import app.persistence.UserMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import static app.controllers.TestController.addRoute;
+
 public class UserController {
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
 
-        app.get("create", ctx -> createUser(ctx, connectionPool));
+        app.post("createUser", ctx -> createUser(ctx, connectionPool));
         app.post("login", ctx -> login(ctx, connectionPool));
         app.get("logout", ctx -> logout(ctx));
+        app.get("renderLoginPage", ctx -> renderLoginPage(ctx, connectionPool));
+        app.get("renderSignupPage", ctx -> renderSignupPage(ctx, connectionPool));
 
+    }
+
+    private static void renderLoginPage(Context ctx, ConnectionPool connectionPool) {
+
+        ctx.render("login.html");
+    }
+
+    private static void renderSignupPage (Context ctx, ConnectionPool connectionPool) {
+
+        ctx.render("signup.html");
     }
 
     private static void login(Context ctx, ConnectionPool connectionPool) {
@@ -41,21 +55,20 @@ public class UserController {
     private static void logout(Context ctx) {
 
         ctx.req().getSession().invalidate();
-        ctx.render("login.html");
+        ctx.render("index.html");
 
     }
 
     private static void adminLogin(Context ctx, ConnectionPool connectionPool, User user) {
 
         ctx.sessionAttribute("currentUser", user);
-        ctx.render("admin-inquiries.html");
-
+        ctx.render("admin-orders.html");
 
     }
 
     private static void createUser(Context ctx, ConnectionPool connectionPool) {
 
-        String name = ctx.formParam("name");
+        String name = ctx.formParam("username");
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
 
@@ -75,7 +88,11 @@ public class UserController {
     private static void userLogin(Context ctx, ConnectionPool connectionPool, User user) {
 
         ctx.sessionAttribute("currentUser", user);
-        ctx.render("inquiry-details");
+        ctx.render("index.html");
 
+    }
+    private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
+
+        ctx.render("index.html");
     }
 }

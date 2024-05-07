@@ -13,11 +13,29 @@
 
 <h1>Fog Carport</h1>
 
-<p>This is your first web application in this world</p>
-<a th:href="@{/loginPage}">Login</a>
+<p>Velkommen til FOG</p>
+<form method="get">
+<a th:href="@{/renderLoginPage}">Login</a>
+<a th:href="@{/renderSignupPage}">Opret bruger</a>
+</form>
+
+    Welcome
+</div>
+
+<a th:href="@{/logout}">Logout</a>
 <form method="get"> <button formaction="myOrders">My Orders</button></form>
 
-<form method="post">
+<!--th:if="${user == null}"-->
+
+<!--user == null betyder ikke logget ind -->
+<!--    <button th:if="${user == null}" th:href="@{/}">Login</button>-->
+
+<!--    &lt;!&ndash; Show the logout button if 'user' is not null (user is logged in) &ndash;&gt;-->
+<!--    <button th:if="${user != null}" th:href="@{/logout}">Logout</button>-->
+
+<!--    &lt;!&ndash; Display the logged-in user's name &ndash;&gt;-->
+<!--    <div th:if="${user != null}">-->
+<!--        Welcome, <span th:text="${user.name}"></span>!-->
 
 </form>
 

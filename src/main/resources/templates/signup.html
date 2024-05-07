@@ -6,7 +6,21 @@
 </head>
 <body>
 
-<a th:href="@{/loginPage}"></a>
+<form method="post">
+    <label> Navn</label>
+    <input type="text" name="username">
+    <label> Email</label>
+    <input type="text" name="email">
+<!--   " type = password " giver os ******* når user skriver kodeordet-->
+    <label> Kodeord</label>
+    <input type="password" name="password">
+
+    <button type="submit" formaction="createUser">Opret bruger</button>
+
+    <div th:if="${alreadyExist}">
+        <p th:text="${alreadyExist}"></p>
+        </div>
+</form>
 
 </body>
 </html>

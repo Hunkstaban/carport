@@ -16,16 +16,16 @@ public class UserMapper {
 
         String sql = "INSERT INTO users (name,email,password) VALUES(?,?,?)";
 
-        try {
-
-            Connection connection = connectionPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ) {
 
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, password);
 
             preparedStatement.executeUpdate();
+            return login(email, password, connectionPool);
 
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
@@ -33,44 +33,38 @@ public class UserMapper {
                 msg = "email findes allerede. Prøv igen";
             }
             throw new DatabaseException(msg, e.getMessage());
-
-
         }
-
-        return login(email, password, connectionPool);
-
     }
 
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
 
         String sql = "SELECT * FROM users WHERE email = ? AND password = ? ";
 
-        try {
-            Connection connection = connectionPool.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ) {
 
 //            preparedStatement.setString(1, "name");
-            preparedStatement.setString(1, "email");
-            preparedStatement.setString(2, "password");
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
 
-            ResultSet resultSet = preparedStatement.executeQuery(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
 
                 String name = resultSet.getString("name");
-                int userId = resultSet.getInt("user_id");
-                int roleId = resultSet.getInt("role_id");
+                int userID = resultSet.getInt("user_id");
+                int roleID = resultSet.getInt("role_id");
 
-                return new User(userId, name, email, password, roleId);
-            } else throw new DatabaseException("Kunne ikke hente user fra databasen");
+                return new User(userID, name, email, password, roleID);
+            } else throw new DatabaseException("could not get user from database");
 
         } catch (SQLException e) {
             throw new DatabaseException("der skete en fejl med database." + e.getMessage());
         }
 
     }
-
 
 
 }
