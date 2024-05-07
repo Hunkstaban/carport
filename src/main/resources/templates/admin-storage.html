@@ -59,6 +59,7 @@
                         <td><input type="text"  th:value="${product.unit.name}"/></td>
                         <input type="hidden" name="unitID" th:value="${product.unit.unitID}">
                         <td><input type="text" name="price" th:value="${product.price}"/></td>
+                        <input type="hidden" name="costPrice" th:value="${product.costPrice}">
                         <td><input type="text" name="quantity"  th:value="${product.quantity}"/></td>
                         <td><button type="submit" formaction="updateProduct">Opdater</button></td>
                     </form>

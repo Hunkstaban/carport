@@ -1,8 +1,10 @@
 package app.persistence;
 
+import app.controllers.ProductController;
 import app.entities.Product;
 import app.entities.Type;
 import app.entities.Unit;
+import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -123,10 +125,38 @@ public class ProductMapper {
 
     }
 
-    public static void updateProduct(ConnectionPool connectionPool, int productID) {
+    public static void updateProduct(ConnectionPool connectionPool, Product product) {
 
         String sql = "UPDATE public.products\n" +
                 "\tSET name=?, description=?, height=?, width=?, unit_id=?, type_id=?, price=?, cost_price=?, quantity=?, length=?\n" +
                 "\tWHERE product_id = ?;";
+
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setString(1, product.getName());
+            ps.setString(2, product.getDescription());
+            ps.setInt(3, product.getHeight());
+            ps.setInt(4, product.getWidth());
+            ps.setInt(5, product.getUnit().getUnitID());
+            ps.setInt(6, product.getType().getTypeID());
+            ps.setInt(7, product.getPrice());
+            ps.setInt(8, product.getCostPrice());
+            ps.setInt(9, product.getQuantity());
+            ps.setInt(10, product.getLength());
+            ps.setInt(11, product.getProductID());
+
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl i opdatering af bestillingsoplysninger");
+            }
+
+        } catch (SQLException | DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

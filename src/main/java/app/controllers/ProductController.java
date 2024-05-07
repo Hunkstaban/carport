@@ -10,14 +10,8 @@ import io.javalin.http.Context;
 
 import java.util.List;
 
-import app.entities.Product;
-import app.persistence.ConnectionPool;
 import app.persistence.StorageMapper;
-import io.javalin.Javalin;
-import io.javalin.http.Context;
 
-import java.util.Map;
-import java.util.TreeMap;
 
 
 public class ProductController {
@@ -39,7 +33,7 @@ public class ProductController {
     private static void updateProduct(Context ctx, ConnectionPool connectionPool) {
 
         int productID = Integer.parseInt(ctx.formParam("productID"));
-        String productName = ctx.formParam("name");
+        String name = ctx.formParam("name");
         String description = ctx.formParam("description");
         int typeID = Integer.parseInt(ctx.formParam("typeID"));
         int width = Integer.parseInt(ctx.formParam("width"));
@@ -47,15 +41,16 @@ public class ProductController {
         int length = Integer.parseInt(ctx.formParam("length"));
         int unitID = Integer.parseInt(ctx.formParam("unitID"));
         int price = Integer.parseInt(ctx.formParam("price"));
+        int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
         int quantity = Integer.parseInt(ctx.formParam("quantity"));
 
         Type type = new Type(typeID);
         Unit unit = new Unit(unitID);
+        Product product = new Product(productID, name, description, height, width, length, unit, type, price, costPrice,quantity);
 
-//        Product product = new Product(productID, productName, type, unit,)
+        ProductMapper.updateProduct(connectionPool, product);
 
-
-        ProductMapper.updateProduct(connectionPool, productID);
+        loadProducts(ctx, connectionPool);
 
     }
 
