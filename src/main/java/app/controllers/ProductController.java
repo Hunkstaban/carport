@@ -28,6 +28,7 @@ public class ProductController {
         app.post("storagePage", ctx -> loadProducts(ctx, connectionPool));
         app.post("filterByType", ctx -> filterByType(ctx, connectionPool));
         app.post("updateProduct", ctx -> updateProduct(ctx, connectionPool));
+        app.post("addProduct", ctx -> addProduct(ctx, connectionPool));
 
         /*app.post("login", ctx -> login(ctx, connectionPool));
         app.get("logout", ctx -> logout(ctx));
@@ -101,10 +102,6 @@ public class ProductController {
         } catch (NumberFormatException e) {
             return null;
         }
-    }
-
-    public static void addRoute(Javalin app, ConnectionPool connectionPool){
-        app.post("addProduct", ctx -> addProduct(ctx, connectionPool));
     }
 
 
