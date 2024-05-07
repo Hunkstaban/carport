@@ -34,6 +34,7 @@
                 <tr>
                     <th>Vare Nr.</th>
                     <th>Navn</th>
+                    <th>Beskrivelse</th>
                     <th>Vare type</th>
                     <th>Bredde</th>
                     <th>Højde</th>
@@ -48,7 +49,8 @@
                 <tr th:each="product : ${productList}">
                     <form method="post">
                         <td><input type="text" name="productID" th:value="${product.productID}"/></td>
-                        <td><input type="text" name="productName" th:value="${product.name}"/></td>
+                        <td><input type="text" name="name" th:value="${product.name}"/></td>
+                        <td><input type="text" name="description" th:value="${product.description}"></td>
                         <td><input type="text" th:value="${product.type.name}"/></td>
                         <input type="hidden" name="typeID" th:value="${product.type.typeID}">
                         <td><input type="text" name="width" th:value="${product.width}"/></td>

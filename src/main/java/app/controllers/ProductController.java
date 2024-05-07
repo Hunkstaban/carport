@@ -39,7 +39,8 @@ public class ProductController {
     private static void updateProduct(Context ctx, ConnectionPool connectionPool) {
 
         int productID = Integer.parseInt(ctx.formParam("productID"));
-        String productName = ctx.formParam("productName");
+        String productName = ctx.formParam("name");
+        String description = ctx.formParam("description");
         int typeID = Integer.parseInt(ctx.formParam("typeID"));
         int width = Integer.parseInt(ctx.formParam("width"));
         int height = Integer.parseInt(ctx.formParam("height"));
