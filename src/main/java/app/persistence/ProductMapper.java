@@ -38,6 +38,7 @@ public class ProductMapper {
         }
     }
 
+
     public static List<Product> filterByType(ConnectionPool connectionPool, int filterID) {
 
         String sql = "SELECT * FROM public.view_all_products WHERE type_id = ?";
@@ -122,4 +123,10 @@ public class ProductMapper {
 
     }
 
+    public static void updateProduct(ConnectionPool connectionPool, int productID) {
+
+        String sql = "UPDATE public.products\n" +
+                "\tSET name=?, description=?, height=?, width=?, unit_id=?, type_id=?, price=?, cost_price=?, quantity=?, length=?\n" +
+                "\tWHERE product_id = ?;";
+    }
 }

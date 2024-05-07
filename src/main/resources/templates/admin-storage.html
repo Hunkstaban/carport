@@ -46,15 +46,20 @@
 
                 <tbody>
                 <tr th:each="product : ${productList}">
-                    <td><input type="text" th:value="${product.productID}"/></td>
-                    <td><input type="text" th:value="${product.name}"/></td>
-                    <td><input type="text" th:value="${product.type.name}"/></td>
-                    <td><input type="text" th:value="${product.width}"/></td>
-                    <td><input type="text" th:value="${product.height}"/></td>
-                    <td><input type="text" th:value="${product.length}"/></td>
-                    <td><input type="text" th:value="${product.unit.name}"/></td>
-                    <td><input type="text" th:value="${product.price}"/></td>
-                    <td><input type="text" th:value="${product.quantity}"/></td>
+                    <form method="post">
+                        <td><input type="text" name="productID" th:value="${product.productID}"/></td>
+                        <td><input type="text" name="productName" th:value="${product.name}"/></td>
+                        <td><input type="text" th:value="${product.type.name}"/></td>
+                        <input type="hidden" name="typeID" th:value="${product.type.typeID}">
+                        <td><input type="text" name="width" th:value="${product.width}"/></td>
+                        <td><input type="text" name="height" th:value="${product.height}"/></td>
+                        <td><input type="text" name="length" th:value="${product.length}"/></td>
+                        <td><input type="text"  th:value="${product.unit.name}"/></td>
+                        <input type="hidden" name="unitID" th:value="${product.unit.unitID}">
+                        <td><input type="text" name="price" th:value="${product.price}"/></td>
+                        <td><input type="text" name="quantity"  th:value="${product.quantity}"/></td>
+                        <td><button type="submit" formaction="updateProduct">Opdater</button></td>
+                    </form>
                 </tr>
                 </tbody>
             </table>

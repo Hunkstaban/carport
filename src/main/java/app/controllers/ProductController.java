@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.entities.Product;
 import app.entities.Type;
+import app.entities.Unit;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
 import io.javalin.Javalin;
@@ -16,10 +17,33 @@ public class ProductController {
 
         app.post("storagePage", ctx -> loadProducts(ctx, connectionPool));
         app.post("filterByType", ctx -> filterByType(ctx, connectionPool));
+        app.post("updateProduct", ctx -> updateProduct(ctx, connectionPool));
 
         /*app.post("login", ctx -> login(ctx, connectionPool));
         app.get("logout", ctx -> logout(ctx));
 */
+
+    }
+
+    private static void updateProduct(Context ctx, ConnectionPool connectionPool) {
+
+        int productID = Integer.parseInt(ctx.formParam("productID"));
+        String productName = ctx.formParam("productName");
+        int typeID = Integer.parseInt(ctx.formParam("typeID"));
+        int width = Integer.parseInt(ctx.formParam("width"));
+        int height = Integer.parseInt(ctx.formParam("height"));
+        int length = Integer.parseInt(ctx.formParam("length"));
+        int unitID = Integer.parseInt(ctx.formParam("unitID"));
+        int price = Integer.parseInt(ctx.formParam("price"));
+        int quantity = Integer.parseInt(ctx.formParam("quantity"));
+
+        Type type = new Type(typeID);
+        Unit unit = new Unit(unitID);
+
+//        Product product = new Product(productID, productName, type, unit,)
+
+
+        ProductMapper.updateProduct(connectionPool, productID);
 
     }
 
