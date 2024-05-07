@@ -13,7 +13,7 @@ public class Product {
     private int costPrice;
     private int quantity;
 
-    public Product(int productID, String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice) {
+    public Product(int productID, String name, String description, int height, int width, int length, Unit unit, Type type, int price, int costPrice, int quantity) {
         this.productID = productID;
         this.name = name;
         this.description = description;
