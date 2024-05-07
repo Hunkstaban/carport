@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.Product;
+import app.entities.Type;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
 import io.javalin.Javalin;
@@ -27,8 +28,10 @@ public class ProductController {
         int typeID = Integer.parseInt(ctx.formParam("filter"));
 
         List<Product> productList = ProductMapper.filterByType(connectionPool, typeID);
+        List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
 
         ctx.attribute("productList", productList);
+        ctx.attribute("filtersList", filtersList);
 
         ctx.render("admin-storage");
 
@@ -41,9 +44,20 @@ public class ProductController {
 
         ctx.attribute("productList", productList);
 
+        globalStorageAttributes(ctx, connectionPool);
+
         ctx.render("admin-storage");
 
     }
 
+
+
+    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool) {
+
+        List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
+
+        ctx.attribute("filtersList", filtersList);
+        return ctx;
+    }
 
 }

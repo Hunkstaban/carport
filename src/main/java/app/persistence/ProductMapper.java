@@ -14,6 +14,29 @@ import java.util.List;
 public class ProductMapper {
 
 
+    public static List<Type> loadFilters(ConnectionPool connectionPool) {
+
+        String sql = "SELECT * FROM types";
+        List<Type> filters = new ArrayList<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                int typeID = rs.getInt("type_id");
+                String name = rs.getString("name");
+                filters.add(new Type(typeID, name));
+            }
+
+            return filters;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public static List<Product> filterByType(ConnectionPool connectionPool, int filterID) {
 
@@ -23,7 +46,7 @@ public class ProductMapper {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1,filterID);
+            ps.setInt(1, filterID);
 
             ResultSet rs = ps.executeQuery();
 

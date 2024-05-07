@@ -13,52 +13,53 @@
 <div id="page">
     <div class="centerpage">
 
+        <div class="flex-filter">
 
-        <div class="filter-menu">
-
-            <form method="post">
-                <button type="submit" name="filter" value="" formaction="storagePage">Alle</button>
-                <button type="submit" name="filter" value="8" formaction="filterByType">Brædder</button>
-                <button type="submit" name="filter" value="7" formaction="filterByType">Pæle</button>
-                <button type="submit" name="filter" value="3" formaction="filterByType">skruer</button>
-                <button type="submit" name="filter" value="5" formaction="filterByType">Tag</button>
+            <form method="post" class="filter-menu">
+                <div>
+                    <button type="submit" name="filter" formaction="storagePage">Alle</button>
+                </div>
+                <div th:each="type : ${filtersList}">
+                    <button type="submit" name="filter" th:value="${type.typeID}" formaction="filterByType"
+                            th:text="${type.name}"></button>
+                </div>
             </form>
         </div>
 
+
         <div class="table-container">
 
-                <table class="products-table">
-                    <thead>
-                    <tr>
-                        <th>Vare Nr.</th>
-                        <th>Navn</th>
-                        <th>Vare type</th>
-                        <th>Bredde</th>
-                        <th>Højde</th>
-                        <th>Længde</th>
-                        <th>Enhed</th>
-                        <th>Enhed Pris</th>
-                        <th>Lagerbeholdning</th>
-                    </tr>
-                    </thead>
+            <table class="products-table">
+                <thead>
+                <tr>
+                    <th>Vare Nr.</th>
+                    <th>Navn</th>
+                    <th>Vare type</th>
+                    <th>Bredde</th>
+                    <th>Højde</th>
+                    <th>Længde</th>
+                    <th>Enhed</th>
+                    <th>Enhed Pris</th>
+                    <th>Lagerbeholdning</th>
+                </tr>
+                </thead>
 
-                    <tbody>
-                    <tr th:each="product : ${productList}">
-                        <td th:text="${product.productID}"></td>
-                        <td th:text="${product.name}"></td>
-                        <td th:text="${product.type.name}"></td>
-                        <td th:text="${product.width}"></td>
-                        <td th:text="${product.height}"></td>
-                        <td th:text="${product.length}"></td>
-                        <td th:text="${product.unit.name}"></td>
-                        <td th:text="${product.price}"></td>
-                        <td th:text="${product.quantity}"></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <tbody>
+                <tr th:each="product : ${productList}">
+                    <td><input type="text" th:value="${product.productID}"/></td>
+                    <td><input type="text" th:value="${product.name}"/></td>
+                    <td><input type="text" th:value="${product.type.name}"/></td>
+                    <td><input type="text" th:value="${product.width}"/></td>
+                    <td><input type="text" th:value="${product.height}"/></td>
+                    <td><input type="text" th:value="${product.length}"/></td>
+                    <td><input type="text" th:value="${product.unit.name}"/></td>
+                    <td><input type="text" th:value="${product.price}"/></td>
+                    <td><input type="text" th:value="${product.quantity}"/></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
-
 </body>
 </html>
