@@ -11,6 +11,7 @@ public class Product {
     private int typeID;
     private int price;
     private int costPrice;
+    private int quantity;
 
     public Product(int productID, String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice) {
         this.productID = productID;
@@ -34,6 +35,19 @@ public class Product {
         this.typeID = typeID;
         this.price = price;
         this.costPrice = costPrice;
+    }
+
+    public Product(String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice, int quantity) {
+        this.name = name;
+        this.description = description;
+        this.height = height;
+        this.width = width;
+        this.length = length;
+        this.unitID = unitID;
+        this.typeID = typeID;
+        this.price = price;
+        this.costPrice = costPrice;
+        this.quantity = quantity;
     }
 
     public int getProductID() {
@@ -74,5 +88,9 @@ public class Product {
 
     public int getCostPrice() {
         return costPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

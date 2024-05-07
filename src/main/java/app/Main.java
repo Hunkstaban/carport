@@ -2,10 +2,14 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.controllers.ProductController;
 import app.controllers.TestController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class Main {
 
@@ -26,8 +30,9 @@ public class Main {
 
         // Routing
 
-        app.get("/", ctx ->  ctx.render("index.html"));
+        app.get("/", ctx ->  ctx.render("admin-storage.html"));
 
         TestController.addRoute(app, connectionPool);
+        ProductController.addRoute(app,connectionPool);
     }
 }
