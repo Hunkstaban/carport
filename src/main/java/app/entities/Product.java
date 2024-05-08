@@ -39,6 +39,13 @@ public class Product {
         this.quantity = quantity;
     }
 
+    // Constructor to be used with ProductListCalc
+    public Product(int productID, String name, int length) {
+        this.productID = productID;
+        this.name = name;
+        this.length = length;
+    }
+
     public int getProductID() {
         return productID;
     }

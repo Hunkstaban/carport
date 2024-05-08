@@ -1,12 +1,10 @@
 package app.controllers;
 
-import app.entities.Product;
-import app.entities.ProductList;
+import app.entities.ProductListItem;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
-import app.persistence.UserMapper;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -28,7 +26,8 @@ public class OrderController {
         try {
             int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
             int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
-            List<ProductList> productList = ProductListCalc.calculateProductList(carportWidth, carportLength, shed, connectionPool);
+            ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
+            //List<ProductListItem> productList = ProductListCalc.calculateProductList(carportWidth, carportLength, shed, connectionPool);
             User user = ctx.sessionAttribute("currentUser");
             // OrderMapper.newOrder(user, productList, remark, connectionPool);
         } catch (DatabaseException e) {
