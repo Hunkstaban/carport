@@ -43,4 +43,8 @@ public class User {
     public int getRoleID() {
         return roleID;
     }
+
+    public int getUserID() {
+        return userID;
+    }
 }

@@ -14,17 +14,30 @@
 <h1>Fog Carport</h1>
 
 <p>Velkommen til FOG</p>
-<form method="get">
-<a th:href="@{/renderLoginPage}">Login</a>
-<a th:href="@{/renderSignupPage}">Opret bruger</a>
-</form>
 
+<!--used to test if there is null or data in user-->
+<!--<p th:text="'Session user: ' + ${session.currentUser}"></p> -->
+
+<form method="get">
+    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+    <a th:href="@{/renderSignupPage}">Opret bruger</a>
+
+    <div>
+        <div th:if="${session.currentUser != null}">
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+        <div th:if="${session.currentUser == null}">
+            <a th:href="@{/renderLoginPage}">Login</a>
+        </div>
+    </div>
+</form>
 
 </div>
 
-<a th:href="@{/logout}">Logout</a>
-<form method="get"> <button formaction="myOrders">My Orders</button></form>
-
+<!--<a th:href="@{/logout}">Logout</a>-->
+<form method="get">
+    <button formaction="myOrders">My Orders</button>
+</form>
 
 
 <!--th:if="${user == null}"-->
