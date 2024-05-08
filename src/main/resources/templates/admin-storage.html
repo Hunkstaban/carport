@@ -46,6 +46,9 @@
                 </thead>
 
                 <tbody>
+<!--                fills the table with data from the product list on each row from the database-->
+<!--                some inputs are hidden and not displayed but still sent with the form so all data from the object-->
+<!--                can be used to update in the BD-->
                 <tr th:each="product : ${productList}">
                     <form method="post">
                         <td><input type="text" name="productID" th:value="${product.productID}"/></td>

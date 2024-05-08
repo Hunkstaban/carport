@@ -30,8 +30,10 @@ public class ProductController {
 
     }
 
+    // controller to take data inputs from the front end and update the database through the ProductMapper.updateProduct mapper method
     private static void updateProduct(Context ctx, ConnectionPool connectionPool) {
 
+        // method gets all the formparams from the frontend and created a 'product' object to send as a variable to the mapper
         int productID = Integer.parseInt(ctx.formParam("productID"));
         String name = ctx.formParam("name");
         String description = ctx.formParam("description");
@@ -54,11 +56,13 @@ public class ProductController {
 
     }
 
+    // takes input from the frontend to get the 'filter' parameter to dertemine which type to load from the database
     private static void filterByType(Context ctx, ConnectionPool connectionPool) {
 
         int typeID = Integer.parseInt(ctx.formParam("filter"));
 
         List<Product> productList = ProductMapper.filterByType(connectionPool, typeID);
+        // loads the different types from the database to filter the productList
         List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
 
         ctx.attribute("productList", productList);
@@ -68,8 +72,10 @@ public class ProductController {
 
     }
 
-
+    // loads all products from the database and sends an attribute to the frontend for the admin
     private static void loadProducts(Context ctx, ConnectionPool connectionPool) {
+
+        // TODO: make a check if user is admin before rendering the admin page
 
         List<Product> productList = ProductMapper.loadProducts(connectionPool);
 

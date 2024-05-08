@@ -18,6 +18,9 @@ public class ProductMapper {
 
     public static List<Type> loadFilters(ConnectionPool connectionPool) {
 
+        // gets all the types from the DB and returns a List which is used in the filter controller
+        // to filter by the chosen type on the frontend.
+
         String sql = "SELECT * FROM types";
         List<Type> filters = new ArrayList<>();
 
@@ -85,6 +88,10 @@ public class ProductMapper {
 
     public static List<Product> loadProducts(ConnectionPool connectionPool) {
 
+        // sql query is a view created to join the 'units' and 'types' tables into products table
+        // so that we can retrieve the unit_id and name as well as type_id and name
+        // for creating the Java Unit and Type objects for the ORM mapping
+        // ORM = Object Relational Mapping
 
         String sql = "SELECT * FROM public.view_all_products";
         List<Product> productList = new ArrayList<>();
@@ -126,6 +133,8 @@ public class ProductMapper {
     }
 
     public static void updateProduct(ConnectionPool connectionPool, Product product) {
+
+        // recieves a Product object with all the values from the frontend and updates the database with the new values.
 
         String sql = "UPDATE public.products\n" +
                 "\tSET name=?, description=?, height=?, width=?, unit_id=?, type_id=?, price=?, cost_price=?, quantity=?, length=?\n" +
