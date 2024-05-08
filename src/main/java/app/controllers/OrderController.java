@@ -7,6 +7,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
+import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
@@ -22,12 +23,12 @@ public class OrderController {
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
+        String remark = ctx.formParam("remark");
 
         try {
             int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
             int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
-            String remark = ctx.formParam("remark");
-            List<Product> productList = OrderMapper.calculateProductList(carportWidth, carportLength, shed, connectionPool);
+            List<ProductList> productList = ProductListCalc.calculateProductList(carportWidth, carportLength, shed, connectionPool);
             User user = ctx.sessionAttribute("currentUser");
             // OrderMapper.newOrder(user, productList, remark, connectionPool);
         } catch (DatabaseException e) {
