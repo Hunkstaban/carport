@@ -95,4 +95,9 @@ public class UserController {
 
         ctx.render("index.html");
     }
+
+    private  static  void changePassword(Context ctx, ConnectionPool connectionPool) {
+
+
+    }
 }
