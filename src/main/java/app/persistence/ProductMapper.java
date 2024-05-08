@@ -18,12 +18,13 @@ public class ProductMapper {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
+            ps.setInt(1, typeID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                int productID = rs.getInt("topping_id");
-                String productName = rs.getString("topping_name");
-                int productLength = rs.getInt("topping_price");
+                int productID = rs.getInt("product_id");
+                String productName = rs.getString("name");
+                int productLength = rs.getInt("length");
                 products.add(new Product(productID, productName, productLength));
             }
         } catch (SQLException e) {
