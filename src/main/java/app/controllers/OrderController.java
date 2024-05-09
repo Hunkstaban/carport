@@ -27,6 +27,7 @@ public class OrderController {
             int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
             int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
             ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
+
             //List<ProductListItem> productList = ProductListCalc.calculateProductList(carportWidth, carportLength, shed, connectionPool);
             User user = ctx.sessionAttribute("currentUser");
             // OrderMapper.newOrder(user, productList, remark, connectionPool);
