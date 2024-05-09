@@ -17,8 +17,17 @@ public class OrderController {
 
         app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
+        app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
 
 
+    }
+
+    private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
+
+
+
+
+        ctx.render("inquiry-details");
     }
 
     private static void viewAllOrders(Context ctx, ConnectionPool connectionPool) {
