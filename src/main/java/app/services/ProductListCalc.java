@@ -49,6 +49,10 @@ public class ProductListCalc {
         calcRoof(carportWidth, carportLength);
     }
 
+    public void testCalcPost() {
+        calcPosts(carportLength, shed);
+    }
+
     private static void calcPosts(int carportLength, boolean shed) {
         String postName = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
@@ -59,10 +63,9 @@ public class ProductListCalc {
             postName = postOption.getName();
             postLength = postOption.getLength();
         }
+
         // Calculate number of posts needed - if shed is attached, an additional 5 posts gets added
         numberOfPosts = 2 * (1 + (carportLength - UNSUPPORTED_SPACE) / MAX_DISTANCE_BETWEEN_POSTS) + (shed ? 5 : 0);
-
-
         productList.add(new ProductListItem(postName, description, postLength, postUnit, numberOfPosts));
     }
 
@@ -87,10 +90,9 @@ public class ProductListCalc {
                 beamLength = beamMap.get(i).getLength();
                 numberOfBeams = beamsNeeded;
             }
-
-
-            productList.add(new ProductListItem(beamName, description, beamLength, beamUnit, numberOfBeams));
         }
+
+        productList.add(new ProductListItem(beamName, description, beamLength, beamUnit, numberOfBeams));
     }
 
     private static void calcRafters(int carportLength, int carportWidth) {
@@ -109,9 +111,8 @@ public class ProductListCalc {
                 break;
             }
         }
+
         numberOfRafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
-
-
         productList.add(new ProductListItem(rafterName, description, rafterLength, rafterUnit, numberOfRafters));
     }
 
@@ -137,9 +138,9 @@ public class ProductListCalc {
                 roofLength = roofMap.get(i).getLength();
                 numberOfRoofPlates = amountLengthPlates * amountWidthPlates;
             }
-
-            productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, numberOfRoofPlates));
         }
+
+        productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, numberOfRoofPlates));
     }
 
     public static List<ProductListItem> getProductList() {

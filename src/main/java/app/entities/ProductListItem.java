@@ -15,5 +15,23 @@ public class ProductListItem {
         this.quantity = quantity;
     }
 
+    public String getProductName() {
+        return productName;
+    }
 
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }
