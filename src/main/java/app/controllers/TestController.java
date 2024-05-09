@@ -28,7 +28,7 @@ public class TestController {
 
     private static void myOrders(Context ctx, ConnectionPool connectionPool) {
 
-        ctx.render("user-orders.html");
+        ctx.render("view-orders.html");
 
     }
 

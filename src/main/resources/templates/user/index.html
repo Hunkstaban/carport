@@ -4,18 +4,18 @@
     <title>Frontpage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
 
 <body>
 
 <!--Global header needed with links to customer order page and account info-->
 
-<h1>velkommen til FOG </h1>
+<h1>Velkommen til FOG </h1>
 
 
 <h2>Carport med fladt tag</h2>
-<form>
+<div>
     <label><h3>Carport bredde</h3></label>
     <br>
     <select name="">
@@ -82,17 +82,22 @@
         </div>
     </form>
 
-    </div>
+</div>
 
-    <!--<a th:href="@{/logout}">Logout</a>-->
-    <form method="get">
-        <button formaction="myOrders">My Orders</button>
-    </form>
+<!--<a th:href="@{/logout}">Logout</a>-->
+<form method="get">
+    <button formaction="myOrders">My Orders</button>
+</form>
 
-<form method="get"> <button formaction="myOrders">My Orders</button></form>
-<form method="post"> <button formaction="storagePage">Storage Page</button></form>
-<form method="post"> <button formaction="viewAllOrders">Admin Order Page</button></form>
-
+<form method="get">
+    <button formaction="myOrders">My Orders</button>
+</form>
+<form method="post">
+    <button formaction="storagePage">Storage Page</button>
+</form>
+<form method="post">
+    <button formaction="viewAllOrders">Admin Order Page</button>
+</form>
 
 
 <button th:action="@{inquiryNext}"></button>

@@ -19,7 +19,7 @@ public class ProductListCalc {
     private static final int UNSUPPORTED_SPACE = 1300;
     private static final int MAX_DISTANCE_BETWEEN_POSTS = 3400;
     private static final int DISTANCE_BETWEEN_RAFTERS = 550;
-    private static final int DEFAULT_ROOF_WIDTH = 1090;
+    private static final int DEFAULT_ROOF_PLATE_WIDTH = 1090;
     private static final int ROOF_PANEL_OVERLAP = 200;
     private static List<ProductListItem> productList = new ArrayList<>();
     private static int carportWidth;
@@ -72,10 +72,8 @@ public class ProductListCalc {
         String description = "Remme i sider - sadles ned i stolper";
         int beamLength = 0;
         String beamUnit = "Stk.";
-        numberOfBeams = 0;
 
         int woodWaste = 0;
-
         for (Integer i : beamMap.keySet()) {
             int beamsNeeded = (int) Math.floor((double) totalCarportLength / beamMap.get(i).getLength());
             if (beamsNeeded % 2 != 0) {
@@ -122,9 +120,9 @@ public class ProductListCalc {
         String description = "Tagplader - monteres på spær";
         int roofLength = 0;
         String roofUnit = "Stk.";
-        numberOfRoofPlates = 0;
+
         // Accounting for overlap
-        int amountWidthPlates = (int) Math.floor((double) carportWidth / (DEFAULT_ROOF_WIDTH - ROOF_PANEL_OVERLAP)) + 1;
+        int amountWidthPlates = (int) Math.floor((double) carportWidth / (DEFAULT_ROOF_PLATE_WIDTH - ROOF_PANEL_OVERLAP)) + 1;
 
         int roofWaste = 0;
         for (Integer i : roofMap.keySet()) {

@@ -11,7 +11,7 @@ public class Order {
     private String description;
     private int totalPrice;
 
-    private List<ProductList> productList;
+    private List<ProductListItem> productList;
     private String productListRaw;
     private Status status;
     private String date;
@@ -122,8 +122,9 @@ public class Order {
 
     public String getUserRemarks() {
         return userRemarks;
+    }
 
-    public void setProductList(List<ProductListItem> productList) {
+    public void setProductList (List <ProductListItem> productList) {
         this.productList = productList;
     }
 }

@@ -26,9 +26,6 @@ public class OrderController {
 
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
-
-
-
         ctx.render("inquiry-details");
     }
 
@@ -36,7 +33,7 @@ public class OrderController {
 
         globalOrderAttributes(ctx, connectionPool, null);
 
-        ctx.render("admin-orders");
+        ctx.render("admin/orders");
 
     }
 
@@ -46,7 +43,7 @@ public class OrderController {
 
         globalOrderAttributes(ctx, connectionPool, statusID);
 
-        ctx.render("admin-orders");
+        ctx.render("admin/orders");
 
     }
 
@@ -71,7 +68,8 @@ public class OrderController {
             int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
             int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
             ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
-
+            productListCalc.calculateProductList();
+            productListCalc.getProductList();
             //List<ProductListItem> productList = ProductListCalc.calculateProductList(carportWidth, carportLength, shed, connectionPool);
             User user = ctx.sessionAttribute("currentUser");
             // OrderMapper.newOrder(user, productList, remark, connectionPool);

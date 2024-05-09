@@ -16,13 +16,13 @@ public class RouteController {
     private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
 
 
-        ctx.render("index.html");
+        ctx.render("user/index.html");
 
     }
     private static void renderContactInfo(Context ctx, ConnectionPool connectionPool) {
 
 
-        ctx.render("inquiry-contact-info.html");
+        ctx.render("accept-inquiry.html");
 
     }
 
