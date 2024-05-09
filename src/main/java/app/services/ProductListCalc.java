@@ -20,11 +20,15 @@ public class ProductListCalc {
     private static final int MAX_DISTANCE_BETWEEN_POSTS = 3400;
     private static final int DISTANCE_BETWEEN_RAFTERS = 550;
     private static final int DEFAULT_ROOF_WIDTH = 1090;
+    private static final int ROOF_PANEL_OVERLAP = 200;
     private static List<ProductListItem> productList = new ArrayList<>();
     private static int carportWidth;
     private static int carportLength;
     private static boolean shed;
     private static int numberOfPosts;
+    private static int numberOfBeams;
+    private static int numberOfRafters;
+    private static int numberOfRoofPlates;
     private static ConnectionPool connectionPool;
 
     public ProductListCalc(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
@@ -35,7 +39,7 @@ public class ProductListCalc {
         this.connectionPool = connectionPool;
     }
 
-    public static void calculateProductList() {
+    public void calculateProductList() {
         if (shed) {
             carportLength += SHED_DIMENSIONS;
         }
@@ -69,23 +73,23 @@ public class ProductListCalc {
         String description = "Remme i sider - sadles ned i stolper";
         int beamLength = 0;
         String beamUnit = "Stk.";
-        int beams = 0;
+        numberOfBeams = 0;
 
         int woodWaste = 0;
-        if (numberOfPosts == 4) {
-            for (Integer i : beamMap.keySet()) {
-                int beamsNeeded = (int)Math.floor((double) totalCarportLength / beamMap.get(i).getLength()) + 1;
-                int totalBeamLength = beamMap.get(i).getLength() * beamsNeeded;
-                int woodWasted = totalBeamLength - totalBeamLength;
-                if(woodWasted >= woodWaste) {
-                    woodWaste = woodWasted;
-                    beamName = beamMap.get(i).getName();
-                    beamLength = beamMap.get(i).getLength();
-                    beams = beamsNeeded;
-                }
+
+        for (Integer i : beamMap.keySet()) {
+            int beamsNeeded = (int) Math.floor((double) totalCarportLength / beamMap.get(i).getLength()) + 1;
+            int totalBeamLength = beamMap.get(i).getLength() * beamsNeeded;
+            int woodWasted = totalCarportLength - totalBeamLength;
+            if (woodWasted >= woodWaste) {
+                woodWaste = woodWasted;
+                beamName = beamMap.get(i).getName();
+                beamLength = beamMap.get(i).getLength();
+                numberOfBeams = beamsNeeded;
             }
 
-            productList.add(new ProductListItem(beamName, description, beamLength, beamUnit, beams));
+
+            productList.add(new ProductListItem(beamName, description, beamLength, beamUnit, numberOfBeams));
         }
     }
 
@@ -94,7 +98,7 @@ public class ProductListCalc {
         String description = "Spær - monteres på rem";
         int rafterLength = 0;
         String rafterUnit = "Stk.";
-        int rafters = 0;
+        numberOfRafters = 0;
         List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
         // Determine the rafter length and name based on the carport width
         for (Product rafter : rafterOptions) {
@@ -105,23 +109,37 @@ public class ProductListCalc {
                 break;
             }
         }
-        rafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
+        numberOfRafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
 
 
-        productList.add(new ProductListItem(rafterName, description, rafterLength, rafterUnit, rafters));
+        productList.add(new ProductListItem(rafterName, description, rafterLength, rafterUnit, numberOfRafters));
     }
 
 
     private static void calcRoof(int carportWidth, int carportLength) {
-        int carportSquareArea = carportWidth * carportLength;
+        Map<Integer, Product> roofMap = ProductMapper.getProductMapByTypeID(ROOF_TYPEID, connectionPool);
         String roofName = null;
         String description = "Tagplader - monteres på spær";
         int roofLength = 0;
         String roofUnit = "Stk.";
-        int roofPlates = 0;
-        List<Product> roofOptions = ProductMapper.getProductsByTypeID(ROOF_TYPEID, connectionPool);
+        numberOfRoofPlates = 0;
+        // Accounting for overlap
+        int amountWidthPlates = (int) Math.floor((double) carportWidth / (DEFAULT_ROOF_WIDTH - ROOF_PANEL_OVERLAP)) + 1;
 
-        productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, roofPlates));
+        int roofWaste = 0;
+        for (Integer i : roofMap.keySet()) {
+            int amountLengthPlates = (int) Math.floor((double) carportLength / (roofMap.get(i).getLength() - ROOF_PANEL_OVERLAP)) + 1;
+            int totalPanelLength = roofMap.get(i).getLength() * amountLengthPlates;
+            int roofWasted = carportLength - totalPanelLength;
+            if (roofWasted >= roofWaste) {
+                roofWaste = roofWasted;
+                roofName = roofMap.get(i).getName();
+                roofLength = roofMap.get(i).getLength();
+                numberOfRoofPlates = amountLengthPlates * amountWidthPlates;
+            }
+
+            productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, numberOfRoofPlates));
+        }
     }
 
     public static List<ProductListItem> getProductList() {
