@@ -3,11 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
+
+
 </head>
 <body>
-<button th:action="@{viewInquiries}"></button>
-<button th:action="@{viewStorage}"></button>
-<button th:action="@{viewOrders}"></button>
+
+<div id="page">
+    <div class="centerpage">
+
+        <div class="flex-filter">
+
+            <form method="post" class="filter-menu">
+                <div>
+                    <button type="submit" name="filter" formaction="viewAllOrders">Alle</button>
+                </div>
+                <div th:each="status : ${statusList}">
+                    <button type="submit" name="filter" th:value="${status.statusID}" formaction="filterByStatus"
+                            th:text="${status.name}"></button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="table-container">
+
+            <table class="orders-table">
+                <thead>
+                <tr>
+                    <th>Dato</th>
+                    <th>Order Nr.</th>
+                    <th>Kunde Nr.</th>
+                    <th>Kunde</th>
+                    <th>Beskrivelse</th>
+                    <th>Pris</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="order : ${orderList}">
+                    <td th:text="${order.date}"></td>
+                    <td th:text="${order.orderID}"></td>
+                    <td th:text="${order.user.userID}"></td>
+                    <td th:text="${order.user.name}"></td>
+                    <td th:text="${order.description}"></td>
+                    <td th:text="${order.totalPrice}"></td>
+                    <td th:text="${order.status.name}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>
