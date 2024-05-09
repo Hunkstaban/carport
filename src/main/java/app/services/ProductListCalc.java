@@ -18,6 +18,7 @@ public class ProductListCalc {
     private static final int UNSUPPORTED_SPACE = 1300;
     private static final int MAX_DISTANCE_BETWEEN_POSTS = 3400;
     private static final int DISTANCE_BETWEEN_RAFTERS = 550;
+    private static final int DEFAULT_ROOF_WIDTH = 1090;
     private static List<ProductListItem> productList = new ArrayList<>();
     private static int carportWidth;
     private static int carportLength;
@@ -52,15 +53,8 @@ public class ProductListCalc {
             postName = postOption.getName();
             postLength = postOption.getLength();
         }
-        // All carports start with 4 posts - if shed is attached, an additional 5 posts gets added
-        int posts = 4;
-        if (shed) {
-            posts = 9;
-        }
-        int remainingLength = carportLength - UNSUPPORTED_SPACE;
-        if (remainingLength > MAX_DISTANCE_BETWEEN_POSTS) {
-            posts += 2;
-        }
+        // Calculate number of posts needed - if shed is attached, an additional 5 posts gets added
+        int posts = 2 * (1 + (carportLength - UNSUPPORTED_SPACE) / MAX_DISTANCE_BETWEEN_POSTS) + (shed ? 5 : 0);
 
         productList.add(new ProductListItem(postName, description, postLength, postUnit, posts));
     }
@@ -83,7 +77,15 @@ public class ProductListCalc {
         String rafterUnit = "Stk.";
         int rafters = 0;
         List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
-
+        // Determine the rafter length and name based on the carport width
+        for (Product rafter : rafterOptions) {
+            if (carportWidth <= rafter.getLength()) {
+                // Set the default rafter length and name to the first suitable option found
+                rafterName = rafter.getName();
+                rafterLength = rafter.getLength();
+                break;
+            }
+        }
         rafters = (int)Math.ceil((double)carportLength / DISTANCE_BETWEEN_RAFTERS);
 
 
@@ -98,7 +100,7 @@ public class ProductListCalc {
         int roofLength = 0;
         String roofUnit = "Stk.";
         int roofPlates = 0;
-        List<Product> roofOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
+        List<Product> roofOptions = ProductMapper.getProductsByTypeID(ROOF_TYPEID, connectionPool);
 
         productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, roofPlates));
     }
