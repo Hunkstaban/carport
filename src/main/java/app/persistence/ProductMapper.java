@@ -30,7 +30,7 @@ public class ProductMapper {
         List<Type> filters = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-             ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
 
@@ -54,7 +54,7 @@ public class ProductMapper {
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-             ps.setInt(1, typeID);
+            ps.setInt(1, typeID);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -71,7 +71,6 @@ public class ProductMapper {
     }
 
 
-           
     public static List<Product> getProducts(ConnectionPool connectionPool, Integer typeID) {
 
         String sql;
@@ -87,7 +86,7 @@ public class ProductMapper {
         }
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-          if (typeID != null) {
+            if (typeID != null) {
 
                 ps.setInt(1, typeID);
             }
@@ -115,13 +114,12 @@ public class ProductMapper {
 
                 productList.add(new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity));
             }
-          } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-            return productList;
-
-           
+        return productList;
+    }
 
     public static Map<Integer, Product> getProductMapByTypeID(int typeID, ConnectionPool connectionPool) {
         String sql = "SELECT * FROM products WHERE type_id = ?";
@@ -144,11 +142,8 @@ public class ProductMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-      return productMap;
+        return productMap;
 
-    }
-
-  
     }
 
     public static void updateProduct(ConnectionPool connectionPool, Product product) {
