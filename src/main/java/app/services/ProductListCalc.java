@@ -10,13 +10,14 @@ import java.util.List;
 
 public class ProductListCalc {
 
-    private static final int POSTTYPEID = 7;
-    private static final int RAFTERANDBEAMTYPEID = 6;
-    private static final int ROOFTYPEID = 5;
-    private static final int SHEDDIMENSIONS = 1400;
-    private static final int CMTOMM = 10;
-    private static final int UNSUPPORTEDSPACE = 1300;
-    private static final int MAXDISTANCEBETWEENPOSTS = 3400;
+    private static final int POST_TYPEID = 7;
+    private static final int RAFTER_AND_BEAM_TYPEID = 6;
+    private static final int ROOF_TYPEID = 5;
+    private static final int SHED_DIMENSIONS = 1400;
+    private static final int CM_TO_MM = 10;
+    private static final int UNSUPPORTED_SPACE = 1300;
+    private static final int MAX_DISTANCE_BETWEEN_POSTS = 3400;
+    private static final int DISTANCE_BETWEEN_RAFTERS = 550;
     private static List<ProductListItem> productList = new ArrayList<>();
     private static int carportWidth;
     private static int carportLength;
@@ -25,19 +26,19 @@ public class ProductListCalc {
 
     public ProductListCalc(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         // Making sure all cm becomes mm
-        this.carportWidth = carportWidth * CMTOMM;
-        this.carportLength = carportLength * CMTOMM;
+        this.carportWidth = carportWidth * CM_TO_MM;
+        this.carportLength = carportLength * CM_TO_MM;
         this.shed = shed;
         this.connectionPool = connectionPool;
     }
 
     public static void calculateProductList () {
         if (shed) {
-            carportLength += SHEDDIMENSIONS;
+            carportLength += SHED_DIMENSIONS;
         }
         calcPosts(carportLength, shed);
-        calcBeams(carportWidth, carportLength);
-        calcRafters(carportLength);
+        calcBeams(carportLength);
+        calcRafters(carportWidth, carportLength);
         calcRoof(carportWidth, carportLength);
     }
 
@@ -46,42 +47,44 @@ public class ProductListCalc {
         String description = "Stolper - nedgraves 90 cm. i jord";
         int postLength = 0;
         String postUnit = "Stk.";
-        List<Product> postOptions = ProductMapper.getProductsByTypeID(POSTTYPEID, connectionPool);
+        List<Product> postOptions = ProductMapper.getProductsByTypeID(POST_TYPEID, connectionPool);
         for (Product postOption : postOptions) {
             postName = postOption.getName();
             postLength = postOption.getLength();
         }
-        // All carports start with 4 posts - if shed is attached, an additional 4 posts gets added
+        // All carports start with 4 posts - if shed is attached, an additional 5 posts gets added
         int posts = 4;
         if (shed) {
-            posts = 8;
+            posts = 9;
         }
-        int remainingLength = carportLength - UNSUPPORTEDSPACE;
-        if (remainingLength > MAXDISTANCEBETWEENPOSTS) {
+        int remainingLength = carportLength - UNSUPPORTED_SPACE;
+        if (remainingLength > MAX_DISTANCE_BETWEEN_POSTS) {
             posts += 2;
         }
 
         productList.add(new ProductListItem(postName, description, postLength, postUnit, posts));
     }
 
-    private static void calcBeams(int carportWidth, int carportLength) {
+    private static void calcBeams(int carportLength) {
         String beamName = null;
         String description = "Remme i sider - sadles ned i stolper";
         int beamLength = 0;
         String beamUnit = "Stk.";
         int beams = 0;
-        List<Product> beamOptions = ProductMapper.getProductsByTypeID(RAFTERANDBEAMTYPEID, connectionPool);
+        List<Product> beamOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
 
         productList.add(new ProductListItem(beamName, description, beamLength, beamUnit, beams));
     }
 
-    private static void calcRafters(int carportLength) {
+    private static void calcRafters(int carportLength, int carportWidth) {
         String rafterName = null;
         String description = "Spær - monteres på rem";
         int rafterLength = 0;
         String rafterUnit = "Stk.";
         int rafters = 0;
-        List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTERANDBEAMTYPEID, connectionPool);
+        List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
+
+        rafters = (int)Math.ceil((double)carportLength / DISTANCE_BETWEEN_RAFTERS);
 
 
         productList.add(new ProductListItem(rafterName, description, rafterLength, rafterUnit, rafters));
@@ -95,8 +98,12 @@ public class ProductListCalc {
         int roofLength = 0;
         String roofUnit = "Stk.";
         int roofPlates = 0;
-        List<Product> roofOptions = ProductMapper.getProductsByTypeID(RAFTERANDBEAMTYPEID, connectionPool);
+        List<Product> roofOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
 
         productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, roofPlates));
+    }
+
+    public static List<ProductListItem> getProductList() {
+        return productList;
     }
 }
