@@ -5,24 +5,75 @@ import java.util.List;
 public class Order {
     private int orderID;
     private int userID;
-    private int carportLengthID;
-    private int carportWidthID;
+    private User user;
+    private CarportLength carportLength;
+    private CarportWidth carportWidth;
     private String description;
     private int totalPrice;
-    private List<ProductListItem> productList;
-    private int statusID;
-    private String date;
 
-    public Order(int orderID, int userID, int carportLengthID, int carportWidthID, String description, int totalPrice, List<ProductListItem> productList, int statusID, String date) {
+    private List<ProductList> productList;
+    private String productListRaw;
+    private Status status;
+    private String date;
+    private boolean shed;
+    private String userRemarks;
+
+    public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
         this.orderID = orderID;
         this.userID = userID;
-        this.carportLengthID = carportLengthID;
-        this.carportWidthID = carportWidthID;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
         this.description = description;
         this.totalPrice = totalPrice;
-        this.productList = productList;
-        this.statusID = statusID;
+        this.productListRaw = productListRaw;
+        this.status = status;
         this.date = date;
+        this.shed = shed;
+    }
+
+    public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed, String userRemarks) {
+        this.orderID = orderID;
+        this.userID = userID;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.description = description;
+        this.totalPrice = totalPrice;
+        this.productListRaw = productListRaw;
+        this.status = status;
+        this.date = date;
+        this.shed = shed;
+        this.userRemarks = userRemarks;
+    }
+
+    public Order(int orderID, User user, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed, String userRemarks) {
+        this.orderID = orderID;
+        this.user = user;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.description = description;
+        this.totalPrice = totalPrice;
+        this.productListRaw = productListRaw;
+        this.status = status;
+        this.date = date;
+        this.shed = shed;
+        this.userRemarks = userRemarks;
+    }
+
+    public Order(int orderID, User user, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
+        this.orderID = orderID;
+        this.user = user;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.description = description;
+        this.totalPrice = totalPrice;
+        this.productListRaw = productListRaw;
+        this.status = status;
+        this.date = date;
+        this.shed = shed;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public int getOrderID() {
@@ -33,12 +84,12 @@ public class Order {
         return userID;
     }
 
-    public int getCarportLengthID() {
-        return carportLengthID;
+    public CarportLength getCarportLength() {
+        return carportLength;
     }
 
-    public int getCarportWidthID() {
-        return carportWidthID;
+    public CarportWidth getCarportWidth() {
+        return carportWidth;
     }
 
     public String getDescription() {
@@ -53,13 +104,24 @@ public class Order {
         return productList;
     }
 
-    public int getStatusID() {
-        return statusID;
+    public String getProductListRaw() {
+        return productListRaw;
+    }
+
+    public Status getStatus() {
+        return status;
     }
 
     public String getDate() {
         return date;
     }
+
+    public boolean isShed() {
+        return shed;
+    }
+
+    public String getUserRemarks() {
+        return userRemarks;
 
     public void setProductList(List<ProductListItem> productList) {
         this.productList = productList;
