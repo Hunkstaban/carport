@@ -1,10 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Frontpage</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
 </head>
+
 <body>
 
+<!--Global header needed with links to customer order page and account info-->
+
+<h1>Velkommen til FOG </h1>
+
+
+<h2>Carport med fladt tag</h2>
+<div>
+    <label><h3>Carport bredde</h3></label>
+    <br>
+    <select name="">
+        <option value="">100 Cm</option>
+        <option value="">200 Cm</option>
+        <option value="">300 Cm</option>
+        <option value="">400 Cm</option>
+    </select>
+    <br>
+
+    <label><h3>Carport længde</h3></label>
+    <br>
+    <select name="">
+        <option value="">100 Cm</option>
+        <option value="">200 Cm</option>
+        <option value="">300 Cm</option>
+        <option value="">400 Cm</option>
+    </select>
+    <br>
+    <label><h3>Trapez tag</h3></label>
+    <br>
+    <select name="">
+        <option value="">Plastmo Ecolite</option>
+    </select>
+    <br>
+    <label><h3>Redskabsrum</h3></label>
+    <br>
+    <label>
+        <input type="radio" name="shed-choosing" value="">
+        Ja
+    </label>
+    <br>
+    <label>
+        <input type="radio" name="shed-choosing" value="">
+        Nej
+    </label>
+    <br>
+    <h3>Kommentar</h3>
+    <form action="" method="post">
+
+        <textarea id="" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ..."></textarea>
+
+        <br>
+    </form>
+    <!--    route to inquiry-contact-info-->
+    <form method="get">
+        <button formaction="/acceptInquiry">Næste</button>
+    </form>
+
+
+    <!--used to test if there is null or data in user-->
+    <!--<p th:text="'Session user: ' + ${session.currentUser}"></p> -->
+
+    <form method="get">
+        <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+        <a th:href="@{/renderSignupPage}">Opret bruger</a>
+        <div>
+            <div th:if="${session.currentUser != null}">
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+            <div th:if="${session.currentUser == null}">
+                <a th:href="@{/renderLoginPage}">Login</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!--<a th:href="@{/logout}">Logout</a>-->
+<form method="get">
+    <button formaction="myOrders">My Orders</button>
+</form>
+
+<form method="post">
+    <button formaction="storagePage">Storage Page</button>
+</form>
+<form method="post">
+    <button formaction="viewAllOrders">Admin Order Page</button>
+</form>
+
+
+<button th:action="@{inquiryNext}"></button>
 </body>
 </html>

@@ -13,9 +13,17 @@ public class UserController {
         app.get("renderLoginPage", ctx -> renderLoginPage(ctx, connectionPool));
         app.get("renderSignupPage", ctx -> renderSignupPage(ctx, connectionPool));
         app.get("renderIndex", ctx -> renderIndex(ctx, connectionPool));
-        app.get("renderContactInfo", ctx -> acceptInquiry(ctx, connectionPool));
+        app.get("/acceptInquiry", ctx -> acceptInquiry(ctx, connectionPool));
         app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
+        app.get("/createInquiry", ctx -> createInquiry(ctx, connectionPool));
     }
+
+    private static void createInquiry(Context ctx, ConnectionPool connectionPool) {
+
+        ctx.render("user/create-inquiry.html");
+
+    }
+
 
     private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
 
