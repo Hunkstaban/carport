@@ -54,7 +54,7 @@ public class ProductListCalc {
         String description = "Stolper - nedgraves 90 cm. i jord";
         int postLength = 0;
         String postUnit = "Stk."; // TODO: find correct unit based on product unitID
-        List<Product> postOptions = ProductMapper.getProductsByTypeID(POST_TYPEID, connectionPool);
+        List<Product> postOptions = ProductMapper.getProductsByTypeID(POST_TYPEID, connectionPool); // TODO: Make this use the Map method
         for (Product postOption : postOptions) {
             postName = postOption.getName();
             postLength = postOption.getLength();
@@ -99,7 +99,7 @@ public class ProductListCalc {
         int rafterLength = 0;
         String rafterUnit = "Stk.";
         numberOfRafters = 0;
-        List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
+        List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool); //TODO: Make this use the Map method
         // Determine the rafter length and name based on the carport width
         for (Product rafter : rafterOptions) {
             if (carportWidth <= rafter.getLength()) {
@@ -144,5 +144,21 @@ public class ProductListCalc {
 
     public static List<ProductListItem> getProductList() {
         return productList;
+    }
+
+    public static int getNumberOfPosts() {
+        return numberOfPosts;
+    }
+
+    public static int getNumberOfBeams() {
+        return numberOfBeams;
+    }
+
+    public static int getNumberOfRafters() {
+        return numberOfRafters;
+    }
+
+    public static int getNumberOfRoofPlates() {
+        return numberOfRoofPlates;
     }
 }
