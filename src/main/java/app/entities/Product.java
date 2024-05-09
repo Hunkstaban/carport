@@ -7,33 +7,43 @@ public class Product {
     private int height;
     private int width;
     private int length;
-    private int unitID;
-    private int typeID;
+    private Unit unit;
+    private Type type;
     private int price;
     private int costPrice;
+    private int quantity;
 
-    public Product(int productID, String name, String description, int height, int width, int length, int unitID, int typeID, int price, int costPrice) {
+    public Product(int productID, String name, String description, int height, int width, int length, Unit unit, Type type, int price, int costPrice, int quantity) {
         this.productID = productID;
         this.name = name;
         this.description = description;
         this.height = height;
         this.width = width;
         this.length = length;
-        this.unitID = unitID;
-        this.typeID = typeID;
+        this.unit = unit;
+        this.type = type;
         this.price = price;
         this.costPrice = costPrice;
+        this.quantity = quantity;
     }
 
     // Height, width, and length is allowed to be null
-    public Product(int productID, String name, String description, int unitID, int typeID, int price, int costPrice) {
+    public Product(int productID, String name, String description, Unit unit, Type type, int price, int costPrice, int quantity) {
         this.productID = productID;
         this.name = name;
         this.description = description;
-        this.unitID = unitID;
-        this.typeID = typeID;
+        this.unit = unit;
+        this.type = type;
         this.price = price;
         this.costPrice = costPrice;
+        this.quantity = quantity;
+    }
+
+    // Constructor to be used with ProductListCalc
+    public Product(int productID, String name, int length) {
+        this.productID = productID;
+        this.name = name;
+        this.length = length;
     }
 
     public int getProductID() {
@@ -60,12 +70,12 @@ public class Product {
         return length;
     }
 
-    public int getUnitID() {
-        return unitID;
+    public Unit getUnit() {
+        return unit;
     }
 
-    public int getTypeID() {
-        return typeID;
+    public Type getType() {
+        return type;
     }
 
     public int getPrice() {
@@ -74,5 +84,9 @@ public class Product {
 
     public int getCostPrice() {
         return costPrice;
+    }
+
+    public int getQuantity() {
+        return quantity;
     }
 }

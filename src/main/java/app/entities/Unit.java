@@ -9,6 +9,10 @@ public class Unit {
         this.name = name;
     }
 
+    public Unit(int unitID) {
+        this.unitID = unitID;
+    }
+
     public int getUnitID() {
         return unitID;
     }
