@@ -49,10 +49,6 @@ public class ProductListCalc {
         calcRoof(carportWidth, carportLength);
     }
 
-    public void testCalcPost() {
-        calcPosts(carportLength, shed);
-    }
-
     private static void calcPosts(int carportLength, boolean shed) {
         String postName = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
@@ -132,10 +128,15 @@ public class ProductListCalc {
 
         int roofWaste = 0;
         for (Integer i : roofMap.keySet()) {
-            int amountLengthPlates = (int) Math.floor((double) carportLength / (roofMap.get(i).getLength() - ROOF_PANEL_OVERLAP)) + 1;
+            int amountLengthPlates = 0;
+            if (carportLength == roofMap.get(i).getLength()) {
+                amountLengthPlates = (int) Math.floor((double) carportLength / (roofMap.get(i).getLength()));
+            } else {
+                amountLengthPlates = (int) Math.floor((double) carportLength / (roofMap.get(i).getLength() - ROOF_PANEL_OVERLAP) + 1);
+            }
             int totalPanelLength = roofMap.get(i).getLength() * amountLengthPlates;
             int roofWasted = totalPanelLength - carportLength;
-            if (roofWasted >= roofWaste) {
+            if (roofWasted <= roofWaste) {
                 roofWaste = roofWasted;
                 roofName = roofMap.get(i).getName();
                 roofLength = roofMap.get(i).getLength();
