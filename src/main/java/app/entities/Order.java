@@ -10,13 +10,13 @@ public class Order {
     private CarportWidth carportWidth;
     private String description;
     private int totalPrice;
+
     private List<ProductList> productList;
     private String productListRaw;
     private Status status;
     private String date;
     private boolean shed;
     private String userRemarks;
-
 
     public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
         this.orderID = orderID;
@@ -100,7 +100,7 @@ public class Order {
         return totalPrice;
     }
 
-    public List<ProductList> getProductList() {
+    public List<ProductListItem> getProductList() {
         return productList;
     }
 
@@ -122,5 +122,8 @@ public class Order {
 
     public String getUserRemarks() {
         return userRemarks;
+
+    public void setProductList(List<ProductListItem> productList) {
+        this.productList = productList;
     }
 }

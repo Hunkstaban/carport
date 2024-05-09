@@ -1,5 +1,6 @@
 package app.persistence;
 
+
 import app.controllers.ProductController;
 import app.entities.Order;
 import app.entities.Product;
@@ -13,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 
 public class ProductMapper {
 
@@ -24,11 +28,9 @@ public class ProductMapper {
 
         String sql = "SELECT * FROM types";
         List<Type> filters = new ArrayList<>();
-
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ResultSet rs = ps.executeQuery();
+             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
 
@@ -45,6 +47,31 @@ public class ProductMapper {
     }
 
 
+    public static List<Product> getProductsByTypeID(int typeID, ConnectionPool connectionPool) {
+        String sql = "SELECT * FROM products WHERE type_id = ?";
+        List<Product> products = new ArrayList<>();
+
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+             ps.setInt(1, typeID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int productID = rs.getInt("product_id");
+                String productName = rs.getString("name");
+                int productLength = rs.getInt("length");
+                products.add(new Product(productID, productName, productLength));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return products;
+    }
+
+
+           
     public static List<Product> getProducts(ConnectionPool connectionPool, Integer typeID) {
 
         String sql;
@@ -58,12 +85,9 @@ public class ProductMapper {
 
             sql = "SELECT * FROM public.view_all_products";
         }
-
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
-
-            if (typeID != null) {
+          if (typeID != null) {
 
                 ps.setInt(1, typeID);
             }
@@ -91,13 +115,40 @@ public class ProductMapper {
 
                 productList.add(new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity));
             }
-
-            return productList;
-
-        } catch (SQLException e) {
+          } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+            return productList;
+
+           
+
+    public static Map<Integer, Product> getProductMapByTypeID(int typeID, ConnectionPool connectionPool) {
+        String sql = "SELECT * FROM products WHERE type_id = ?";
+        Map<Integer, Product> productMap = new TreeMap<>();
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, typeID);
+            ResultSet rs = ps.executeQuery();
+
+            int key = 1;
+            while (rs.next()) {
+
+                int productID = rs.getInt("product_id");
+                String productName = rs.getString("name");
+                int productLength = rs.getInt("length");
+                productMap.put(key, new Product(productID, productName, productLength));
+                key++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+      return productMap;
+
+    }
+
+  
     }
 
     public static void updateProduct(ConnectionPool connectionPool, Product product) {
