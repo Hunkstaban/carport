@@ -81,9 +81,12 @@ public class ProductListCalc {
         int woodWaste = 0;
 
         for (Integer i : beamMap.keySet()) {
-            int beamsNeeded = (int) Math.floor((double) totalCarportLength / beamMap.get(i).getLength()) + 1;
+            int beamsNeeded = (int) Math.floor((double) totalCarportLength / beamMap.get(i).getLength());
+            if (beamsNeeded % 2 != 0) {
+                beamsNeeded += 1;
+            }
             int totalBeamLength = beamMap.get(i).getLength() * beamsNeeded;
-            int woodWasted = totalCarportLength - totalBeamLength;
+            int woodWasted = totalBeamLength - totalCarportLength;
             if (woodWasted >= woodWaste) {
                 woodWaste = woodWasted;
                 beamName = beamMap.get(i).getName();
@@ -131,7 +134,7 @@ public class ProductListCalc {
         for (Integer i : roofMap.keySet()) {
             int amountLengthPlates = (int) Math.floor((double) carportLength / (roofMap.get(i).getLength() - ROOF_PANEL_OVERLAP)) + 1;
             int totalPanelLength = roofMap.get(i).getLength() * amountLengthPlates;
-            int roofWasted = carportLength - totalPanelLength;
+            int roofWasted = totalPanelLength - carportLength;
             if (roofWasted >= roofWaste) {
                 roofWaste = roofWasted;
                 roofName = roofMap.get(i).getName();
