@@ -6,6 +6,12 @@
     justify-content: center;
 }
 
+.top-nav {
+
+    display: flex;
+    justify-content: center;
+}
+
 .centerpage {
 
     width: 90%;

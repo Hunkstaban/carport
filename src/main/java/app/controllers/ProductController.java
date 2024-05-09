@@ -61,12 +61,8 @@ public class ProductController {
 
         int typeID = Integer.parseInt(ctx.formParam("filter"));
 
-        List<Product> productList = ProductMapper.filterByType(connectionPool, typeID);
         // loads the different types from the database to filter the productList
-        List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
-
-        ctx.attribute("productList", productList);
-        ctx.attribute("filtersList", filtersList);
+        globalStorageAttributes(ctx, connectionPool, typeID);
 
         ctx.render("admin-storage");
 
@@ -77,11 +73,7 @@ public class ProductController {
 
         // TODO: make a check if user is admin before rendering the admin page
 
-        List<Product> productList = ProductMapper.loadProducts(connectionPool);
-
-        ctx.attribute("productList", productList);
-
-        globalStorageAttributes(ctx, connectionPool);
+        globalStorageAttributes(ctx, connectionPool, null);
 
         ctx.render("admin-storage");
 
@@ -89,11 +81,14 @@ public class ProductController {
 
 
 
-    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool) {
+    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID) {
 
         List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
+        List<Product> productList = ProductMapper.getProducts(connectionPool, typeID);
 
         ctx.attribute("filtersList", filtersList);
+        ctx.attribute("productList", productList);
+
         return ctx;
     }
 

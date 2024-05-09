@@ -9,6 +9,21 @@
 </head>
 <body>
 
+<header>
+
+<div class="top-nav">
+
+    <form method="post">
+
+    <button type="submit" formaction="viewAllOrders">Orders</button>
+    <button >Forespørgsler</button>
+    <button type="submit" formaction="storagePage">Lager</button>
+    </form>
+
+</div>
+
+</header>
+
 
 <div id="page">
     <div class="centerpage">
@@ -49,6 +64,7 @@
 <!--                fills the table with data from the product list on each row from the database-->
 <!--                some inputs are hidden and not displayed but still sent with the form so all data from the object-->
 <!--                can be used to update in the BD-->
+
                 <tr th:each="product : ${productList}">
                     <form method="post">
                         <td><input type="text" name="productID" th:value="${product.productID}"/></td>

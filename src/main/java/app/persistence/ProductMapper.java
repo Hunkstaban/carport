@@ -1,6 +1,7 @@
 package app.persistence;
 
 import app.controllers.ProductController;
+import app.entities.Order;
 import app.entities.Product;
 import app.entities.Type;
 import app.entities.Unit;
@@ -44,61 +45,28 @@ public class ProductMapper {
     }
 
 
-    public static List<Product> filterByType(ConnectionPool connectionPool, int filterID) {
+    public static List<Product> getProducts(ConnectionPool connectionPool, Integer typeID) {
 
-        String sql = "SELECT * FROM public.view_all_products WHERE type_id = ?";
-        List<Product> filteredList = new ArrayList<>();
+        String sql;
+
+        List<Product> productList = new ArrayList<>();
+
+        if (typeID != null) {
+
+            sql = "SELECT * FROM public.view_all_products WHERE type_id = ?";
+        } else {
+
+            sql = "SELECT * FROM public.view_all_products";
+        }
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, filterID);
 
-            ResultSet rs = ps.executeQuery();
+            if (typeID != null) {
 
-            while (rs.next()) {
-
-                int productID = rs.getInt("product_id");
-                String name = rs.getString("product_name");
-                String description = rs.getString("description");
-                int height = rs.getInt("height");
-                int width = rs.getInt("width");
-                int length = rs.getInt("length");
-                int unitID = rs.getInt("unit_id");
-                String unitName = rs.getString("unit_name");
-                int typeID = rs.getInt("type_id");
-                String typeName = rs.getString("type_name");
-                int price = rs.getInt("price");
-                int costPrice = rs.getInt("cost_price");
-                int quantity = rs.getInt("quantity");
-
-                Unit unit = new Unit(unitID, unitName);
-                Type type = new Type(typeID, typeName);
-
-                filteredList.add(new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity));
+                ps.setInt(1, typeID);
             }
-            return filteredList;
-
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public static List<Product> loadProducts(ConnectionPool connectionPool) {
-
-        // sql query is a view created to join the 'units' and 'types' tables into products table
-        // so that we can retrieve the unit_id and name as well as type_id and name
-        // for creating the Java Unit and Type objects for the ORM mapping
-        // ORM = Object Relational Mapping
-
-        String sql = "SELECT * FROM public.view_all_products";
-        List<Product> productList = new ArrayList<>();
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)
-        ) {
 
             ResultSet rs = ps.executeQuery();
 
@@ -112,18 +80,18 @@ public class ProductMapper {
                 int length = rs.getInt("length");
                 int unitID = rs.getInt("unit_id");
                 String unitName = rs.getString("unit_name");
-                int typeID = rs.getInt("type_id");
+                int typeID1 = rs.getInt("type_id");
                 String typeName = rs.getString("type_name");
                 int price = rs.getInt("price");
                 int costPrice = rs.getInt("cost_price");
                 int quantity = rs.getInt("quantity");
 
                 Unit unit = new Unit(unitID, unitName);
-                Type type = new Type(typeID, typeName);
+                Type type = new Type(typeID1, typeName);
 
                 productList.add(new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity));
-
             }
+
             return productList;
 
         } catch (SQLException e) {
