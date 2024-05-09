@@ -2,6 +2,7 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
+import app.controllers.RouteController;
 import app.controllers.TestController;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
@@ -30,5 +31,6 @@ public class Main {
 
         TestController.addRoute(app, connectionPool);
         UserController.addRoute(app, connectionPool);
+        RouteController.addRoute(app, connectionPool);
     }
 }

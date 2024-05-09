@@ -39,10 +39,10 @@ public class TestController {
     }
 
 
-    private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
-
-
-        ctx.render("index.html");
-
-    }
+//    private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
+//
+//
+//        ctx.render("index.html");
+//
+//    }
 }
