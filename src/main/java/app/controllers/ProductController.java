@@ -64,7 +64,7 @@ public class ProductController {
         // loads the different types from the database to filter the productList
         globalStorageAttributes(ctx, connectionPool, typeID);
 
-        ctx.render("admin-storage");
+        ctx.render("admin/storage.html");
 
     }
 
@@ -75,7 +75,7 @@ public class ProductController {
 
         globalStorageAttributes(ctx, connectionPool, null);
 
-        ctx.render("admin-storage");
+        ctx.render("admin/storage.html");
 
     }
 

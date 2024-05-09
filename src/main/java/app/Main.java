@@ -2,10 +2,9 @@ package app;
 
 import app.config.SessionConfig;
 import app.config.ThymeleafConfig;
-import app.controllers.RouteController;
+import app.controllers.LoginController;
 import app.controllers.OrderController;
 import app.controllers.ProductController;
-import app.controllers.TestController;
 import app.controllers.UserController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
@@ -29,11 +28,10 @@ public class Main {
         }).start(7070);
 
         // Routing
-        app.get("/", ctx ->  ctx.render("index.html"));
+        app.get("/", ctx ->  ctx.render("user/index.html"));
 
-        TestController.addRoute(app, connectionPool);
+        LoginController.addRoute(app, connectionPool);
         UserController.addRoute(app, connectionPool);
-        RouteController.addRoute(app, connectionPool);
         ProductController.addRoute(app, connectionPool);
         OrderController.addRoute(app, connectionPool);
 
