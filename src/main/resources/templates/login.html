@@ -6,8 +6,30 @@
 </head>
 <body>
 
+
 <!--<a th:href="@{/forgotPassword}"></a>-->
-<a th:href="@{/createAccount}"></a>
+<!--<a th:href="@{/createAccount}"></a>-->
+
+<!-- en <form></form> er en sektion hvor user får lov til at få eller give data -->
+<!-- "method" = er hvad metode skal være inde i vores <form></form>. altså om det skal værer "post" eller "get" >-->
+<div class="login">
+    <a th:href="@{/renderSignupPage}">Opret bruger</a>
+
+    <form method="post">
+        <label>Email</label>
+        <input type="text" name="email">
+        <label>Kodeord</label>
+        <input type="password" name="password">
+
+        <button type="submit" formaction="login">Log ind</button>
+
+        <div th:if="${loginError}">
+            <p th:text="${loginError}"></p>
+            <p>Har du glemt dit kodeord. Kontakt kundeservice</p>
+        </div>
+    </form>
+</div>
+
 
 </body>
 </html>

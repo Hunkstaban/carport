@@ -8,12 +8,27 @@ public class User {
     private String password;
     private int roleID;
 
+
+
     public User(int userID, String name, String email, String password, int roleID) {
         this.userID = userID;
         this.name = name;
         this.email = email;
         this.password = password;
         this.roleID = roleID;
+    }
+
+    public User(String name, String email, String password, int roleID) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.roleID = roleID;
+    }
+
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
     }
 
     public User(int userID, String name, String email, int roleID) {
@@ -41,5 +56,9 @@ public class User {
 
     public int getRoleID() {
         return roleID;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 }
