@@ -8,5 +8,46 @@
 
 <p> kontaktinformation </p>
 
+<form method="get">
+    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+    <a th:href="@{/renderSignupPage}">Opret bruger</a>
+    <div>
+<!--        when logged in show contact info-->
+        <div th:if="${session.currentUser != null}">
+            <label><p>Fornavn</p></label>
+            <input>
+            <br>
+            <label><p>Efternavn</p></label>
+            <input>
+            <br>
+            <label><p>Email</p></label>
+            <input>
+            <br>
+            <label><p>Kodeord</p></label>
+            <input>
+            <br>
+            <label><p>Adresse</p></label>
+            <input>
+            <br>
+            <label><p>Post nr.</p></label>
+            <input>
+            <br>
+            <label><p>By</p></label>
+            <input>
+            <br>
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+        <div th:if="${session.currentUser == null}">
+
+            <a th:href="@{/renderLoginPage}">Login</a>
+        </div>
+    </div>
+</form>
+
+Tegning laves her
+<br>
+estimat pris her
+<br>
+
 </body>
 </html>
