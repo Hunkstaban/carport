@@ -21,6 +21,7 @@ public class ProductListCalc {
     private static final int DISTANCE_BETWEEN_RAFTERS = 550;
     private static final int DEFAULT_ROOF_PLATE_WIDTH = 1090;
     private static final int ROOF_PANEL_OVERLAP = 200;
+    private static final int INITIAL_POSTS = 4;
     private static List<ProductListItem> productList = new ArrayList<>();
     private static int carportWidth;
     private static int carportLength;
@@ -53,19 +54,48 @@ public class ProductListCalc {
         String postName = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
         int postLength = 0;
-        String postUnit = "Stk."; // TODO: find correct unit based on product unitID
-        List<Product> postOptions = ProductMapper.getProductsByTypeID(POST_TYPEID, connectionPool); // TODO: Make this use the Map method
+        String postUnit = "Stk.";
+        List<Product> postOptions = ProductMapper.getProductsByTypeID(POST_TYPEID, connectionPool);
         for (Product postOption : postOptions) {
             postName = postOption.getName();
             postLength = postOption.getLength();
         }
 
-        // Calculate number of posts needed - if shed is attached, an additional 5 posts gets added
-        numberOfPosts = 2 * (1 + (carportLength - UNSUPPORTED_SPACE) / MAX_DISTANCE_BETWEEN_POSTS) + (shed ? 5 : 0);
+        // Calculate number of posts needed - all carports start with 4 (STARTING_POSTS) - if shed is attached, an additional 5 posts gets added
+        // An extra set of posts gets added if the remaining length is greater than
+        numberOfPosts = (int) (INITIAL_POSTS + (2 * Math.floor((double)(carportLength - UNSUPPORTED_SPACE) / MAX_DISTANCE_BETWEEN_POSTS)) + (shed ? 5 : 0));
         productList.add(new ProductListItem(postName, description, postLength, postUnit, numberOfPosts));
     }
 
+
     private static void calcBeams(int carportLength) {
+        List<Product> beamOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
+        int totalCarportLength = 2 * carportLength;
+        String description = "Remme i sider - sadles ned i stolper";
+        String beamUnit = "Stk.";
+
+        int leastWoodWaste = Integer.MAX_VALUE; // Initialize with maximum value
+        Product optimalBeam = null;
+
+        for (Product beam : beamOptions) {
+            int beamLength = beam.getLength();
+            int beamsNeeded = (int)Math.ceil((double)totalCarportLength / beamLength);
+            int totalBeamLength = beamsNeeded * beamLength;
+            int woodWaste = totalBeamLength - totalCarportLength;
+
+            // Update if this beam results in less wood waste
+            if (woodWaste < leastWoodWaste) {
+                leastWoodWaste = woodWaste;
+                numberOfBeams = beamsNeeded;
+                optimalBeam = beam;
+            }
+        }
+
+        if (optimalBeam != null) {
+            productList.add(new ProductListItem(optimalBeam.getName(), description, optimalBeam.getLength(), beamUnit, numberOfBeams));
+        }
+    }
+    /*private static void calcBeams(int carportLength) {
         Map<Integer, Product> beamMap = ProductMapper.getProductMapByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int totalCarportLength = 2 * carportLength;
         String beamName = null;
@@ -90,31 +120,70 @@ public class ProductListCalc {
         }
 
         productList.add(new ProductListItem(beamName, description, beamLength, beamUnit, numberOfBeams));
-    }
+    }*/
 
-    private static void calcRafters(int carportLength, int carportWidth) {
-        String rafterName = null;
+    private static void calcRafters(int carportWidth, int carportLength) {
         String description = "Spær - monteres på rem";
-        int rafterLength = 0;
         String rafterUnit = "Stk.";
         numberOfRafters = 0;
-        List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool); //TODO: Make this use the Map method
-        // Determine the rafter length and name based on the carport width
+        List<Product> rafterOptions = ProductMapper.getProductsByTypeID(RAFTER_AND_BEAM_TYPEID, connectionPool);
+
+        // Initialize variables to store the suitable rafter option
+        String rafterName = null;
+        int rafterLength = 0;
+
+        // Iterate through the list of rafter options to find the suitable option based on carport width
         for (Product rafter : rafterOptions) {
             if (carportWidth <= rafter.getLength()) {
-                // Set the default rafter length and name to the first suitable option found
                 rafterName = rafter.getName();
                 rafterLength = rafter.getLength();
                 break;
             }
         }
 
-        numberOfRafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
+        // Calculate the number of rafters needed
+        numberOfRafters = (int)Math.ceil((double)carportLength / DISTANCE_BETWEEN_RAFTERS);
+
+        // Add the rafter product to the product list
         productList.add(new ProductListItem(rafterName, description, rafterLength, rafterUnit, numberOfRafters));
     }
 
 
     private static void calcRoof(int carportWidth, int carportLength) {
+        List<Product> roofOptions = ProductMapper.getProductsByTypeID(ROOF_TYPEID, connectionPool);
+        String description = "Tagplader - monteres på spær";
+        String roofUnit = "Stk.";
+
+        // Calculate the number of width plates needed, accounting for overlap
+        int amountWidthPlates = (int)Math.floor((double)carportWidth / (DEFAULT_ROOF_PLATE_WIDTH - ROOF_PANEL_OVERLAP)) + 1;
+
+        // Initialize variables to keep track of optimal roof plate
+        int leastRoofWaste = Integer.MAX_VALUE;
+        Product optimalRoofPlate = null;
+
+        for (Product roofPlate : roofOptions) {
+            // Calculate the number of length plates needed, accounting for overlap
+            int amountLengthPlates = (int)Math.ceil((double)carportLength / (carportLength >= roofPlate.getLength() ? roofPlate.getLength() : roofPlate.getLength() - ROOF_PANEL_OVERLAP));
+
+            // Calculate total panel length and roof waste
+            int totalPanelLength = amountLengthPlates * roofPlate.getLength();
+            int roofWasted = totalPanelLength - carportLength;
+
+            // Update if this roof plate results in less waste
+            if (roofWasted < leastRoofWaste) {
+                leastRoofWaste = roofWasted;
+                numberOfRoofPlates = amountLengthPlates * amountWidthPlates;
+                optimalRoofPlate = roofPlate;
+            }
+        }
+
+        // Add the optimal roof plate to the productList
+        if (optimalRoofPlate != null) {
+            productList.add(new ProductListItem(optimalRoofPlate.getName(), description, optimalRoofPlate.getLength(), roofUnit, numberOfRoofPlates));
+        }
+    }
+
+    /*private static void calcRoof(int carportWidth, int carportLength) {
         Map<Integer, Product> roofMap = ProductMapper.getProductMapByTypeID(ROOF_TYPEID, connectionPool);
         String roofName = null;
         String description = "Tagplader - monteres på spær";
@@ -143,7 +212,7 @@ public class ProductListCalc {
         }
 
         productList.add(new ProductListItem(roofName, description, roofLength, roofUnit, numberOfRoofPlates));
-    }
+    }*/
 
     public static List<ProductListItem> getProductList() {
         return productList;
