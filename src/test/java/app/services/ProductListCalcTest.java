@@ -17,7 +17,7 @@ class ProductListCalcTest {
 
     @Test
     void calculateProductList() {
-        ProductListCalc productListCalc = new ProductListCalc(500,780,false, connectionPool);
+        ProductListCalc productListCalc = new ProductListCalc(600,980,false, connectionPool);
         productListCalc.calculateProductList();
         List<ProductListItem> productList = productListCalc.getProductList();
 
