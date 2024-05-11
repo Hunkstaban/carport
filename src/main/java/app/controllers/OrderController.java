@@ -11,6 +11,7 @@ import app.persistence.OrderMapper;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
 import java.util.List;
 
 public class OrderController {
@@ -20,7 +21,16 @@ public class OrderController {
         app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
+        app.get("getOrdersByUser", ctx -> getOrdersByUser(ctx, connectionPool));
 
+    }
+
+    private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
+
+        User user = ctx.sessionAttribute("currentUser");
+        List<Order> orderList = OrderMapper.getOrdersByUser(connectionPool, user);
+        ctx.sessionAttribute("ordersByUser", orderList);
+        ctx.render("view-order.html");
 
     }
 

@@ -72,6 +72,14 @@ public class Order {
         this.shed = shed;
     }
 
+    public Order(int orderID, int totalPrice, String productListRaw, Status status, String date) {
+        this.orderID = orderID;
+        this.totalPrice = totalPrice;
+        this.productListRaw = productListRaw;
+        this.status = status;
+        this.date = date;
+    }
+
     public User getUser() {
         return user;
     }

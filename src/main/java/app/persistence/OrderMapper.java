@@ -2,16 +2,14 @@ package app.persistence;
 
 
 import app.entities.*;
-import io.javalin.http.Context;
 import app.exceptions.DatabaseException;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class OrderMapper {
 
@@ -138,4 +136,38 @@ public class OrderMapper {
             throw new RuntimeException(e);
         }
     }
-}
+
+    public static List<Order> getOrdersByUser (ConnectionPool connectionPool, User user) {
+
+        String sql = "SELECT * FROM view_all_orders WHERE user_id = ?";
+        List<Order> orderList = new ArrayList<>();
+//        Map<Integer, Order> orderMap = new TreeMap<>();
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ) {
+
+            ps.setInt(1, user.getUserID());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int orderID = rs.getInt("order_id");
+                int statusID = rs.getInt("status_id");
+                String status = rs.getString("status");
+                String date = String.valueOf(rs.getDate("date"));
+                int totalPrice = rs.getInt("total_price");
+                String productListRaw = rs.getString("product_list");
+//                String drawing = rs.getString("drawing");
+//                String title = -----------------------------;
+
+                orderList.add(new Order(orderID, totalPrice, productListRaw, new Status(statusID, status), date));
+            }
+            return orderList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+} // CLASS END
