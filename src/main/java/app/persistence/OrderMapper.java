@@ -159,10 +159,30 @@ public class OrderMapper {
                 int totalPrice = rs.getInt("total_price");
                 String totalPriceRaw = totalPrice + " kr inkl. moms";
                 String productListRaw = rs.getString("product_list");
+
+                // Details
+                int carportLength = rs.getInt("carport_length");
+                int carportLengthID = rs.getInt("carport_length_id");
+                int carportWidth = rs.getInt("carport_width");
+                int carportWidthID = rs.getInt("carport_width_id");
+                boolean shed = rs.getBoolean("shed");
+                String userRemarks = rs.getString("user_remarks");
+                String description = rs.getString("description");
+
 //                String drawing = rs.getString("drawing");
 //                String title = -----------------------------;
 
-                orderList.add(new Order(orderID, totalPriceRaw, productListRaw, new Status(statusID, status), date));
+                orderList.add(new Order(
+                        orderID,
+                        totalPriceRaw,
+                        productListRaw,
+                        new Status(statusID, status),
+                        date,
+                        new CarportLength(carportLengthID, carportLength),
+                        new CarportWidth(carportWidthID, carportWidth),
+                        shed,
+                        userRemarks,
+                        description));
             }
             return orderList;
 

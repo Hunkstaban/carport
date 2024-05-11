@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
+    <link rel="stylesheet" href="../../public/css/user/view-orders-style.css" th:href="@{/css/user/view-orders-style.css}">
 
 </head>
 <body>
@@ -32,22 +33,59 @@
 
         <form action="post">
             <div th:if="${order.status.statusID == 2}">
-                <button formaction="orderPaid"> Betal</button>
+                <button formaction="orderPaid" class="box"> Betal</button>
             </div>
         </form>
 
-        <form action="get">
-            <div>
-                <button formaction="userOrderDetails" value="order.orderID">Ordredetaljer</button>
-            </div>
-        </form>
 
-        <div>
-            <button>Se Tegning</button>
+        <button class="box">
+            <a href="#popup-details">Ordredetaljer</a>
+        </button>
+
+        <div id="popup-details" class="modal">
+            <div class="content">
+                <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>
+                <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
+                <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
+                <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
+                <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>
+
+                <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+            </div>
         </div>
 
+
+
+        <button class="box">
+            <a href="#popup-drawing">Se Tegning</a>
+        </button>
+
+        <div id="popup-drawing" class="modal">
+            <div class="content">
+                <div>Tegning: <span th:text="${order.carportLength.length}"></span> mm</div>
+
+                <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+            </div>
+        </div>
+
+
+
         <div th:if="${order.status.statusID >= 3}">
-            <button>Se Stykliste</button>
+            <button class="box">
+                <a href="#popup-parts-list">Se Stykliste</a>
+            </button>
+        </div>
+        <div th:if="${order.status.statusID < 3}">
+            <button class="grey box">Se Stykliste</button>
+        </div>
+
+
+        <div id="popup-parts-list" class="modal">
+            <div class="content">
+                <div>Stykliste: <span th:text="${order.carportLength.length}"></span> mm</div>
+
+                <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+            </div>
         </div>
 
     </tr>

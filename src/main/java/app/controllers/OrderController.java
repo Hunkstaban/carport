@@ -23,14 +23,7 @@ public class OrderController {
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.get("myOrders", ctx -> getOrdersByUser(ctx, connectionPool));
         app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
-//        app.get("userOrderDetails",ctx -> userOrderDetails(ctx, connectionPool));
-
     }
-
-//    private static void userOrderDetails(Context ctx, ConnectionPool connectionPool) {
-//        User user = ctx.sessionAttribute("currentUser");
-//        OrderMapper.viewOrderDetails(connectionPool, user);
-//    }
 
     private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
