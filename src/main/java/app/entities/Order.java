@@ -10,6 +10,7 @@ public class Order {
     private CarportWidth carportWidth;
     private String description;
     private int totalPrice;
+    private String totalPriceRaw;
 
     private List<ProductListItem> productList;
     private String productListRaw;
@@ -72,12 +73,16 @@ public class Order {
         this.shed = shed;
     }
 
-    public Order(int orderID, int totalPrice, String productListRaw, Status status, String date) {
+    public Order(int orderID, String totalPriceRaw, String productListRaw, Status status, String date) {
         this.orderID = orderID;
-        this.totalPrice = totalPrice;
+        this.totalPriceRaw = totalPriceRaw;
         this.productListRaw = productListRaw;
         this.status = status;
         this.date = date;
+    }
+
+    public String getTotalPriceRaw() {
+        return totalPriceRaw;
     }
 
     public User getUser() {

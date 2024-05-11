@@ -14,7 +14,7 @@ public class UserController {
         app.get("renderSignupPage", ctx -> renderSignupPage(ctx, connectionPool));
         app.get("renderIndex", ctx -> renderIndex(ctx, connectionPool));
         app.get("renderContactInfo", ctx -> acceptInquiry(ctx, connectionPool));
-        app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
+//        app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
     }
 
     private static void renderIndex(Context ctx, ConnectionPool connectionPool) {

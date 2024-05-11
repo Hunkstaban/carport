@@ -21,16 +21,29 @@ public class OrderController {
         app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
-        app.get("getOrdersByUser", ctx -> getOrdersByUser(ctx, connectionPool));
+        app.get("myOrders", ctx -> getOrdersByUser(ctx, connectionPool));
+        app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
+//        app.get("userOrderDetails",ctx -> userOrderDetails(ctx, connectionPool));
 
+    }
+
+//    private static void userOrderDetails(Context ctx, ConnectionPool connectionPool) {
+//        User user = ctx.sessionAttribute("currentUser");
+//        OrderMapper.viewOrderDetails(connectionPool, user);
+//    }
+
+    private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        OrderMapper.setOrderPaid(connectionPool, user);
+        getOrdersByUser(ctx,connectionPool);
     }
 
     private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
 
         User user = ctx.sessionAttribute("currentUser");
         List<Order> orderList = OrderMapper.getOrdersByUser(connectionPool, user);
-        ctx.sessionAttribute("ordersByUser", orderList);
-        ctx.render("view-order.html");
+        ctx.attribute("orderList", orderList);
+        ctx.render("user/view-orders.html");
 
     }
 

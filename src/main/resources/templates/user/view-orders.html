@@ -1,10 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
+
 </head>
 <body>
+
+<h1>My orders :)</h1>
+
+<table class="orders-table">
+    <thead>
+    <tr>
+        <th>Ordrenr.</th>
+        <th>Status</th>
+        <th>Bestillingsdato</th>
+        <th>Pris</th>
+        <th>Liste</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="order : ${orderList}">
+        <td th:text="${order.orderID}"></td>
+        <td th:text="${order.status.name}"></td>
+        <td th:text="${order.date}"></td>
+        <td th:text="${order.totalPriceRaw}"></td>
+        <td th:text="${order.productListRaw}"></td>
+
+        <form action="post">
+            <div th:if="${order.status.statusID == 2}">
+                <button formaction="orderPaid"> Betal</button>
+            </div>
+        </form>
+
+        <form action="get">
+            <div>
+                <button formaction="userOrderDetails" value="order.orderID">Ordredetaljer</button>
+            </div>
+        </form>
+
+        <div>
+            <button>Se Tegning</button>
+        </div>
+
+        <div th:if="${order.status.statusID >= 3}">
+            <button>Se Stykliste</button>
+        </div>
+
+    </tr>
+    </tbody>
+</table>
+
+
+<!--<button th:if="${order.status.statusID == 3}">Stykliste</button>-->
 
 </body>
 </html>
