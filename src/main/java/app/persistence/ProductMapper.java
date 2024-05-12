@@ -215,14 +215,22 @@ public class ProductMapper {
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-        )
-        {
+        ) {
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int getWidthID = resultSet.getInt("carport_width_id");
+                int getWidth = resultSet.getInt("width");
+                getAllWidthList.add(new CarportWidth(getWidthID, getWidth));
+            }
 
         } catch (SQLException e) {
             throw new DatabaseException("Der skete en fejl i databasen" + e.getMessage());
 
         }
-
+        return getAllWidthList;
 
     }
 }

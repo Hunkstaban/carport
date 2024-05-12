@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.entities.CarportLength;
+import app.entities.CarportWidth;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
@@ -24,7 +25,9 @@ public class UserController {
     private static void createInquiry(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         List<CarportLength> getAllLengthList = ProductMapper.getAllLength(connectionPool);
+        List<CarportWidth> getAllWidthList = ProductMapper.getAllwidth(connectionPool);
         ctx.attribute("getAllLength", getAllLengthList);
+        ctx.attribute("getAllWidth", getAllWidthList);
         ctx.render("user/create-inquiry.html");
 
     }

@@ -16,13 +16,14 @@
 
 <h2>Carport med fladt tag</h2>
 <div>
+    <form method="post">
     <label><h3>Carport bredde</h3></label>
     <br>
-    <select name="">
-        <option value="">100 Cm</option>
-        <option value="">200 Cm</option>
-        <option value="">300 Cm</option>
-        <option value="">400 Cm</option>
+    <select name="carportWidth">
+        <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
+                th:text="${width.width} + ' Cm' " >
+
+        </option>
     </select>
     <br>
 
@@ -43,21 +44,24 @@
     <label><h3>Redskabsrum</h3></label>
     <br>
     <label>
-        <input type="radio" name="shed-choosing" value="">
+        <input type="radio" name="shed-choosing" value="true">
         Ja
     </label>
     <br>
     <label>
-        <input type="radio" name="shed-choosing" value="">
+        <input type="radio" name="shed-choosing" value="false">
         Nej
     </label>
     <br>
     <h3>Kommentar</h3>
-    <form action="" method="post">
 
-        <textarea id="" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ..."></textarea>
+
+        <textarea id="" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ...">
+
+        </textarea>
 
         <br>
+
     </form>
     <!--    route to inquiry-contact-info-->
     <form method="get">
