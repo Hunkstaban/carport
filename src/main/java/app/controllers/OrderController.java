@@ -8,6 +8,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -81,17 +82,37 @@ public class OrderController {
     }
 
     private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        int carportWidthID = ctx.attribute("carportWidthID");
+        int carportLengthID = ctx.attribute("carportLengthID");
+        boolean shedChosen = ctx.attribute("shed");
+        String remark = ctx.attribute("orderRemark");
+        List<ProductListItem> productList = ctx.attribute("productList");
+        String carportDrawing = ctx.attribute("carportDrawing");
+        int totalPrice = 0;
 
+        if (user == null) {
+            String name = ctx.formParam("name");
+            String email = ctx.formParam("email");
+            String password = ctx.formParam("password");
+            try {
+                user = UserMapper.createUser(name, email, password, connectionPool);
+            } catch (DatabaseException e) {
+                String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer. Prøv igen.";
+                ctx.attribute("inquiryFailed", msg);
+            }
+        }
+
+        int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, shedChosen, remark, productList, totalPrice, carportDrawing);
     }
 
     private static List<ProductListItem> prepareProductList (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
-
         ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
         productListCalc.calculateProductList();
         return productListCalc.getProductList();
     }
 
-    // Will become method to be used with prepareInquiry
+    // Will become method to be used with prepareInquiry to receive SVG drawing
     private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
         return "test";
     }

@@ -71,7 +71,7 @@ public class ProductMapper {
     }
 
 
-    public static List<Product> getProducts(ConnectionPool connectionPool, Integer typeID) {
+    public static List<Product> getProducts(Integer typeID, ConnectionPool connectionPool) {
 
         String sql;
 
@@ -146,7 +146,7 @@ public class ProductMapper {
 
     }
 
-    public static void updateProduct(ConnectionPool connectionPool, Product product) {
+    public static void updateProduct(Product product, ConnectionPool connectionPool) {
 
         // recieves a Product object with all the values from the frontend and updates the database with the new values.
 

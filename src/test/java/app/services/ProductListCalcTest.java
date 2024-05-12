@@ -17,15 +17,17 @@ class ProductListCalcTest {
 
     @Test
     void calculateProductList() {
-        ProductListCalc productListCalc = new ProductListCalc(600,980,false, connectionPool);
+        ProductListCalc productListCalc = new ProductListCalc(600,780,false, connectionPool);
         productListCalc.calculateProductList();
         List<ProductListItem> productList = productListCalc.getProductList();
 
         for (ProductListItem productListItem : productList) {
-            System.out.println(productListItem.getProductName());
-            System.out.println(productListItem.getProductDescription());
-            System.out.println(productListItem.getLength());
-            System.out.println(productListItem.getQuantity());
+            System.out.println("Vare nr.: " + productListItem.getProductID());
+            System.out.println("Navn: " + productListItem.getProductName());
+            System.out.println("Beskrivelse: " + productListItem.getProductDescription());
+            System.out.println("Længde: " + productListItem.getLength());
+            System.out.println("Mængde: " + productListItem.getQuantity());
+            System.out.println("Pris: " + productListItem.getPrice());
         }
     }
 }

@@ -50,7 +50,7 @@ public class ProductController {
         Unit unit = new Unit(unitID);
         Product product = new Product(productID, name, description, height, width, length, unit, type, price, costPrice,quantity);
 
-        ProductMapper.updateProduct(connectionPool, product);
+        ProductMapper.updateProduct(product, connectionPool);
 
         loadProducts(ctx, connectionPool);
 
@@ -84,7 +84,7 @@ public class ProductController {
     private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID) {
 
         List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
-        List<Product> productList = ProductMapper.getProducts(connectionPool, typeID);
+        List<Product> productList = ProductMapper.getProducts(typeID, connectionPool);
 
         ctx.attribute("filtersList", filtersList);
         ctx.attribute("productList", productList);

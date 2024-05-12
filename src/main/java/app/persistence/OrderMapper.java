@@ -139,5 +139,30 @@ public class OrderMapper {
         }
     }
 
-    public static void newOrder (User user, List<ProductListItem> productList, String svgDrawing, String remark, int carportLengthID, int carportWidthID, boolean shed){}
+    public static int newOrder (User user, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing){
+        String sql = "INSERT INTO orders (user_id, carport_width_id, carport_length_id, description, total_price, product_list, shed, user_remark, carport_drawing) VALUES (?,?,?,?,?,?,?,?,?)";
+        return 0;
+        /*List<OrderDetail> userCart = user.getCartList();
+
+        for (OrderDetail orderDetail : userCart) {
+            try (
+                    Connection connection = connectionPool.getConnection();
+                    PreparedStatement ps = connection.prepareStatement(sql)
+            ) {
+                ps.setInt(1, orderDetail.getBaseID());
+                ps.setInt(2, orderDetail.getToppingID());
+                ps.setInt(3, orderDetail.getAmount());
+                ps.setInt(4, orderDetail.getTotalPrice());
+                ps.setInt(5, orderID);
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected != 1) {
+                    throw new DatabaseException("Fejl i opdatering af bestillingsoplysninger");
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }*/
+    }
 }
