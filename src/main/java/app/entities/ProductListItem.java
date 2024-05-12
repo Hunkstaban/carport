@@ -47,4 +47,14 @@ public class ProductListItem {
     public int getPrice() {
         return price;
     }
+
+    @Override
+    public String toString() {
+        return "Vare nr.: " + productID + " ||" +
+                " Navn: " + productName + " ||" +
+                " Beskrivelse: " + productDescription + " ||" +
+                " Længde: " + length + " mm. ||" +
+                " Mængde: " + quantity + " " + unit +
+                "\n";
+    }
 }

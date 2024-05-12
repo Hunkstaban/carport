@@ -2,14 +2,10 @@ package app.persistence;
 
 
 import app.entities.*;
-import io.javalin.http.Context;
 import app.exceptions.DatabaseException;
 
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,11 +79,10 @@ public class OrderMapper {
 
 
             if (rs.next()) {
-                int carportWidth = rs.getInt("width");
-                return carportWidth;
+                return rs.getInt("width");
 
             } else {
-                throw new DatabaseException("Error no width found");
+                throw new DatabaseException("Error: no width found");
             }
            } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -127,8 +122,7 @@ public class OrderMapper {
 
 
             if (rs.next()) {
-                int carportLength = rs.getInt("length");
-                return carportLength;
+                return rs.getInt("length");
 
             } else {
                 throw new DatabaseException("Error no length found");
@@ -139,30 +133,37 @@ public class OrderMapper {
         }
     }
 
-    public static int newOrder (User user, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing){
+    public static int newOrder (User user, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO orders (user_id, carport_width_id, carport_length_id, description, total_price, product_list, shed, user_remark, carport_drawing) VALUES (?,?,?,?,?,?,?,?,?)";
-        return 0;
-        /*List<OrderDetail> userCart = user.getCartList();
 
-        for (OrderDetail orderDetail : userCart) {
-            try (
-                    Connection connection = connectionPool.getConnection();
-                    PreparedStatement ps = connection.prepareStatement(sql)
-            ) {
-                ps.setInt(1, orderDetail.getBaseID());
-                ps.setInt(2, orderDetail.getToppingID());
-                ps.setInt(3, orderDetail.getAmount());
-                ps.setInt(4, orderDetail.getTotalPrice());
-                ps.setInt(5, orderID);
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+        ) {
+            ps.setInt(1, user.getUserID());
+            ps.setInt(2, carportWidthID);
+            ps.setInt(3, carportLengthID);
+            ps.setBoolean(4, shed);
+            ps.setString(5, remark);
+            ps.setString(6, productList.toString());
+            ps.setInt(7, totalPrice);
+            ps.setString(8, carportDrawing);
+            int rowsAffected = ps.executeUpdate();
 
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected != 1) {
-                    throw new DatabaseException("Fejl i opdatering af bestillingsoplysninger");
-                }
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Could not add the order to the database");
             }
-        }*/
+
+            // Retrieve the auto-generated keys
+            ResultSet generatedKeys = ps.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                // Retrieve the generated order_id
+                return generatedKeys.getInt(1);
+            } else {
+                throw new DatabaseException("Could not retrieve the generated ID");
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

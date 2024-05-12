@@ -50,15 +50,15 @@ public class ProductListCalc {
         calcRoof(carportWidth, carportLength);
     }
 
+    // TODO: Find the option that will waste the least amount of wood/roof AND will be the cheapest
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock
-    // TODO: Find the option that will waste the least amount of wood/roof AND is the cheapest
 
     private static void calcPosts(int carportLength, boolean shed) {
         Product optimalPost = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
         String postUnit = "Stk.";
-        int price = 0;
+        int price;
         List<Product> postOptions = ProductMapper.getProducts(POST_TYPEID, connectionPool);
 
 
@@ -79,13 +79,12 @@ public class ProductListCalc {
         }
     }
 
-
     private static void calcBeams(int carportLength) {
         List<Product> beamOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int totalCarportLength = 2 * carportLength;
         String description = "Remme i sider - sadles ned i stolper";
         String beamUnit = "Stk.";
-        int price = 0;
+        int price;
 
         // Variables to keep track of and store the optimal beam option
         int leastWoodWaste = Integer.MAX_VALUE;
@@ -117,7 +116,7 @@ public class ProductListCalc {
         String description = "Spær - monteres på rem";
         String rafterUnit = "Stk.";
         List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
-        int price = 0;
+        int price;
 
         // Variable to keep track of and store the optimal rafter option
         Product optimalRafter = null;
@@ -146,7 +145,7 @@ public class ProductListCalc {
         List<Product> roofOptions = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
         String description = "Tagplader - monteres på spær";
         String roofUnit = "Stk.";
-        int price = 0;
+        int price;
 
         // Calculate the number of roof plates needed for the width, accounting for overlap
         int plateWidthAdjusted = DEFAULT_ROOF_PLATE_WIDTH - ROOF_PANEL_OVERLAP;
