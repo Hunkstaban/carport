@@ -26,6 +26,12 @@ public class OrderController {
 
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+
+        Order order = OrderMapper.getOrderByID(connectionPool, orderID);
+
+
+        ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");
     }
 

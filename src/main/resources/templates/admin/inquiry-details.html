@@ -3,8 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link rel="stylesheet" href="../../public/css/inquiry-details-style.css"
+          th:href="@{/css/inquiry-details-style.css}">
 </head>
 <body>
 
+
+<div class="page">
+
+    <div class="right-flex-container">
+
+        <div class="right-nav-bar-container">
+
+            <div class="order-nav-bar-left">
+                <button>Stykliste</button>
+                <button>Beskrivelse</button>
+            </div>
+
+            <div class="order-nav-bar-right">
+                <button>Tilbage</button>
+                <button>Godkend</button>
+                <button>Ret</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="left-flex-container">
+
+        <div class="order-details">
+
+            <table>
+                <tbody>
+                <tr>
+                    <th>Dato</th>
+                    <td th:text="${order.date}"></td>
+                </tr>
+
+                <tr>
+                    <th>Ordre Nr.</th>
+                    <td th:text="${order.orderID}"></td>
+                </tr>
+
+                <tr>
+                    <th>Status</th>
+                    <td th:text="${order.status.name}"></td>
+                </tr>
+
+                <tr>
+                    <th>Bredde</th>
+                    <td th:text="${order.carportWidth.width}"></td>
+                </tr>
+
+                <tr>
+                    <th>Længde</th>
+                    <td th:text="${order.carportLength.length}"></td>
+                </tr>
+
+                <tr>
+                    <th>Kunde</th>
+                    <td th:text="${order.user.name}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
 </body>
 </html>

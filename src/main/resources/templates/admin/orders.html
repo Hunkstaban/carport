@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
 
 </head>
@@ -13,7 +14,7 @@
     <div class="top-nav">
         <form method="post">
             <button type="submit" formaction="viewAllOrders">Orders</button>
-            <button >Forespørgsler</button>
+            <button>Forespørgsler</button>
             <button type="submit" formaction="storagePage">Lager</button>
         </form>
     </div>
@@ -54,13 +55,19 @@
 
                 <tbody>
                 <tr th:each="order : ${orderList}">
-                    <td th:text="${order.date}"></td>
-                    <td th:text="${order.orderID}"></td>
-                    <td th:text="${order.user.userID}"></td>
-                    <td th:text="${order.user.name}"></td>
-                    <td th:text="${order.description}"></td>
-                    <td th:text="${order.totalPrice}"></td>
-                    <td th:text="${order.status.name}"></td>
+                    <form method="post">
+                        <td th:text="${order.date}"></td>
+                        <td th:text="${order.orderID}"></td>
+                        <input type="hidden" name="orderID" th:value="${order.orderID}">
+                        <td th:text="${order.user.userID}"></td>
+                        <td th:text="${order.user.name}"></td>
+                        <td th:text="${order.description}"></td>
+                        <td th:text="${order.totalPrice}"></td>
+                        <td th:text="${order.status.name}"></td>
+                        <td>
+                            <button type="submit" formaction="inquiryDetailsPage">Se ordre</button>
+                        </td>
+                    </form>
                 </tr>
                 </tbody>
             </table>
