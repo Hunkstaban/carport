@@ -138,4 +138,6 @@ public class OrderMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public static void newOrder (User user, List<ProductListItem> productList, String svgDrawing, String remark, int carportLengthID, int carportWidthID, boolean shed){}
 }

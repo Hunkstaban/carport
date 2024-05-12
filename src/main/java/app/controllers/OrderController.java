@@ -58,24 +58,51 @@ public class OrderController {
         return ctx;
     }
 
-    private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+    private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
         String remark = ctx.formParam("remark");
+        int carportWidth = 0;
+        int carportLength = 0;
 
         try {
-            int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
-            int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
-            ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
-            productListCalc.calculateProductList();
-            List<ProductListItem> productList = productListCalc.getProductList();
-            User user = ctx.sessionAttribute("currentUser");
-            // OrderMapper.newOrder(user, productList, remark, connectionPool);
+            carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
+            carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
 
+        List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
+        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
+        prepareOrderAttributes(ctx, carportWidthID, carportLengthID, shed, remark, productList, carportDrawing);
 
+        ctx.render("user/accept-inquiry.html");
+    }
+
+    private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+
+    }
+
+    private static List<ProductListItem> prepareProductList (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+
+        ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
+        productListCalc.calculateProductList();
+        return productListCalc.getProductList();
+    }
+
+    // Will become method to be used with prepareInquiry
+    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
+        return "test";
+    }
+
+    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing) {
+        ctx.attribute("carportWidthID", carportWidthID);
+        ctx.attribute("carportLengthID", carportLengthID);
+        ctx.attribute("orderRemark", remark);
+        ctx.attribute("shed", shed);
+        ctx.attribute("productList", productList);
+        ctx.attribute("carportDrawing", svgDrawing);
+        return ctx;
     }
 }
