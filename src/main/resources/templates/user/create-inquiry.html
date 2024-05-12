@@ -29,10 +29,9 @@
     <label><h3>Carport længde</h3></label>
     <br>
     <select name="">
-        <option value="">100 Cm</option>
-        <option value="">200 Cm</option>
-        <option value="">300 Cm</option>
-        <option value="">400 Cm</option>
+
+        <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
+                th:text="${length.length} + ' Cm' "></option>
     </select>
     <br>
     <label><h3>Trapez tag</h3></label>
