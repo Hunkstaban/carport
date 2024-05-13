@@ -1,41 +1,91 @@
+/*html {*/
+/*    width: 95%;*/
+/*}*/
+
+/*body {*/
+
+/*    width: 95%;*/
+/*    background-color: #F5F5F3FF*/
+/*}*/
 
 .page {
 
     display: flex;
     width: 100%;
-    height: 100%;
-
+    height: 100vh;
+    background-color: #ffff00;
+    justify-content: center;
 }
+
 
 .left-flex-container {
 
+    display: flex;
     order: 1;
     width: 20%;
+    height: 80%;
+    /*background-color: #ffffff;*/
+    margin-right: 20px;
+    flex-direction: column;
+    background-color: #ffff00;
+    justify-content: flex-start;
 }
 
 .right-flex-container {
+    display: flex;
     order: 2;
     width: 70%;
     height: 80%;
+    background-color: #ffffff;
+    margin-left: 20px;
 }
 
 .right-nav-bar-container {
 
     display: flex;
+    height: 10%;
+    width: 100%;
+    justify-content: center;
+
+}
+
+.order-nav-bar-right {
+
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+}
+
+.order-nav-bar-left {
+
+    display: flex;
+    width: 50%;
+}
+
+
+.cost-display {
+
+
+    width: 100%;
+    height: 48%;
+    background-color: #ffffff;
+
+    margin-top: auto;
 }
 
 
 .order-details {
     display: flex;
-    /*grid-template-columns: auto auto; !* Two columns *!*/
-    justify-content: flex-start;
-    width: 30%;
+    width: 100%;
+    height: 48%;
+    background-color: #ffffff;
+
 }
 
 .order-details table th {
-    text-align: left; /* Align titles to the left */
+    text-align: left;
 }
 .order-details table td {
-    text-align: right; /* Align data to the right */
+    text-align: right;
     padding-left: 30px;
 }
