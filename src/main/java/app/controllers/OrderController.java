@@ -1,10 +1,7 @@
 package app.controllers;
 
 
-import app.entities.Order;
-import app.entities.Status;
-import app.entities.ProductListItem;
-import app.entities.User;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
@@ -12,15 +9,18 @@ import app.persistence.UserMapper;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController {
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.post("newOrder", ctx -> newOrder(ctx, connectionPool));
-        app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
+        app.get("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
+        app.post("approveInquiry", ctx -> approveInquiry(ctx, connectionPool));
 
 
     }
@@ -31,9 +31,14 @@ public class OrderController {
 
         Order order = OrderMapper.getOrderByID(connectionPool, orderID);
 
+        List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
+        ctx.attribute("productListItems", productListItems);
         ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");
+
+        ProductListCalc.clearList();
+
     }
 
     private static void viewAllOrders(Context ctx, ConnectionPool connectionPool) {
@@ -63,6 +68,22 @@ public class OrderController {
         ctx.attribute("statusList", statusList);
 
         return ctx;
+    }
+
+    private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) {
+
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+
+        if (OrderMapper.ApproveOrder(connectionPool, orderID)) {
+
+            String message = "Ordre Godkendt";
+
+            ctx.attribute("approved", message);
+            inquiryDetailsPage(ctx, connectionPool);
+            return true;
+        }
+         return false;
+
     }
 
     private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
@@ -124,18 +145,18 @@ public class OrderController {
         }
     }
 
-    private static List<ProductListItem> prepareProductList (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+    private static List<ProductListItem> prepareProductList(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
         productListCalc.calculateProductList();
         return productListCalc.getProductList();
     }
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
-    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
+    private static String prepareCarportDrawing(int carportWidth, int carportLength, boolean shed) {
         return "test";
     }
 
-    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
+    private static Context prepareOrderAttributes(Context ctx, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
         ctx.attribute("carportWidthID", carportWidthID);
         ctx.attribute("carportLengthID", carportLengthID);
         ctx.attribute("orderRemark", remark);
