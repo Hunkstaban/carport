@@ -68,7 +68,6 @@ public class LoginController {
             ctx.render("user/signup.html");
 
         }
-
     }
 
     private static void userLogin(Context ctx, ConnectionPool connectionPool, User user) {
@@ -77,4 +76,5 @@ public class LoginController {
         ctx.render("user/index.html");
 
     }
+
 }

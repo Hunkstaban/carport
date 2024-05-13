@@ -8,6 +8,7 @@ import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
+import app.persistence.UserMapper;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
@@ -58,24 +59,84 @@ public class OrderController {
         return ctx;
     }
 
-    private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+    private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
         String remark = ctx.formParam("remark");
+        int carportWidth = 0;
+        int carportLength = 0;
+        int estimatedPrice = 0;
 
         try {
-            int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
-            int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
-            ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
-            productListCalc.calculateProductList();
-            List<ProductListItem> productList = productListCalc.getProductList();
-            User user = ctx.sessionAttribute("currentUser");
-            // OrderMapper.newOrder(user, productList, remark, connectionPool);
+            carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
+            carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
 
+        List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
+        for (ProductListItem productListItem : productList) {
+            estimatedPrice += productListItem.getPrice();
+        }
+        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
+        prepareOrderAttributes(ctx, carportWidthID, carportLengthID, shed, remark, productList, carportDrawing, estimatedPrice);
 
+        ctx.render("user/accept-inquiry.html");
+    }
+
+    private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        int carportWidthID = ctx.attribute("carportWidthID");
+        int carportLengthID = ctx.attribute("carportLengthID");
+        boolean shedChosen = ctx.attribute("shed");
+        String remark = ctx.attribute("orderRemark");
+        List<ProductListItem> productList = ctx.attribute("productList");
+        String carportDrawing = ctx.attribute("carportDrawing");
+        int orderPrice = ctx.attribute("estimatedPrice");
+
+        // If user has not logged in, create an account TODO: If they have already have an account, there is no option currently to simply log in
+        if (user == null) {
+            String name = ctx.formParam("name");
+            String email = ctx.formParam("email");
+            String password = ctx.formParam("password");
+            try {
+                user = UserMapper.createUser(name, email, password, connectionPool);
+            } catch (DatabaseException e) {
+                String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer. Prøv igen.";
+                ctx.attribute("inquiryFailed", msg);
+            }
+        }
+
+        // Create new order/inquiry, and redirect back to the landing page, sending orderID as an attribute to be displayed to the user
+        try {
+            int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
+            ctx.attribute("orderID", orderID);
+            ctx.render("user/index.html");
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static List<ProductListItem> prepareProductList (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+        ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
+        productListCalc.calculateProductList();
+        return productListCalc.getProductList();
+    }
+
+    // Will become method to be used with prepareInquiry to receive SVG drawing
+    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
+        return "test";
+    }
+
+    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
+        ctx.attribute("carportWidthID", carportWidthID);
+        ctx.attribute("carportLengthID", carportLengthID);
+        ctx.attribute("orderRemark", remark);
+        ctx.attribute("shed", shed);
+        ctx.attribute("productList", productList);
+        ctx.attribute("carportDrawing", svgDrawing);
+        ctx.attribute("estimatedPrice", estimatedPrice);
+        return ctx;
     }
 }
