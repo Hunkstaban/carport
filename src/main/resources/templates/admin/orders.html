@@ -13,8 +13,7 @@
 <header>
     <div class="top-nav">
         <form method="get">
-            <button type="submit" formaction="viewAllOrders">Orders</button>
-            <button>Forespørgsler</button>
+            <button type="submit" formaction="viewAllOrders">Ordre</button>
             <button type="submit" formaction="storagePage">Lager</button>
         </form>
     </div>
@@ -26,10 +25,12 @@
 
         <div class="flex-filter">
 
-            <form method="post" class="filter-menu">
+            <form class="filter-menu">
                 <div>
                     <button type="submit" name="filter" formaction="viewAllOrders">Alle</button>
                 </div>
+            </form>
+            <form method="post" class="filter-menu">
                 <div th:each="status : ${statusList}">
                     <button type="submit" name="filter" th:value="${status.statusID}" formaction="filterByStatus"
                             th:text="${status.name}"></button>
