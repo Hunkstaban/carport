@@ -20,14 +20,14 @@
     <form method="post">
         <br>
         <select name="carportWidth">
-            <option value=""></option>
+
             <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
                     th:text="${width.width} + ' Cm' ">
             </option>
         </select>
         <br>
         <select name="carportLength">
-            <option value=""></option>
+
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
                     th:text="${length.length} + ' Cm' ">
 
@@ -58,7 +58,7 @@
 
 
         <textarea id="textarea" name="remark" rows="10" cols="40"
-                  placeholder="Skriv din kommentar her ..."> </textarea>
+                  placeholder="Skriv din kommentar her ..."></textarea>
 
         <br>
 
