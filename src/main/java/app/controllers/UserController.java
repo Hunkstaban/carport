@@ -18,7 +18,7 @@ public class UserController {
         app.get("/index", ctx -> renderIndex(ctx, connectionPool));
         app.get("/acceptInquiry", ctx -> acceptInquiry(ctx, connectionPool));
         app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
-        app.get("/createInquiry", ctx -> createInquiry(ctx, connectionPool));
+        app.get("/opret-forespørgsel", ctx -> createInquiry(ctx, connectionPool));
     }
 
 
