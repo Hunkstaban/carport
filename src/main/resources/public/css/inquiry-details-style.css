@@ -11,6 +11,7 @@
 .page {
 
     display: flex;
+    margin-top: 2%;
     width: 100%;
     height: 100vh;
     background-color: #F5F5F3;
@@ -48,9 +49,16 @@
     display: flex;
     height: 10%;
     width: 100%;
-    justify-content: center;
-    align-content: flex-end;
+    justify-content: flex-end;
+    align-items: center;
 
+}
+
+.right-nav-bar-container {
+
+
+    padding: 10px;
+    background-color: #f1f1f1;
 }
 
 .order-nav-bar-right {
@@ -62,7 +70,7 @@
     margin-right: 20px;
 
 }
-.order-nav-bar-left button {
+.tabs button {
 
     display: flex;
     height: 40px;
@@ -77,15 +85,15 @@
 
 }
 
-.order-nav-bar-left button:disabled {
+.tabs button:disabled {
     opacity: .5;
 }
 
-.order-nav-bar-left button:focus {
+.tabs button:focus {
     outline: 0;
 }
 
-.order-nav-bar-left button:hover {
+.tabs button:hover {
     background-color: #333333;
     border-color: #333333;
 }
@@ -144,19 +152,51 @@
     border-color: #013D7A;
 }
 
-.order-nav-bar-left {
+.tabs {
 
     display: flex;
+    flex-wrap: wrap;
     width: 50%;
     justify-content: flex-start;
     align-items: center;
 }
 
 
+
+
+
+.radio {
+    display: none;
+}
+
+.tabs-label {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.products-table {
+    order: 1;
+    display: none;
+    margin-top: 20px;
+}
+
+.radio:checked + .tabs-label + .products-table {
+    display: block;
+}
+
+.radio:checked + .tabs-label + .beskrivelse-content {
+    display: block;
+}
+
+.radio:checked + .tabs-label {
+    color: cadetblue;
+}
+
+
 .products-table {
     width: 100%; /* Ensure the table fills the available width */
     overflow-x: auto; /* Add horizontal scrolling if content overflows */
-    display: none;
+
 }
 
 .products-table table {
@@ -178,10 +218,8 @@
     display: none;
 }
 
-.radio:checked + .products-table {
 
-    display: block;
-}
+
 
 
 .cost-display {

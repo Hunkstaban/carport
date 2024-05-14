@@ -16,16 +16,6 @@
 
         <div class="right-nav-bar-container">
 
-            <div class="order-nav-bar-left">
-
-                <input type="radio" class="radio" id="stykliste" name="nav" value="stykliste">
-                <label for="stykliste">Stykliste</label>
-<!--                <button>Stykliste</button>-->
-                <input type="radio"  id="beskrivelse" name="nav" value="beskrivelse">
-                <label for="beskrivelse">Beskrivelse</label>
-<!--                <button>Beskrivelse</button>-->
-            </div>
-
             <div class="order-nav-bar-right">
                 <form>
                     <button type="submit" formaction="viewAllOrders">Tilbage</button>
@@ -38,35 +28,53 @@
 
                 <button>Ret</button>
             </div>
+
+            </div>
+
+        <div class="tabs">
+
+            <input type="radio" class="radio" id="stykliste" name="nav" value="stykliste" checked>
+            <label for="stykliste" class="tabs-label">Stykliste</label>
+
+            <div class="products-table">
+
+                <table>
+                    <thead>
+                    <th>Vare Nummer</th>
+                    <th>Navn</th>
+                    <th>Længde</th>
+                    <th>Stk. Pris</th>
+                    <th>Antal</th>
+                    <th>Enhed</th>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="product : ${productListItems}">
+                        <td th:text="${product.productID}"></td>
+                        <td th:text="${product.productName}"></td>
+                        <td th:text="${product.length}"></td>
+                        <td th:text="${product.price}"></td>
+                        <td th:text="${product.quantity}"></td>
+                        <td th:text="${product.unit}"></td>
+
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="radio" class="radio" id="beskrivelse" name="nav" value="beskrivelse">
+            <label for="beskrivelse" class="tabs-label">Beskrivelse</label>
+
+        </div>
         </div>
 
-        <div class="products-table">
+    <div class="content-container">
 
-            <table>
-                <thead>
-                <th>Vare Nummer</th>
-                <th>Navn</th>
-                <th>Længde</th>
-                <th>Stk. Pris</th>
-                <th>Antal</th>
-                <th>Enhed</th>
-                </thead>
 
-                <tbody>
-                <tr th:each="product : ${productListItems}">
-                    <td th:text="${product.productID}"></td>
-                    <td th:text="${product.productName}"></td>
-                    <td th:text="${product.length}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td th:text="${product.quantity}"></td>
-                    <td th:text="${product.unit}"></td>
-
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
     </div>
+
+
 
     <div class="left-flex-container">
 
