@@ -18,19 +18,19 @@
 <h2>Carport med fladt tag</h2>
 <div>
     <form method="post">
-        <br>
+            <label><h3>Vælg bredde</h3></label>
         <select name="carportWidth">
-            <option value="">Carport bredde</option>
+            <br>
             <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
                     th:text="${width.width} + ' Cm' ">
             </option>
+            <br>
         </select>
-
+        <br>
+            <label><h3>Vælg længde</h3></label>
         <select name="carportLength">
-            <option value="">Carport længde</option>
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
                     th:text="${length.length} + ' Cm' ">
-
             </option>
         </select>
         <br>
@@ -43,9 +43,8 @@
         <label><h3>Redskabsrum</h3></label>
         <br>
 
-
-        <label>
             <input type="radio" name="shed" value="true">
+        <label>
             Ja
         </label>
         <div class="radiobuttontext"> OBS. carporten vil få extra 140 cm. i længden</div>
@@ -59,7 +58,7 @@
 
 
         <textarea id="textarea" name="remark" rows="10" cols="40"
-                  placeholder="Skriv din kommentar her ..."> </textarea>
+                  placeholder="Skriv din kommentar her ..."></textarea>
 
         <br>
 
