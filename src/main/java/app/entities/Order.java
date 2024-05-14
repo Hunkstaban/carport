@@ -10,6 +10,7 @@ public class Order {
     private CarportWidth carportWidth;
     private String description;
     private int totalPrice;
+    private String totalPriceRaw;
 
     private List<ProductListItem> productList;
     private String productListRaw;
@@ -70,6 +71,23 @@ public class Order {
         this.status = status;
         this.date = date;
         this.shed = shed;
+    }
+
+    public Order(int orderID, String totalPriceRaw, String productListRaw, Status status, String date, CarportLength carportLength, CarportWidth carportWidth, boolean shed, String userRemarks, String description) {
+        this.orderID = orderID;
+        this.totalPriceRaw = totalPriceRaw;
+        this.productListRaw = productListRaw;
+        this.status = status;
+        this.date = date;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.shed = shed;
+        this.userRemarks = userRemarks;
+        this.description = description;
+    }
+
+    public String getTotalPriceRaw() {
+        return totalPriceRaw;
     }
 
     public User getUser() {

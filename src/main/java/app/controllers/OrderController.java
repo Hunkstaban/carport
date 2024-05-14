@@ -1,7 +1,10 @@
 package app.controllers;
 
 
-import app.entities.*;
+import app.entities.Order;
+import app.entities.Status;
+import app.entities.ProductListItem;
+import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
@@ -10,8 +13,6 @@ import app.services.CarportSvg;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,7 +25,22 @@ public class OrderController {
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("approveInquiry", ctx -> approveInquiry(ctx, connectionPool));
+        app.get("myOrders", ctx -> getOrdersByUser(ctx, connectionPool));
+        app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
+    }
 
+    private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        OrderMapper.setOrderPaid(connectionPool, user);
+        getOrdersByUser(ctx,connectionPool);
+    }
+
+    private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
+
+        User user = ctx.sessionAttribute("currentUser");
+        List<Order> orderList = OrderMapper.getOrdersByUser(connectionPool, user);
+        ctx.attribute("orderList", orderList);
+        ctx.render("user/view-orders.html");
 
     }
 

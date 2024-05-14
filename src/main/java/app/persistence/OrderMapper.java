@@ -75,7 +75,7 @@ public class OrderMapper {
         }
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-        if (statusID != null) {
+            if (statusID != null) {
 
                 ps.setInt(1, statusID);
             }
@@ -112,7 +112,7 @@ public class OrderMapper {
 
             }
             return orderList;
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -133,7 +133,7 @@ public class OrderMapper {
             } else {
                 throw new DatabaseException("Error: no width found");
             }
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -145,7 +145,7 @@ public class OrderMapper {
         List<Status> statusList = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-          ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
 
@@ -156,7 +156,7 @@ public class OrderMapper {
             }
 
             return statusList;
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -240,4 +240,74 @@ public class OrderMapper {
         }
 
     }
-}
+
+    public static List<Order> getOrdersByUser(ConnectionPool connectionPool, User user) {
+
+        String sql = "SELECT * FROM view_all_orders WHERE user_id = ?";
+        List<Order> orderList = new ArrayList<>();
+//        Map<Integer, Order> orderMap = new TreeMap<>();
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+
+            ps.setInt(1, user.getUserID());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int orderID = rs.getInt("order_id");
+                int statusID = rs.getInt("status_id");
+                String status = rs.getString("status");
+                String date = String.valueOf(rs.getDate("date"));
+                int totalPrice = rs.getInt("total_price");
+                String totalPriceRaw = totalPrice + " kr inkl. moms";
+                String productListRaw = rs.getString("product_list");
+
+                // Details
+                int carportLength = rs.getInt("carport_length");
+                int carportLengthID = rs.getInt("carport_length_id");
+                int carportWidth = rs.getInt("carport_width");
+                int carportWidthID = rs.getInt("carport_width_id");
+                boolean shed = rs.getBoolean("shed");
+                String userRemarks = rs.getString("user_remarks");
+                String description = rs.getString("description");
+
+//                String drawing = rs.getString("drawing");
+//                String title = -----------------------------;
+
+                orderList.add(new Order(
+                        orderID,
+                        totalPriceRaw,
+                        productListRaw,
+                        new Status(statusID, status),
+                        date,
+                        new CarportLength(carportLengthID, carportLength),
+                        new CarportWidth(carportWidthID, carportWidth),
+                        shed,
+                        userRemarks,
+                        description));
+            }
+            return orderList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setOrderPaid(ConnectionPool connectionPool, User user) {
+
+        String sql = "UPDATE orders SET status_id = ? WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+
+            ps.setInt(1, 3);
+            ps.setInt(2, user.getUserID());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
