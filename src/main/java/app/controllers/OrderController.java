@@ -25,7 +25,7 @@ public class OrderController {
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("approveInquiry", ctx -> approveInquiry(ctx, connectionPool));
-        app.get("myOrders", ctx -> getOrdersByUser(ctx, connectionPool));
+        app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
         app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
     }
 

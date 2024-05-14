@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.entities.User;
 import app.entities.CarportLength;
 import app.entities.CarportWidth;
 import app.entities.User;
@@ -17,7 +18,6 @@ public class UserController {
         app.get("/login", ctx -> renderLoginPage(ctx, connectionPool));
         app.get("/opret-bruger", ctx -> renderSignupPage(ctx, connectionPool));
         app.get("/index", ctx -> renderIndex(ctx, connectionPool));
-        app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
         app.get("/opret-forespoergsel", ctx -> createInquiry(ctx, connectionPool));
     }
 
