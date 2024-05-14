@@ -47,7 +47,7 @@
 .right-nav-bar-container {
 
     display: flex;
-    height: 10%;
+    height: 5%;
     width: 100%;
     justify-content: flex-end;
     align-items: center;
@@ -106,7 +106,7 @@
 .order-nav-bar-right button {
     display: flex;
     margin-left: 20px;
-    height: 35px;
+    height: 25px;
     width: 75px;
     align-items: center;
 
@@ -156,13 +156,10 @@
 
     display: flex;
     flex-wrap: wrap;
-    width: 50%;
+    width: 100%;
     justify-content: flex-start;
     align-items: center;
 }
-
-
-
 
 
 .radio {
@@ -171,13 +168,13 @@
 
 .tabs-label {
     margin-right: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #555555;
+    color: #555555;
+    padding: 10px 20px;
     cursor: pointer;
-}
-
-.products-table {
-    order: 1;
-    display: none;
-    margin-top: 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .radio:checked + .tabs-label + .products-table {
@@ -188,15 +185,30 @@
     display: block;
 }
 
+.tabs-label:hover {
+    background-color: #777777;
+    border-color: #777777;
+}
+
+.tabs-label:active {
+    background-color: #FFFFFF;
+    border-color: #333333;
+}
+
 .radio:checked + .tabs-label {
-    color: cadetblue;
+    color: white;
+    background-color: #555555;
+    border-color: #555555;
 }
 
 
 .products-table {
+
+    order: 1;
+    display: none;
     width: 100%; /* Ensure the table fills the available width */
     overflow-x: auto; /* Add horizontal scrolling if content overflows */
-
+    margin-top: 20px;
 }
 
 .products-table table {
