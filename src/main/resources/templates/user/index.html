@@ -13,75 +13,34 @@
 
 <h1>Velkommen til FOG </h1>
 
+<form method="get">
+    <button formaction="/opret-forespørgsel">Byg selv carport</button>
+</form>
+<br>
+<form method="get">
+    <a href="https://www.johannesfog.dk/soegning?q=carport">Standard carport</a>
+</form>
+<br>
 
-<h2>Carport med fladt tag</h2>
-<div>
-    <label><h3>Carport bredde</h3></label>
-    <br>
-    <select name="">
-        <option value="">100 Cm</option>
-        <option value="">200 Cm</option>
-        <option value="">300 Cm</option>
-        <option value="">400 Cm</option>
-    </select>
-    <br>
-
-    <label><h3>Carport længde</h3></label>
-    <br>
-    <select name="">
-        <option value="">100 Cm</option>
-        <option value="">200 Cm</option>
-        <option value="">300 Cm</option>
-        <option value="">400 Cm</option>
-    </select>
-    <br>
-    <label><h3>Trapez tag</h3></label>
-    <br>
-    <select name="">
-        <option value="">Plastmo Ecolite</option>
-    </select>
-    <br>
-    <label><h3>Redskabsrum</h3></label>
-    <br>
-    <label>
-        <input type="radio" name="" value="">
-        Ja
-    </label>
-    <br>
-    <label>
-        <input type="radio" name="" value="">
-        Nej
-    </label>
-    <br>
-    <h3>Kommentar</h3>
-    <form action="" method="post">
-
-        <textarea id="" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ..."></textarea>
-
+<form method="get">
+    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+    <a th:href="@{/opret-bruger}">Opret bruger</a>
+    <div>
         <br>
-    </form>
-    <!--    route to inquiry-contact-info-->
-    <form method="get">
-        <button formaction="renderContactInfo">Næste</button>
-    </form>
-
-
-    <!--used to test if there is null or data in user-->
-    <!--<p th:text="'Session user: ' + ${session.currentUser}"></p> -->
-
-    <form method="get">
-        <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
-        <a th:href="@{/renderSignupPage}">Opret bruger</a>
-        <div>
-            <div th:if="${session.currentUser != null}">
-                <a th:href="@{/logout}">Logout</a>
-            </div>
-            <div th:if="${session.currentUser == null}">
-                <a th:href="@{/renderLoginPage}">Login</a>
-            </div>
+        <!-- if currentuser is not equal to null // if a user logged in. show logout link-->
+        <div th:if="${session.currentUser != null}">
+            <a th:href="@{/logout}">Logout</a>
         </div>
-    </form>
+        <br>
+        <!--   if currentuser is equal to null // if there is not a user logged in. show login link-->
+        <div th:if="${session.currentUser == null}">
+            <a th:href="@{/login}">Login</a>
+        </div>
+        <br>
+    </div>
+</form>
 
+<br>
 </div>
 
 <!--<a th:href="@{/logout}">Logout</a>-->

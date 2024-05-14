@@ -25,6 +25,11 @@ public class ConnectionPool
     {
     }
 
+    // overloading method for our integrationstest
+    public static ConnectionPool getInstance()
+    {
+        return getInstance("","","","");
+    }
     /***
      * Getting a singleton instance of a Hikari Connection Pool with specific credentials
      * and connection string. If an environment variable "DEPLOYED" exists then local
@@ -35,6 +40,8 @@ public class ConnectionPool
      * @param db database name for connection
      * @return A ConnectionPool object
      */
+
+
     public static ConnectionPool getInstance(String user, String password, String url, String db)
     {
         if (instance == null)

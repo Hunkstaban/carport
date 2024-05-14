@@ -1,11 +1,7 @@
 package app.persistence;
 
 
-import app.controllers.ProductController;
-import app.entities.Order;
-import app.entities.Product;
-import app.entities.Type;
-import app.entities.Unit;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -180,6 +176,61 @@ public class ProductMapper {
         } catch (SQLException | DatabaseException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    public static List<CarportLength> getAllLength(ConnectionPool connectionPool) throws DatabaseException {
+
+        String sql = "SELECT * FROM carport_lengths order by length ASC";
+        List<CarportLength> getAllLengthList = new ArrayList<>();
+
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)
+        ) {
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+
+                int getLengthID = resultSet.getInt("carport_length_id");
+                int getLengthCm = resultSet.getInt("length");
+                getAllLengthList.add(new CarportLength(getLengthID, getLengthCm));
+            }
+
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Der skete en fejl med databasen " + e.getMessage());
+        }
+
+        return getAllLengthList;
+    }
+
+    public static List<CarportWidth> getAllwidth(ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM carport_widths order by width ASC";
+
+        List<CarportWidth> getAllWidthList = new ArrayList<>();
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        ) {
+
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int getWidthID = resultSet.getInt("carport_width_id");
+                int getWidth = resultSet.getInt("width");
+                getAllWidthList.add(new CarportWidth(getWidthID, getWidth));
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Der skete en fejl i databasen" + e.getMessage());
+
+        }
+        return getAllWidthList;
 
     }
 }

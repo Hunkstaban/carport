@@ -8,5 +8,62 @@
 
 <p> kontaktinformation </p>
 
+<form method="get">
+    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+    <a th:href="@{/renderSignupPage}">Opret bruger</a>
+    <div>
+<!--        when logged in show contact info-->
+        <div th:if="${session.currentUser != null}">
+
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+        <div th:if="${session.currentUser == null}">
+
+            <a th:href="@{/login}">Login</a>
+
+            <label><p>Fornavn</p></label>
+            <input type="text" name="username">
+            <br>
+            <label><p>Efternavn</p></label>
+            <input type="text">
+            <br>
+            <label><p>Email</p></label>
+            <input type="email" name="email" required>
+            <br>
+            <label><p>Kodeord</p></label>
+            <input type="password" name="password" >
+            <br>
+            <label><p>Adresse</p></label>
+            <input type="text">
+            <br>
+            <label><p>Post nr.</p></label>
+            <input type="number" min="0">
+            <br>
+            <label><p>By</p></label>
+            <input type="text">
+            <br>
+        </div>
+    </div>
+</form>
+
+Tegning laves her
+<br>
+estimat pris her
+<br>
+
+
+<form method="post">
+    <button type="submit" formaction="createUser">
+    <a th:href="@{/index}"></a>
+        Send forespørgelse
+    </button>
+</form>
+
+<div th:if="${alreadyExist}">
+    <p th:text="${alreadyExist}"></p>
+</div>
+
+
+
 </body>
 </html>
