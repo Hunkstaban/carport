@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:postgresql://138.68.83.232:5432/carport?currentSchema=public</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="postgres@138.68.83.232" uuid="2de76214-06f9-47a0-ae44-eb1e3a735a93">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://138.68.83.232:5432/carport</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

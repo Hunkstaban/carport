@@ -17,15 +17,23 @@ class ProductListCalcTest {
 
     @Test
     void calculateProductList() {
-        ProductListCalc productListCalc = new ProductListCalc(600,780,true, connectionPool);
+        ProductListCalc productListCalc = new ProductListCalc(420,600,true, connectionPool);
         productListCalc.calculateProductList();
         List<ProductListItem> productList = productListCalc.getProductList();
+        int totalPrice = 0;
 
         for (ProductListItem productListItem : productList) {
-            System.out.println(productListItem.getProductName());
-            System.out.println(productListItem.getProductDescription());
-            System.out.println(productListItem.getLength());
-            System.out.println(productListItem.getQuantity());
+            System.out.println("Vare nr.: " + productListItem.getProductID());
+            System.out.println("Navn: " + productListItem.getProductName());
+            System.out.println("Beskrivelse: " + productListItem.getProductDescription());
+            System.out.println("Længde: " + productListItem.getLength() + " mm.");
+            System.out.println("Mængde: " + productListItem.getQuantity() + " " + productListItem.getUnit());
+            System.out.println("Pris: " + productListItem.getPrice() + " kr.\n");
+
+            totalPrice += productListItem.getPrice();
         }
+
+        System.out.println("Carport pris: " + totalPrice);
+        System.out.println(productList);
     }
 }

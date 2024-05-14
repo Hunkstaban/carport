@@ -1,0 +1,25 @@
+<svg  xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      viewBox="0 0 800 600">
+
+    <!-- Ramme -->
+    <rect x="0" y="0" height="600" width="780" style="stroke:#000000; fill: #ffffff" />
+
+    <!-- Remme -->
+    <rect x="0" y="35" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />
+    <rect x="0" y="565" height="4.5" width="780" style="stroke:#000000; fill: #ffffff" />
+
+    <!-- Spær -->
+    <rect x="0" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" />
+    <rect x="55" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" />
+    <rect x="110" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" />
+    <rect x="775.5" y="0" height="600" width="4.5" style="stroke:#000000; fill: #ffffff" />
+
+    <!-- Stolper -->
+    <rect x="110" y="32" height="9.7" width="9.7" style="stroke:#000000; fill: #ffffff" />
+    <rect x="420" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+    <rect x="730" y="32" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+    <rect x="110" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+    <rect x="420" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+    <rect x="730" y="562" height="9.7" width="10" style="stroke:#000000; fill: #ffffff" />
+</svg>
