@@ -20,7 +20,7 @@ public class OrderController {
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.post("/godkend-forespoergsel", ctx -> prepareInquiry(ctx, connectionPool));
         app.post("/ny-ordre", ctx -> newOrder(ctx, connectionPool));
-        app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
+        app.get("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("approveInquiry", ctx -> approveInquiry(ctx, connectionPool));

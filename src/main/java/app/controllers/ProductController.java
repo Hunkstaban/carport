@@ -19,7 +19,7 @@ public class ProductController {
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
 
-        app.post("storagePage", ctx -> loadProducts(ctx, connectionPool));
+        app.get("storagePage", ctx -> loadProducts(ctx, connectionPool));
         app.post("filterByType", ctx -> filterByType(ctx, connectionPool));
         app.post("updateProduct", ctx -> updateProduct(ctx, connectionPool));
         app.post("addProduct", ctx -> addProduct(ctx, connectionPool));
