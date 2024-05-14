@@ -49,7 +49,7 @@ public class OrderMapper {
                 CarportLength carportLength1 = new CarportLength(carportLengthID, carportLength);
                 CarportWidth carportWidth1 = new CarportWidth(carportWidthID, carportWidth);
 
-               order = new Order(orderID, user, carportLength1, carportWidth1, description,
+                order = new Order(orderID, user, carportLength1, carportWidth1, description,
                         totalPrice, productListRaw, status1, date, shed, userRemarks);
 
             }
@@ -118,7 +118,7 @@ public class OrderMapper {
     }
 
 
-    public static int getWidthByID (int carportWidthID, ConnectionPool connectionPool) throws DatabaseException {
+    public static int getWidthByID(int carportWidthID, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM carport_widths WHERE carport_width_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
@@ -161,13 +161,13 @@ public class OrderMapper {
         }
     }
 
-    public static int getLengthByID (int carportLengthID, ConnectionPool connectionPool) throws DatabaseException {
+    public static int getLengthByID(int carportLengthID, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM carport_lengths WHERE carport_length_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-              ps.setInt(1, carportLengthID);
-              ResultSet rs = ps.executeQuery();
+            ps.setInt(1, carportLengthID);
+            ResultSet rs = ps.executeQuery();
 
 
             if (rs.next()) {
@@ -182,7 +182,7 @@ public class OrderMapper {
         }
     }
 
-    public static int newOrder (User user, int carportWidthID, int carportLengthID, String description, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
+    public static int newOrder(User user, int carportWidthID, int carportLengthID, String description, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO orders (user_id, carport_width_id, carport_length_id, description, total_price, product_list, shed, user_remark, carport_drawing) VALUES (?,?,?,?,?,?,?,?,?)";
 
         try (
@@ -224,8 +224,8 @@ public class OrderMapper {
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1,2);
-            ps.setInt(2,orderID);
+            ps.setInt(1, 2);
+            ps.setInt(2, orderID);
 
             int rowsAffected = ps.executeUpdate();
 
@@ -311,3 +311,5 @@ public class OrderMapper {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+}
