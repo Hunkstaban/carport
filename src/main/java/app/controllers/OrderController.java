@@ -9,10 +9,12 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
+import app.services.CarportSvg;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderController {
 
@@ -134,7 +136,10 @@ public class OrderController {
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
     private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
-        return "test";
+        Locale.setDefault(new Locale("US"));
+        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed);
+
+        return carportSvg.toString();
     }
 
     private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
