@@ -192,6 +192,11 @@ public class ProductListCalc {
         return productList;
     }
 
+    public static void clearList() {
+
+        productList.clear();
+    }
+
     public static int getNumberOfPosts() {
         return numberOfPosts;
     }

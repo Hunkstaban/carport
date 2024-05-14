@@ -1,0 +1,270 @@
+/*html {*/
+/*    width: 95%;*/
+/*}*/
+
+/*body {*/
+
+/*    width: 95%;*/
+/*    background-color: #F5F5F3FF*/
+/*}*/
+
+.page {
+
+    display: flex;
+    margin-top: 2%;
+    width: 100%;
+    height: 100vh;
+    background-color: #F5F5F3;
+    justify-content: center;
+}
+
+
+.left-flex-container {
+
+    display: flex;
+    order: 1;
+    width: 20%;
+    height: 80%;
+    /*background-color: #ffffff;*/
+    margin-right: 20px;
+    flex-direction: column;
+    background-color: #F5F5F3;
+    justify-content: flex-start;
+}
+
+.right-flex-container {
+    display: flex;
+    order: 2;
+    width: 70%;
+    height: 80%;
+    background-color: #ffffff;
+    margin-left: 20px;
+    flex-direction: column;
+}
+
+
+
+.right-nav-bar-container {
+
+    display: flex;
+    height: 5%;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: center;
+
+}
+
+.right-nav-bar-container {
+
+
+    padding: 10px;
+    background-color: #f1f1f1;
+}
+
+.order-nav-bar-right {
+
+    display: flex;
+    width: 50%;
+    justify-content: flex-end;
+    align-self: center;
+    margin-right: 20px;
+
+}
+.tabs button {
+
+    display: flex;
+    height: 40px;
+    width: 100px;
+    align-items: center;
+    justify-content: center;
+    background-color: #555555;
+    border: 1px solid #555555;
+    color: white;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+
+}
+
+.tabs button:disabled {
+    opacity: .5;
+}
+
+.tabs button:focus {
+    outline: 0;
+}
+
+.tabs button:hover {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+/*.order-nav-bar-left button:active {*/
+/*    background-color: #013D7A;*/
+/*    border-color: #013D7A;*/
+/*}*/
+
+.order-nav-bar-right button {
+    display: flex;
+    margin-left: 20px;
+    height: 25px;
+    width: 75px;
+    align-items: center;
+
+}
+
+.order-nav-bar-right button {
+    background-color: #1652F0;
+    border: 1px solid #1652F0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    line-height: 1.15;
+    overflow: visible;
+    padding: 12px 16px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: all 80ms ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+}
+
+.order-nav-bar-right button:disabled {
+    opacity: .5;
+}
+
+.order-nav-bar-right button:focus {
+    outline: 0;
+}
+
+.order-nav-bar-right button:hover {
+    background-color: #013D7A;
+    border-color: #013D7A;
+}
+
+.order-nav-bar-right button:active {
+    background-color: #013D7A;
+    border-color: #013D7A;
+}
+
+.tabs {
+
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+
+.radio {
+    display: none;
+}
+
+.tabs-label {
+    margin-right: 20px;
+    background-color: #FFFFFF;
+    border: 1px solid #555555;
+    color: #555555;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.radio:checked + .tabs-label + .products-table {
+    display: block;
+}
+
+.radio:checked + .tabs-label + .beskrivelse-content {
+    display: block;
+}
+
+.tabs-label:hover {
+    background-color: #777777;
+    border-color: #777777;
+}
+
+.tabs-label:active {
+    background-color: #FFFFFF;
+    border-color: #333333;
+}
+
+.radio:checked + .tabs-label {
+    color: white;
+    background-color: #555555;
+    border-color: #555555;
+}
+
+
+.products-table {
+
+    order: 1;
+    display: none;
+    width: 100%; /* Ensure the table fills the available width */
+    overflow-x: auto; /* Add horizontal scrolling if content overflows */
+    margin-top: 20px;
+}
+
+.products-table table {
+    width: 100%; /* Make the table fill the container width */
+    border-collapse: collapse; /* Collapse borders between table cells */
+}
+
+.products-table th, .products-table td {
+    border: 1px solid #ddd; /* Add borders to table cells */
+    padding: 8px; /* Add padding inside table cells */
+    text-align: left; /* Align text to the left */
+}
+
+.products-table th {
+    background-color: #f2f2f2; /* Add background color to table header cells */
+}
+
+.products-table {
+    display: none;
+}
+
+
+
+
+
+.cost-display {
+
+
+    width: 100%;
+    height: 48%;
+    background-color: #ffffff;
+
+    margin-top: auto;
+}
+
+
+.order-details {
+    display: flex;
+    width: 100%;
+    height: 48%;
+    background-color: #ffffff;
+    justify-content: center;
+
+}
+
+.order-details table {
+    width: 90%;
+}
+
+.order-details table th {
+    text-align: left;
+    align-self: flex-start;
+}
+
+.order-details table td {
+    text-align: right;
+    /*padding-left: 50px;*/
+    align-self: flex-end;
+}
