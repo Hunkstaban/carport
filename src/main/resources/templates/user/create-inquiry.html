@@ -20,14 +20,14 @@
     <form method="post">
         <br>
         <select name="carportWidth">
-            <option value="">Carport bredde</option>
+            <option value=""></option>
             <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
                     th:text="${width.width} + ' Cm' ">
             </option>
         </select>
-
+        <br>
         <select name="carportLength">
-            <option value="">Carport længde</option>
+            <option value=""></option>
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
                     th:text="${length.length} + ' Cm' ">
 
@@ -43,9 +43,8 @@
         <label><h3>Redskabsrum</h3></label>
         <br>
 
-
-        <label>
             <input type="radio" name="shed" value="true">
+        <label>
             Ja
         </label>
         <div class="radiobuttontext"> OBS. carporten vil få extra 140 cm. i længden</div>
