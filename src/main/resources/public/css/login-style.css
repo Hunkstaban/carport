@@ -1,0 +1,109 @@
+h1 {
+    color: #333333;
+    font-family: Segoe UI Variable;
+    font-weight: 400;
+    font-size: 36px;
+
+}
+
+h2 {
+    color: #333333;
+    font-family: Segoe UI Variable;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.log-på{
+    margin-top: 136px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.log-på-med-mail{
+    margin-bottom: 12px;
+    margin-left: 52px;
+
+}
+.opret-bruger-href {
+    color: #337AB7;
+    margin-bottom: 16px;
+    margin-top: 12px;
+    margin-left: 52px;
+
+}
+
+.login {
+    height: 1500px;
+    width: 100%;
+    background-color: #013D7A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.login-box {
+
+    background-color: white;
+    /*display: flex;*/
+    /*justify-content: center;*/
+    display: block;
+    /*align-items: center;*/
+    width: 464px; /* Set the width of the box */
+    height: 700px; /* Set the height of the box */
+    margin: 0px;
+    /*margin: !* Center the box horizontally and add some margin *!*/
+    /*padding: !* Add some padding inside the box *!*/
+    /*border: 1px solid #ccc; !* Optionally, add a light gray border *!*/
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); !* Optionally, add a subtle shadow *!*/
+}
+
+.login-button {
+    color: #dddddd;
+    background-color: #296EC6;
+    width: 226px;
+    height: 50px;
+    margin-top: 12px;
+    margin-left: 52px;
+}
+
+.email-input {
+    align-items: center;
+    font-family: Segoe UI Variable;
+    color: #333333;
+    font-size: large;
+    font-weight: 400;
+    width: 360px;
+    height: 50px;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    margin-left: 52px;
+    margin-right: 52px;
+}
+
+.email-input::placeholder {
+    color: #555555;
+
+}
+
+.password-input {
+    font-family: Segoe UI Variable;
+    color: #333333;
+    font-size: large;
+    width: 360px;
+    height: 50px;
+    padding-left: 20px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    margin-left: 52px;
+    margin-right: 52px;
+}
+
+.glemt-kodeord{
+    margin-left: 52px;
+}
+
+
+
