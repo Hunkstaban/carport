@@ -133,7 +133,7 @@ public class OrderMapper {
         }
     }
 
-    public static int newOrder (User user, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
+    public static int newOrder (User user, int carportWidthID, int carportLengthID, String description, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO orders (user_id, carport_width_id, carport_length_id, description, total_price, product_list, shed, user_remark, carport_drawing) VALUES (?,?,?,?,?,?,?,?,?)";
 
         try (
@@ -143,11 +143,12 @@ public class OrderMapper {
             ps.setInt(1, user.getUserID());
             ps.setInt(2, carportWidthID);
             ps.setInt(3, carportLengthID);
-            ps.setBoolean(4, shed);
-            ps.setString(5, remark);
+            ps.setString(4, description);
+            ps.setInt(5, totalPrice);
             ps.setString(6, productList.toString());
-            ps.setInt(7, totalPrice);
-            ps.setString(8, carportDrawing);
+            ps.setBoolean(7, shed);
+            ps.setString(8, remark);
+            ps.setString(9, carportDrawing);
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected != 1) {
