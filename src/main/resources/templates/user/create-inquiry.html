@@ -18,19 +18,19 @@
 <h2>Carport med fladt tag</h2>
 <div>
     <form method="post">
-        <br>
+            <label><h3>Vælg bredde</h3></label>
         <select name="carportWidth">
-
+            <br>
             <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
                     th:text="${width.width} + ' Cm' ">
             </option>
+            <br>
         </select>
         <br>
+            <label><h3>Vælg længde</h3></label>
         <select name="carportLength">
-
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
                     th:text="${length.length} + ' Cm' ">
-
             </option>
         </select>
         <br>
