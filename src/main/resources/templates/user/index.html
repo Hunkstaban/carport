@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Frontpage</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+</head>
+
+<body>
+
+<!--Global header needed with links to customer order page and account info-->
+
+<h1>Velkommen til FOG </h1>
+
+<form method="get">
+    <button formaction="/opret-forespørgsel">Byg selv carport</button>
+</form>
+<br>
+<form method="get">
+    <a href="https://www.johannesfog.dk/soegning?q=carport">Standard carport</a>
+</form>
+<br>
+
+<form method="get">
+    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+    <a th:href="@{/opret-bruger}">Opret bruger</a>
+    <div>
+        <br>
+        <!-- if currentuser is not equal to null // if a user logged in. show logout link-->
+        <div th:if="${session.currentUser != null}">
+            <a th:href="@{/logout}">Logout</a>
+        </div>
+        <br>
+        <!--   if currentuser is equal to null // if there is not a user logged in. show login link-->
+        <div th:if="${session.currentUser == null}">
+            <a th:href="@{/login}">Login</a>
+        </div>
+        <br>
+    </div>
+</form>
+
+<br>
+</div>
+
+<!--<a th:href="@{/logout}">Logout</a>-->
+<form method="get">
+    <button formaction="myOrders">My Orders</button>
+</form>
+
+<form method="post">
+    <button formaction="storagePage">Storage Page</button>
+</form>
+<form method="post">
+    <button formaction="viewAllOrders">Admin Order Page</button>
+</form>
+
+
+<button th:action="@{inquiryNext}"></button>
+</body>
+</html>

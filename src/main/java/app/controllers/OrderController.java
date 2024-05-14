@@ -1,70 +1,143 @@
 package app.controllers;
 
+
+import app.entities.Order;
+import app.entities.Status;
 import app.entities.ProductListItem;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
-import app.services.CarportSvg;
+import app.persistence.UserMapper;
 import app.services.ProductListCalc;
-import app.services.Svg;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
-
 import java.util.List;
-import java.util.Locale;
 
 public class OrderController {
 
-    public static void addRoutes(Javalin app, ConnectionPool connectionPool) {
-        app.post("newOrder", ctx -> newOrder(ctx, connectionPool));
-        app.get("showSVG", ctx -> showSVG(ctx, connectionPool));
+    public static void addRoute(Javalin app, ConnectionPool connectionPool) {
+        app.post("/godkend-forespørgsel", ctx -> prepareInquiry(ctx, connectionPool));
+        app.post("/ny-ordre", ctx -> newOrder(ctx, connectionPool));
+        app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
+        app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
+        app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
+
+
     }
 
-    private static void showSVG(Context ctx, ConnectionPool connectionPool) {
-        Locale.setDefault(new Locale("US"));
+    private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
-//        int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
-//        int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
-        int carportWidth = 600;
-        int carportLength = 780;
-        boolean shed = true;
-
-//        try {
-//            carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
-//            carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
-//        } catch (DatabaseException e) {
-//            throw new RuntimeException(e);
-//        }
-
-
-        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, false);
-//        Svg carportSvg = new Svg(0,0,"0 0 855 690", "100%");
-//        carportSvg.addRectangle(0,0,600,780,"stroke-width:1px; stroke:#000000; fill:#ffffff");
-
-
-        ctx.attribute("svg", carportSvg.toString());
-        ctx.render("testSVG.html");
+        ctx.render("admin/inquiry-details.html");
     }
 
-    private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+    private static void viewAllOrders(Context ctx, ConnectionPool connectionPool) {
+
+        globalOrderAttributes(ctx, connectionPool, null);
+
+        ctx.render("admin/orders.html");
+
+    }
+
+    private static void filterByStatus(Context ctx, ConnectionPool connectionPool) {
+
+        int statusID = Integer.parseInt(ctx.formParam("filter"));
+
+        globalOrderAttributes(ctx, connectionPool, statusID);
+
+        ctx.render("admin/orders.html");
+
+    }
+
+    private static Context globalOrderAttributes(Context ctx, ConnectionPool connectionPool, Integer statusID) {
+
+        List<Status> statusList = OrderMapper.loadStatusList(connectionPool);
+        List<Order> orderList = OrderMapper.getOrders(connectionPool, statusID);
+
+        ctx.attribute("orderList", orderList);
+        ctx.attribute("statusList", statusList);
+
+        return ctx;
+    }
+
+    private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
         String remark = ctx.formParam("remark");
+        int carportWidth;
+        int carportLength;
+        int estimatedPrice = 0;
 
         try {
-            int carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
-            int carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
-            ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
-
-            //List<ProductListItem> productList = ProductListCalc.calculateProductList(carportWidth, carportLength, shed, connectionPool);
-            User user = ctx.sessionAttribute("currentUser");
-            // OrderMapper.newOrder(user, productList, remark, connectionPool);
+            carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
+            carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
 
+        List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
+        for (ProductListItem productListItem : productList) {
+            estimatedPrice += productListItem.getPrice();
+        }
+        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
+        prepareOrderAttributes(ctx, carportWidthID, carportLengthID, shed, remark, productList, carportDrawing, estimatedPrice);
 
+        ctx.render("user/accept-inquiry.html");
+    }
+
+    private static void newOrder(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        int carportWidthID = ctx.attribute("carportWidthID");
+        int carportLengthID = ctx.attribute("carportLengthID");
+        boolean shedChosen = ctx.attribute("shed");
+        String remark = ctx.attribute("orderRemark");
+        List<ProductListItem> productList = ctx.attribute("productList");
+        String carportDrawing = ctx.attribute("carportDrawing");
+        int orderPrice = ctx.attribute("estimatedPrice");
+
+        // If user has not logged in, create an account TODO: If they have already have an account, there is no option currently to simply log in
+        if (user == null) {
+            String name = ctx.formParam("username");
+            String email = ctx.formParam("email");
+            String password = ctx.formParam("password");
+            try {
+                user = UserMapper.createUser(name, email, password, connectionPool);
+            } catch (DatabaseException e) {
+                String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer. Prøv igen.";
+                ctx.attribute("inquiryFailed", msg);
+            }
+        }
+
+        // Create new order/inquiry, and redirect back to the landing page, sending orderID as an attribute to be displayed to the user
+        try {
+            int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
+            ctx.attribute("orderID", orderID);
+            ctx.render("user/index.html");
+        } catch (DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static List<ProductListItem> prepareProductList (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+        ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
+        productListCalc.calculateProductList();
+        return productListCalc.getProductList();
+    }
+
+    // Will become method to be used with prepareInquiry to receive SVG drawing
+    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
+        return "test";
+    }
+
+    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
+        ctx.attribute("carportWidthID", carportWidthID);
+        ctx.attribute("carportLengthID", carportLengthID);
+        ctx.attribute("orderRemark", remark);
+        ctx.attribute("shed", shed);
+        ctx.attribute("productList", productList);
+        ctx.attribute("carportDrawing", svgDrawing);
+        ctx.attribute("estimatedPrice", estimatedPrice);
+        return ctx;
     }
 }

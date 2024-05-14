@@ -1,0 +1,8 @@
+.radiobuttontext {
+    color: red;
+    display: none;
+}
+
+input[type="radio"]:checked + label + .radiobuttontext {
+    display: block;
+}

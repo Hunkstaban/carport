@@ -9,6 +9,10 @@ public class Type {
         this.name = name;
     }
 
+    public Type(int typeID) {
+        this.typeID = typeID;
+    }
+
     public int getTypeID() {
         return typeID;
     }

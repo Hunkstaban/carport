@@ -1,0 +1,80 @@
+
+#page {
+
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.top-nav {
+
+    display: flex;
+    justify-content: center;
+}
+
+.centerpage {
+
+    width: 90%;
+}
+
+.filter-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-filter {
+    flex-direction: row;
+}
+
+.table-container {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    justify-content: center;
+}
+
+.products-table {
+    border-collapse: collapse;
+}
+
+.products-table th, .products-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.products-table th {
+    background-color: #f2f2f2;
+}
+
+.products-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.products-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+.products-table input[type="text"] {
+    width: 100px;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+.products-table td:nth-child(1) input[type="text"] {
+    width: 30px;
+}
+
+.products-table td:nth-child(2) input[type="text"] {
+    width: 200px;
+}
+.products-table td:nth-child(3) input[type="text"] {
+    width: 100px;
+}
+
+.products-table input[type="text"]:disabled {
+    background-color: transparent;
+    border: none;
+}
