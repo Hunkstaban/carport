@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.entities.CarportLength;
+import app.entities.CarportWidth;
 import app.entities.User;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
