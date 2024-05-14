@@ -38,7 +38,7 @@ public class OrderController {
 //        }
 
 
-        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, true);
+        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, false);
 //        Svg carportSvg = new Svg(0,0,"0 0 855 690", "100%");
 //        carportSvg.addRectangle(0,0,600,780,"stroke-width:1px; stroke:#000000; fill:#ffffff");
 

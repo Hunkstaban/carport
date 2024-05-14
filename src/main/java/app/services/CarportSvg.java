@@ -14,22 +14,39 @@ public class CarportSvg {
     private int length;
     private boolean shed;
     private Svg carportSvg;
+    private Svg arrowSvg;
 
     public CarportSvg(int clength, int width, boolean shed) {
         this.length = clength + (shed ? shed_width : 0);
         this.width = width;
         this.shed = shed;
-        carportSvg = new Svg(0, 0, "0 0 " + (length + 5) + " " + width, "50%");
+
+        int arrowOffset = 20;
+        int carportOffset = arrowOffset + 20;
+
+        //viewbox is min-x, min-y, width and height
+        arrowSvg = new Svg(0, 0, "0 0 " + (length+carportOffset + 5) + " " + width+arrowOffset, "50%"); //Arrows
+        arrowSvg.addArrow(arrowOffset, 0, arrowOffset, width, "stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow)");
+        arrowSvg.addArrow(carportOffset, width+arrowOffset, length+carportOffset, width+arrowOffset, "stroke:#000000;  marker-start: url(#beginArrow); marker-end: url(#endArrow)");
+        arrowSvg.addText(15, width/2, -90, width);
+        arrowSvg.addText((length+carportOffset)/2, width+arrowOffset+15, 0, length);
+
+
+        carportSvg = new Svg(carportOffset, 0, "0 0 " + (length + carportOffset + 5) + " " + width, "100%"); // Carport
         carportSvg.addRectangle(0, 0, width, length, "stroke-width:1px; stroke:#000000; fill: #ffffff");
         if (shed == true) {
-            addShed();
+            addShed(carportSvg);
         }
-        addBeams();
-        addRafters();
-        addPosts();
+        addBeams(carportSvg);
+        addRafters(carportSvg);
+        addPosts(carportSvg);
+
+        arrowSvg.addSvg(carportSvg);
+        this.carportSvg = arrowSvg;
+
     }
 
-    private void addShed() {
+    private void addShed(Svg carportSvg) {
 //        carportSvg.addRectangle(TOP_BOTTOM_OFFSET, length-BACK_OFFSET-140, width-TOP_BOTTOM_OFFSET, 140, "stroke:#000000; fill: #ffffff");
         carportSvg.addRectangle(length-BACK_OFFSET-shed_width, TOP_BOTTOM_OFFSET, width-(TOP_BOTTOM_OFFSET*2)+(postSize/2), shed_width+(postSize/2), "stroke:#000000; fill: #c9c9c9");
 //        Posts
@@ -43,19 +60,19 @@ public class CarportSvg {
         carportSvg.addRectangle(length-BACK_OFFSET, width/2-(postSize / 4), postSize, postSize, "stroke:#000000; fill: #ffffff");
     }
 
-    private void addBeams() {
+    private void addBeams(Svg carportSvg) {
 //        35 cm offset each side
         carportSvg.addRectangle(0, 35, 5, length, "stroke:#000000; fill: #ffffff");
         carportSvg.addRectangle(0, width-35, 5, length, "stroke:#000000; fill: #ffffff");
     }
 
-    private void addRafters() {
+    private void addRafters(Svg carportSvg) {
         for (double i = 0; i < length; i += DISTANCE_BETWEEN_RAFTERS) {
             carportSvg.addRectangle(i, 0.0, width, 4.5, "stroke:#000000; fill: #ffffff");
         }
     }
 
-    private void addPosts() {
+    private void addPosts(Svg carportSvg) {
 //        27,5cm offset at the back and 110 cm offset in front
 //        Top left
         carportSvg.addRectangle(FRONT_OFFSET-(postSize/4), TOP_BOTTOM_OFFSET-(postSize / 4), postSize, postSize, "stroke:#000000; fill: #ffffff");
