@@ -12,7 +12,7 @@
     <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
     <a th:href="@{/renderSignupPage}">Opret bruger</a>
     <div>
-<!--        when logged in show contact info-->
+        <!--        when logged in show contact info-->
         <div th:if="${session.currentUser != null}">
 
             <a th:href="@{/logout}">Logout</a>
@@ -31,7 +31,7 @@
             <input type="email" name="email" required>
             <br>
             <label><p>Kodeord</p></label>
-            <input type="password" name="password" >
+            <input type="password" name="password">
             <br>
             <label><p>Adresse</p></label>
             <input type="text">
@@ -45,16 +45,18 @@
         </div>
     </div>
 </form>
-
-Tegning laves her
-<br>
-estimat pris her
-<br>
-
+<div class="show-inquiry">
+    <form method="post">
+        Tegning laves her
+        <br>
+        estimat pris her
+        <br>
+    </form>
+</div>
 
 <form method="post">
-    <button type="submit" formaction="createUser">
-    <a th:href="@{/index}"></a>
+    <button type="submit" formaction="ny-ordre">
+        <a th:href="@{/index}"></a>
         Send forespørgelse
     </button>
 </form>
@@ -62,7 +64,6 @@ estimat pris her
 <div th:if="${alreadyExist}">
     <p th:text="${alreadyExist}"></p>
 </div>
-
 
 
 </body>

@@ -17,7 +17,8 @@ import java.util.List;
 public class OrderController {
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
-        app.post("newOrder", ctx -> newOrder(ctx, connectionPool));
+        app.post("/godkend-forespørgsel", ctx -> prepareInquiry(ctx, connectionPool));
+        app.post("/ny-ordre", ctx -> newOrder(ctx, connectionPool));
         app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
@@ -64,8 +65,8 @@ public class OrderController {
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
         String remark = ctx.formParam("remark");
-        int carportWidth = 0;
-        int carportLength = 0;
+        int carportWidth;
+        int carportLength;
         int estimatedPrice = 0;
 
         try {
@@ -97,7 +98,7 @@ public class OrderController {
 
         // If user has not logged in, create an account TODO: If they have already have an account, there is no option currently to simply log in
         if (user == null) {
-            String name = ctx.formParam("name");
+            String name = ctx.formParam("username");
             String email = ctx.formParam("email");
             String password = ctx.formParam("password");
             try {

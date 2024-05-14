@@ -30,7 +30,7 @@
 
         <label><h3>Carport længde</h3></label>
         <br>
-        <select name="">
+        <select name="carportLength">
 
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
                     th:text="${length.length} + ' Cm' "></option>
@@ -45,21 +45,23 @@
         <label><h3>Redskabsrum</h3></label>
         <br>
 
-        <input type="radio" name="shed-choosing" value="true">
+
         <label>
+            <input type="radio" name="shed" value="true">
             Ja
         </label>
-        <div class="radiobuttontext"> OBS. carporten vil få extra 140 cm. i længden </div>
+        <div class="radiobuttontext"> OBS. carporten vil få extra 140 cm. i længden</div>
         <br>
         <label>
-            <input type="radio" name="shed-choosing" value="false">
+            <input type="radio" name="shed" value="false">
             Nej
         </label>
         <br>
-        <h3>Kommentar</h3>
+        <h3>Evt. bemærkning / særlige ønsker:</h3>
 
 
-        <textarea id="textarea" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ..."> </textarea>
+        <textarea id="textarea" name="remark" rows="10" cols="40"
+                  placeholder="Skriv din kommentar her ..."> </textarea>
 
         <br>
 
