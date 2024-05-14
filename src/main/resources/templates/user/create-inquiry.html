@@ -1,10 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Frontpage</title>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/create-inquiry-style.css}" rel="stylesheet" href="../../public/css/create-inquiry-style.css">
 </head>
+
 <body>
 
+<!--Global header needed with links to customer order page and account info-->
+
+<h1>Velkommen til FOG </h1>
+
+
+<h2>Carport med fladt tag</h2>
+<div>
+    <form method="post">
+        <br>
+        <select name="carportWidth">
+            <option value="">Carport bredde</option>
+            <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
+                    th:text="${width.width} + ' Cm' ">
+            </option>
+        </select>
+
+        <select name="carportLength">
+            <option value="">Carport længde</option>
+            <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
+                    th:text="${length.length} + ' Cm' ">
+
+            </option>
+        </select>
+        <br>
+        <label><h3>Trapez tag</h3></label>
+        <br>
+        <select name="">
+            <option value="">Plastmo Ecolite</option>
+        </select>
+        <br>
+        <label><h3>Redskabsrum</h3></label>
+        <br>
+
+
+        <label>
+            <input type="radio" name="shed" value="true">
+            Ja
+        </label>
+        <div class="radiobuttontext"> OBS. carporten vil få extra 140 cm. i længden</div>
+        <br>
+        <label>
+            <input type="radio" name="shed" value="false">
+            Nej
+        </label>
+        <br>
+        <h3>Evt. bemærkning / særlige ønsker:</h3>
+
+
+        <textarea id="textarea" name="remark" rows="10" cols="40"
+                  placeholder="Skriv din kommentar her ..."> </textarea>
+
+        <br>
+
+        <button formaction="/godkend-forespoergsel">Næste</button>
+
+    </form>
+    <!--    route to inquiry-contact-info-->
+
+
+    <!--used to test if there is null or data in user-->
+    <!--<p th:text="'Session user: ' + ${session.currentUser}"></p> -->
+
+    <form method="get">
+        <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
+        <a th:href="@{/renderSignupPage}">Opret bruger</a>
+        <div>
+            <div th:if="${session.currentUser != null}">
+                <a th:href="@{/logout}">Logout</a>
+            </div>
+            <div th:if="${session.currentUser == null}">
+                <a th:href="@{/login}">Login</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<!--<a th:href="@{/logout}">Logout</a>-->
+<form method="get">
+    <button formaction="myOrders">My Orders</button>
+</form>
+
+<form method="post">
+    <button formaction="storagePage">Storage Page</button>
+</form>
+<form method="post">
+    <button formaction="viewAllOrders">Admin Order Page</button>
+</form>
+
+
+<button th:action="@{inquiryNext}"></button>
 </body>
 </html>

@@ -1,21 +1,36 @@
 package app.controllers;
 
-import app.entities.User;
+import app.entities.CarportLength;
+import app.entities.CarportWidth;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.UserMapper;
+import app.persistence.ProductMapper;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
+import java.util.List;
 
 public class UserController {
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
-        app.get("renderLoginPage", ctx -> renderLoginPage(ctx, connectionPool));
-        app.get("renderSignupPage", ctx -> renderSignupPage(ctx, connectionPool));
-        app.get("renderIndex", ctx -> renderIndex(ctx, connectionPool));
-        app.get("renderContactInfo", ctx -> acceptInquiry(ctx, connectionPool));
+        app.get("/login", ctx -> renderLoginPage(ctx, connectionPool));
+        app.get("/opret-bruger", ctx -> renderSignupPage(ctx, connectionPool));
+        app.get("/index", ctx -> renderIndex(ctx, connectionPool));
         app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
+        app.get("/opret-forespoergsel", ctx -> createInquiry(ctx, connectionPool));
     }
+
+
+    private static void createInquiry(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        List<CarportLength> getAllLengthList = ProductMapper.getAllLength(connectionPool);
+        List<CarportWidth> getAllWidthList = ProductMapper.getAllwidth(connectionPool);
+        ctx.attribute("getAllLength", getAllLengthList);
+        ctx.attribute("getAllWidth", getAllWidthList);
+        ctx.render("user/create-inquiry.html");
+
+    }
+
 
     private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
 
@@ -26,11 +41,6 @@ public class UserController {
     private static void myOrders(Context ctx, ConnectionPool connectionPool) {
 
         ctx.render("user/view-orders.html");
-
-    }
-    private static void acceptInquiry(Context ctx, ConnectionPool connectionPool) {
-
-        ctx.render("user/accept-inquiry.html");
 
     }
 
