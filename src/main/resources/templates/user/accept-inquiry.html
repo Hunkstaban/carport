@@ -19,7 +19,7 @@
         </div>
         <div th:if="${session.currentUser == null}">
 
-            <a th:href="@{/renderLoginPage}">Login</a>
+            <a th:href="@{/login}">Login</a>
 
             <label><p>Fornavn</p></label>
             <input type="text" name="username">
@@ -54,7 +54,7 @@ estimat pris her
 
 <form method="post">
     <button type="submit" formaction="createUser">
-    <a th:href="@{/renderIndex}"></a>
+    <a th:href="@{/index}"></a>
         Send forespørgelse
     </button>
 </form>

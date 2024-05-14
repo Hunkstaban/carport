@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/create-inquiry-style.css}" rel="stylesheet" href="../../public/css/create-inquiry-style.css">
 </head>
 
 <body>
@@ -17,46 +18,48 @@
 <h2>Carport med fladt tag</h2>
 <div>
     <form method="post">
-    <label><h3>Carport bredde</h3></label>
-    <br>
-    <select name="carportWidth">
-        <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
-                th:text="${width.width} + ' Cm' " >
+        <label><h3>Carport bredde</h3></label>
+        <br>
+        <select name="carportWidth">
+            <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
+                    th:text="${width.width} + ' Cm' ">
 
-        </option>
-    </select>
-    <br>
+            </option>
+        </select>
+        <br>
 
-    <label><h3>Carport længde</h3></label>
-    <br>
-    <select name="">
+        <label><h3>Carport længde</h3></label>
+        <br>
+        <select name="">
 
-        <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
-                th:text="${length.length} + ' Cm' "></option>
-    </select>
-    <br>
-    <label><h3>Trapez tag</h3></label>
-    <br>
-    <select name="">
-        <option value="">Plastmo Ecolite</option>
-    </select>
-    <br>
-    <label><h3>Redskabsrum</h3></label>
-    <br>
-    <label>
+            <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
+                    th:text="${length.length} + ' Cm' "></option>
+        </select>
+        <br>
+        <label><h3>Trapez tag</h3></label>
+        <br>
+        <select name="">
+            <option value="">Plastmo Ecolite</option>
+        </select>
+        <br>
+        <label><h3>Redskabsrum</h3></label>
+        <br>
+
         <input type="radio" name="shed-choosing" value="true">
-        Ja
-    </label>
-    <br>
-    <label>
-        <input type="radio" name="shed-choosing" value="false">
-        Nej
-    </label>
-    <br>
-    <h3>Kommentar</h3>
+        <label>
+            Ja
+        </label>
+        <div class="radiobuttontext"> OBS. carporten vil få extra 140 cm. i længden </div>
+        <br>
+        <label>
+            <input type="radio" name="shed-choosing" value="false">
+            Nej
+        </label>
+        <br>
+        <h3>Kommentar</h3>
 
 
-        <textarea id="" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ...">
+        <textarea id="textarea" name="comment" rows="10" cols="40" placeholder="Skriv din kommentar her ...">
 
         </textarea>
 
@@ -80,7 +83,7 @@
                 <a th:href="@{/logout}">Logout</a>
             </div>
             <div th:if="${session.currentUser == null}">
-                <a th:href="@{/renderLoginPage}">Login</a>
+                <a th:href="@{/login}">Login</a>
             </div>
         </div>
     </form>

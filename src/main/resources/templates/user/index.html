@@ -34,7 +34,7 @@
         <br>
         <!--   if currentuser is equal to null // if there is not a user logged in. show login link-->
         <div th:if="${session.currentUser == null}">
-            <a th:href="@{/renderLoginPage}">Login</a>
+            <a th:href="@{/login}">Login</a>
         </div>
         <br>
     </div>

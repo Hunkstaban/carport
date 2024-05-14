@@ -13,9 +13,9 @@ import java.util.List;
 public class UserController {
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
-        app.get("renderLoginPage", ctx -> renderLoginPage(ctx, connectionPool));
+        app.get("/login", ctx -> renderLoginPage(ctx, connectionPool));
         app.get("/opret-bruger", ctx -> renderSignupPage(ctx, connectionPool));
-        app.get("/renderIndex", ctx -> renderIndex(ctx, connectionPool));
+        app.get("/index", ctx -> renderIndex(ctx, connectionPool));
         app.get("/acceptInquiry", ctx -> acceptInquiry(ctx, connectionPool));
         app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
         app.get("/createInquiry", ctx -> createInquiry(ctx, connectionPool));
