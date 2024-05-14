@@ -17,7 +17,7 @@ public class UserController {
         app.get("/opret-bruger", ctx -> renderSignupPage(ctx, connectionPool));
         app.get("/index", ctx -> renderIndex(ctx, connectionPool));
         app.get("myOrders", ctx -> myOrders(ctx, connectionPool));
-        app.get("/opret-forespørgsel", ctx -> createInquiry(ctx, connectionPool));
+        app.get("/opret-forespoergsel", ctx -> createInquiry(ctx, connectionPool));
     }
 
 

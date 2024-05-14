@@ -18,22 +18,20 @@
 <h2>Carport med fladt tag</h2>
 <div>
     <form method="post">
-        <label><h3>Carport bredde</h3></label>
         <br>
         <select name="carportWidth">
+            <option value="">Carport bredde</option>
             <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
                     th:text="${width.width} + ' Cm' ">
-
             </option>
         </select>
-        <br>
 
-        <label><h3>Carport længde</h3></label>
-        <br>
         <select name="carportLength">
-
+            <option value="">Carport længde</option>
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
-                    th:text="${length.length} + ' Cm' "></option>
+                    th:text="${length.length} + ' Cm' ">
+
+            </option>
         </select>
         <br>
         <label><h3>Trapez tag</h3></label>
@@ -65,11 +63,10 @@
 
         <br>
 
+        <button formaction="/godkend-forespoergsel">Næste</button>
+
     </form>
     <!--    route to inquiry-contact-info-->
-    <form method="post">
-        <button formaction="/godkend-forespørgsel">Næste</button>
-    </form>
 
 
     <!--used to test if there is null or data in user-->

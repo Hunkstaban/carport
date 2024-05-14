@@ -47,16 +47,19 @@
 </form>
 <div class="show-inquiry">
     <form method="post">
-        Tegning laves her
+        <p th:text="${session.description}"></p>
         <br>
-        estimat pris her
+        <h3>Tegning:</h3>
+        <p th:text="${session.carportDrawing}"></p>
+        <br>
+        <h3>Estimeret pris: </h3>
+        <p th:text="${session.estimatedPrice}"></p>
         <br>
     </form>
 </div>
 
 <form method="post">
     <button type="submit" formaction="ny-ordre">
-        <a th:href="@{/index}"></a>
         Send forespørgelse
     </button>
 </form>
