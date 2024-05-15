@@ -112,7 +112,7 @@ public class OrderController {
         String remark = ctx.formParam("remark");
         int carportWidth;
         int carportLength;
-        int estimatedPrice = 0;
+        double estimatedPrice = 0.00;
         String inquiryDescription = "";
 
         try {
@@ -131,6 +131,7 @@ public class OrderController {
         for (ProductListItem productListItem : productList) {
             estimatedPrice += productListItem.getPrice(); //TODO: Needs the coverage degree added to the price
         }
+        estimatedPrice = calculatePrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
@@ -185,7 +186,7 @@ public class OrderController {
         return carportSvg.toString();
     }
 
-    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
+    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, double estimatedPrice) {
         ctx.sessionAttribute("carportWidthID", carportWidthID);
         ctx.sessionAttribute("carportLengthID", carportLengthID);
         ctx.sessionAttribute("description", inquiryDescription);
@@ -195,5 +196,14 @@ public class OrderController {
         ctx.sessionAttribute("carportDrawing", svgDrawing);
         ctx.sessionAttribute("estimatedPrice", estimatedPrice);
         return ctx;
+    }
+
+    private static double calculatePrice (double price) {
+        double degreeOfCoverage = 0.40;
+        double processingFee = 2000.00;
+        double carportPrice = price;
+        carportPrice = (carportPrice * degreeOfCoverage) + price + processingFee;
+
+        return carportPrice;
     }
 }

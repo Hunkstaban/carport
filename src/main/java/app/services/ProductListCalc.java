@@ -150,10 +150,10 @@ public class ProductListCalc {
 
         // Calculate the number of roof plates needed for the width, accounting for overlap
         int plateWidthAdjusted = DEFAULT_ROOF_PLATE_WIDTH - ROOF_PANEL_OVERLAP;
-        int amountWidthPlates = (int) Math.floor((carportWidth / plateWidthAdjusted));
+        int amountWidthPlates = (int) Math.ceil(((double)carportWidth / plateWidthAdjusted));
 
         // If the overlap accounted roof plate doesn't fit the carport width, add an extra plate
-        if (carportWidth % plateWidthAdjusted != 0) {
+        if (carportWidth % plateWidthAdjusted == 0) {
             amountWidthPlates += 1;
         }
 

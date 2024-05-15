@@ -33,7 +33,7 @@
 
         <form action="post">
             <div th:if="${order.status.statusID == 2}">
-                <button formaction="orderPaid" class="box"> Betal</button>
+                <button formaction="orderPaid" class="box" th:value="${order.orderID}"> Betal</button>
             </div>
         </form>
 
