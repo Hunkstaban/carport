@@ -17,7 +17,9 @@ class ProductListCalcTest {
 
     @Test
     void calculateProductList() {
-        ProductListCalc productListCalc = new ProductListCalc(420,600,true, connectionPool);
+        int carportWidth = 600;
+        int carportLength = 780;
+        ProductListCalc productListCalc = new ProductListCalc(carportWidth,carportLength,true, connectionPool);
         productListCalc.calculateProductList();
         List<ProductListItem> productList = productListCalc.getProductList();
         int totalPrice = 0;

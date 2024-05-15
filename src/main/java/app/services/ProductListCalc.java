@@ -33,7 +33,7 @@ public class ProductListCalc {
     private static ConnectionPool connectionPool;
 
     public ProductListCalc(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
-        // Making sure all cm becomes mm
+        // Making sure all cm becomes mm for easier calculations
         this.carportWidth = carportWidth * CM_TO_MM;
         this.carportLength = carportLength * CM_TO_MM;
         this.shed = shed;
@@ -41,6 +41,7 @@ public class ProductListCalc {
     }
 
     public void calculateProductList() {
+        // Add the extra length if shed is true
         if (shed) {
             carportLength += SHED_DIMENSIONS;
         }
