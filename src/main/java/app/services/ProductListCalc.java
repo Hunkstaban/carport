@@ -98,7 +98,11 @@ public class ProductListCalc {
             int woodWaste = totalBeamLength - totalCarportLength;
 
             // Update optimal beam if it results in less wood waste
-            if (woodWaste < leastWoodWaste && beamLength > MAX_DISTANCE_BETWEEN_POSTS) {
+            if (woodWaste < leastWoodWaste && numberOfPosts == 4) {
+                leastWoodWaste = woodWaste;
+                numberOfBeams = beamsNeeded;
+                optimalBeam = beam;
+            } else if (woodWaste < leastWoodWaste && beamLength > MAX_DISTANCE_BETWEEN_POSTS + UNSUPPORTED_SPACE && beamLength < 6000) {
                 leastWoodWaste = woodWaste;
                 numberOfBeams = beamsNeeded;
                 optimalBeam = beam;
