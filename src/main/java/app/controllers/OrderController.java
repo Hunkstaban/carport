@@ -25,7 +25,7 @@ public class OrderController {
         app.post("/ny-ordre", ctx -> newOrder(ctx, connectionPool));
         app.get("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
-        app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
+        app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("approveInquiry", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
         app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
@@ -63,6 +63,11 @@ public class OrderController {
 
         preparePriceDetails(ctx, order.getTotalPrice());
 
+        } else {
+            int totalPrice = Integer.parseInt(ctx.formParam("newTotalPrice"));
+            int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
+
+            updateInquiryPrice(ctx, totalPrice, costPrice);
         }
 
         ctx.attribute("svgDrawing", svgDrawwing);
@@ -74,20 +79,28 @@ public class OrderController {
 
     }
 
-    private static void updateInquiryPrice (Context ctx, int costPrice, int profitPrice) {
-
-
-
-
-    }
 
     private static Context preparePriceDetails (Context ctx, int orderPrice) {
 
         int profitPrice = orderPrice - PROCESSING_FEE;
-        int costPrice = (int) (profitPrice - (profitPrice * DEGREE_OF_COVERAGE));
+        int costPrice = (int) ((profitPrice) / (1 + DEGREE_OF_COVERAGE));
 
+        ctx.attribute("degreeOfCoverage", DEGREE_OF_COVERAGE * 100);
         ctx.attribute("totalPrice", orderPrice);
         ctx.attribute("processFee", PROCESSING_FEE);
+        ctx.attribute("profitPrice", profitPrice);
+        ctx.attribute("costPrice", costPrice);
+
+        return ctx;
+    }
+
+    private static Context updateInquiryPrice (Context ctx, int totalPrice, int costPrice) {
+        int profitPrice = totalPrice - PROCESSING_FEE;
+        double newDegreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
+
+        ctx.attribute("totalPrice", totalPrice);
+        ctx.attribute("processFee", PROCESSING_FEE);
+        ctx.attribute("degreeOfCoverage", newDegreeOfCoverage);
         ctx.attribute("profitPrice", profitPrice);
         ctx.attribute("costPrice", costPrice);
 
@@ -163,7 +176,7 @@ public class OrderController {
 
         List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
         for (ProductListItem productListItem : productList) {
-            estimatedPrice += productListItem.getPrice(); //TODO: Needs the coverage degree added to the price
+            estimatedPrice += productListItem.getPrice();
         }
         estimatedPrice = calculateOrderPrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
@@ -232,8 +245,8 @@ public class OrderController {
         return ctx;
     }
 
-    private static int calculateOrderPrice (int price) {
-        int carportPrice = (int) ((price * DEGREE_OF_COVERAGE) + price + PROCESSING_FEE);
+    private static int calculateOrderPrice (int costPrice) {
+        int carportPrice = (int) (((costPrice * DEGREE_OF_COVERAGE) + costPrice) + PROCESSING_FEE);
 
         return carportPrice;
     }
