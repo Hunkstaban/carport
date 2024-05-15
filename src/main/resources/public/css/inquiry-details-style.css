@@ -240,7 +240,6 @@
 
 
 
-
 .cost-display {
 
 
@@ -258,6 +257,7 @@
     height: 48%;
     background-color: #ffffff;
     justify-content: center;
+    flex-direction: column;
 
 }
 
