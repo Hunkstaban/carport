@@ -136,6 +136,7 @@ public class OrderController {
         for (ProductListItem productListItem : productList) {
             estimatedPrice += productListItem.getPrice(); //TODO: Needs the coverage degree added to the price
         }
+        estimatedPrice = calculatePrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
@@ -200,5 +201,14 @@ public class OrderController {
         ctx.sessionAttribute("carportDrawing", svgDrawing);
         ctx.sessionAttribute("estimatedPrice", estimatedPrice);
         return ctx;
+    }
+
+    private static int calculatePrice (int price) {
+        double degreeOfCoverage = 0.40;
+        int processingFee = 2000;
+        int carportPrice = price;
+        carportPrice = (int) ((carportPrice * degreeOfCoverage) + price + processingFee);
+
+        return carportPrice;
     }
 }

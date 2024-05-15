@@ -33,7 +33,7 @@ public class ProductListCalc {
     private static ConnectionPool connectionPool;
 
     public ProductListCalc(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
-        // Making sure all cm becomes mm
+        // Making sure all cm becomes mm for easier calculations
         this.carportWidth = carportWidth * CM_TO_MM;
         this.carportLength = carportLength * CM_TO_MM;
         this.shed = shed;
@@ -41,6 +41,7 @@ public class ProductListCalc {
     }
 
     public void calculateProductList() {
+        // Add the extra length if shed is true
         if (shed) {
             carportLength += SHED_DIMENSIONS;
         }
@@ -97,7 +98,7 @@ public class ProductListCalc {
             int woodWaste = totalBeamLength - totalCarportLength;
 
             // Update optimal beam if it results in less wood waste
-            if (woodWaste < leastWoodWaste) {
+            if (woodWaste < leastWoodWaste && beamLength > MAX_DISTANCE_BETWEEN_POSTS) {
                 leastWoodWaste = woodWaste;
                 numberOfBeams = beamsNeeded;
                 optimalBeam = beam;
@@ -149,10 +150,10 @@ public class ProductListCalc {
 
         // Calculate the number of roof plates needed for the width, accounting for overlap
         int plateWidthAdjusted = DEFAULT_ROOF_PLATE_WIDTH - ROOF_PANEL_OVERLAP;
-        int amountWidthPlates = (int) Math.floor((carportWidth / plateWidthAdjusted));
+        int amountWidthPlates = (int) Math.ceil(((double)carportWidth / plateWidthAdjusted));
 
         // If the overlap accounted roof plate doesn't fit the carport width, add an extra plate
-        if (carportWidth % plateWidthAdjusted != 0) {
+        if (carportWidth % plateWidthAdjusted == 0) {
             amountWidthPlates += 1;
         }
 
