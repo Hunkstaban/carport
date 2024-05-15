@@ -2,26 +2,45 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    <link th:href="@{/css/sign-up-style.css}" rel="stylesheet" href="../public/css/login-style.css">
+    <link th:href="@{/css/global-style.css}" rel="stylesheet" href="../public/css/global-style.css">
+    <title>Sign up</title>
 </head>
 <body>
+<div class="create-user-page">
 
-<form method="post">
-    <label> Navn</label>
-    <input type="text" name="username">
-    <label> Email</label>
-    <input type="email" name="email" required>
-<!--   " type = password " giver os ******* når user skriver kodeordet-->
-    <label> Kodeord</label>
-    <input type="password" name="password" required>
+    <div class="create-user-box">
+        <h1>Opret FOG konto</h1>
 
 
-    <button type="submit" formaction="createUser">Opret bruger</button>
+    <form method="post">
 
-    <div th:if="${alreadyExist}">
-        <p th:text="${alreadyExist}"></p>
+        <input class="name-input" placeholder="Navn" type="text" name="username">
+
+        <input class="email-input" placeholder="E-mailadresse" type="email" name="email" required>
+        <!--   " type = password " giver os ******* når user skriver kodeordet-->
+
+        <input class="password-input" placeholder="Kodeord" type="password" name="password" required>
+
+
+        <button class="create-button" type="submit" formaction="createUser">Opret bruger</button>
+
+        <div th:if="${alreadyExist}">
+            <p th:text="${alreadyExist}"></p>
         </div>
-</form>
+
+
+        <p>Har du allerede en konto login</p> <a class="login-href" th:href="@{/login}">her</a>
+
+    </form>
+
+    </div>
+</div>
 
 </body>
 </html>

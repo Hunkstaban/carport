@@ -10,15 +10,16 @@
     margin-left: 52px;
 
 }
-.opret-bruger-href {
+.login-href {
     color: #337AB7;
     margin-bottom: 16px;
     margin-top: 12px;
-    margin-left: 52px;
+    /*margin-left: 52px;*/
+
 
 }
 
-.login-page {
+.create-user-page {
     height: 900px;
     width: 100%;
     background-color: #013D7A;
@@ -28,7 +29,7 @@
 
 }
 
-.login-box {
+.create-user-box {
 
     background-color: white;
     display: flex;
@@ -52,6 +53,24 @@
     margin-top: 12px;
     margin-left: 52px;
 }
+.name-input {
+    align-items: center;
+    font-family: Segoe UI Variable;
+    color: #333333;
+    font-size: large;
+    font-weight: 400;
+    width: 360px;
+    height: 50px;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    margin-top: 12px;
+    margin-left: 52px;
+    margin-right: 52px;
+}
+
+.name-input-input::placeholder {
+    color: #555555;
+}
 
 .email-input {
     align-items: center;
@@ -70,7 +89,6 @@
 
 .email-input::placeholder {
     color: #555555;
-
 }
 
 .password-input {
@@ -87,6 +105,15 @@
 }
 
 .glemt-kodeord{
+    margin-left: 52px;
+}
+
+.create-button {
+    color: #dddddd;
+    background-color: #296EC6;
+    width: 226px;
+    height: 50px;
+    margin-top: 12px;
     margin-left: 52px;
 }
 
