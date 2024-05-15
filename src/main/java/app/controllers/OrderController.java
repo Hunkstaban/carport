@@ -26,7 +26,7 @@ public class OrderController {
         app.get("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
-        app.post("approveInquiry", ctx -> approveInquiry(ctx, connectionPool));
+        app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
         app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
     }
@@ -64,7 +64,7 @@ public class OrderController {
         preparePriceDetails(ctx, order.getTotalPrice());
 
         } else {
-            int totalPrice = Integer.parseInt(ctx.formParam("newTotalPrice"));
+            int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
             int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
 
             updateInquiryPrice(ctx, totalPrice, costPrice);
@@ -98,9 +98,11 @@ public class OrderController {
         int profitPrice = totalPrice - PROCESSING_FEE;
         double newDegreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
 
+        String formattedDegreeOfCoverage = String.format("%.1f", newDegreeOfCoverage);
+
         ctx.attribute("totalPrice", totalPrice);
         ctx.attribute("processFee", PROCESSING_FEE);
-        ctx.attribute("degreeOfCoverage", newDegreeOfCoverage);
+        ctx.attribute("degreeOfCoverage", formattedDegreeOfCoverage);
         ctx.attribute("profitPrice", profitPrice);
         ctx.attribute("costPrice", costPrice);
 
@@ -139,8 +141,8 @@ public class OrderController {
     private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
-
-        if (OrderMapper.ApproveOrder(connectionPool, orderID)) {
+        int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
+        if (OrderMapper.ApproveOrder(connectionPool, orderID, totalPrice)) {
 
             String message = "Ordre Godkendt";
 
