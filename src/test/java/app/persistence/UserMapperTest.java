@@ -85,9 +85,7 @@ class UserMapperTest {
     }
 
 
-//  TODO: creater en user . giver dig en user tilbage some passer med det man creater. = tjatjing
-    // TODO: create user = tjek om user er logged in,
-
+    //  AN INTERGRATION-TEST ON CREATING A USER
     @Test
     void createUser() throws DatabaseException {
         int userIDExpected = 3;
@@ -107,33 +105,17 @@ class UserMapperTest {
     }
 
     // TODO: create allready existing user. = should give exception
+    // A INTEGRATION-TEST ON CREATING A USER THAT ALLREADY EXIST. THAT SHOULD THROWS AN DATABASE EXCEPTION
     @Test
     void createUserException() {
 
-//        int userIDExpected = 2;
-//        String nameExpected = "toby";
-//        String emailExpected = "toby@toby.dk";
-//        String passwordExpected = "1234";
-//        int roleIDExpected = 1;
-//
-//
-//        assertEquals(userIDExpected, user.getUserID());
-//        assertEquals(nameExpected, user.getName());
-//        assertEquals(emailExpected, user.getEmail());
-//        assertEquals(passwordExpected, user.getPassword());
-//        assertEquals(roleIDExpected, user.getRoleID());
-
         assertThrows(DatabaseException.class, () -> {
             User user = UserMapper.createUser("toby", "toby@toby.dk", "1234", connectionPool);
-            User user1 = UserMapper.createUser("toby", "toby@toby.dk", "1234", connectionPool);
+
         });
 
     }
-
-//
-
-    //TODO: loginer ind med forkerte creditials = exeption
-    //TODO: loginmethod med det rigtige creditias = tatjing
+    // AN INTEGRATION-TEST ON LOGGIN AN EXISTING USER IN
     @Test
     void login() throws DatabaseException {
         int userIDExpected = 1;
@@ -153,5 +135,14 @@ class UserMapperTest {
 
     }
 
+    // A INTEGRATION-TEST ON LOGGIN IN WITH USER THAT DOESN'T EXIST. THAT SHOULD THROW AN DATABASE EXCEPTION
+    @Test
+    void loginUserException() {
 
+        assertThrows(DatabaseException.class, () -> {
+            User user = UserMapper.login("bob", "bob@bob.dk", connectionPool);
+
+        });
+
+    }
 }
