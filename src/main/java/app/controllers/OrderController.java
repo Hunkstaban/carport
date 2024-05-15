@@ -58,13 +58,26 @@ public class OrderController {
 
         List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
+
+        if ((ctx.formParam("costPrice")) == null) {
+
         preparePriceDetails(ctx, order.getTotalPrice());
+
+        }
+
         ctx.attribute("svgDrawing", svgDrawwing);
         ctx.attribute("productListItems", productListItems);
         ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");
 
         ProductListCalc.clearList();
+
+    }
+
+    private static void updateInquiryPrice (Context ctx, int costPrice, int profitPrice) {
+
+
+
 
     }
 
