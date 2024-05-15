@@ -66,6 +66,12 @@
             <input type="radio" class="radio" id="beskrivelse" name="nav" value="beskrivelse">
             <label for="beskrivelse" class="tabs-label">Beskrivelse</label>
 
+            <div class="svg-and-description" th:utext="${svgDrawing}">
+
+
+
+            </div>
+
         </div>
         </div>
 
@@ -105,6 +111,12 @@
                 <tr>
                     <th>Længde</th>
                     <td th:text="${order.carportLength.length}"></td>
+                </tr>
+
+                <tr>
+                    <th>Skur</th>
+                    <td th:if="${order.shed} == true">Ja</td>
+                    <td th:if="${order.shed} == false">Nej</td>
                 </tr>
 
                 <tr>

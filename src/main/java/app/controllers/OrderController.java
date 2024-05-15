@@ -46,12 +46,17 @@ public class OrderController {
 
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
+        ProductListCalc.clearList();
+
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
 
+
         Order order = OrderMapper.getOrderByID(connectionPool, orderID);
+        String svgDrawwing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed());
 
         List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
+        ctx.attribute("svgDrawing", svgDrawwing);
         ctx.attribute("productListItems", productListItems);
         ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");

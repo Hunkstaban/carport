@@ -40,6 +40,7 @@
     background-color: #ffffff;
     margin-left: 20px;
     flex-direction: column;
+    overflow-y: auto;
 }
 
 
@@ -181,7 +182,7 @@
     display: block;
 }
 
-.radio:checked + .tabs-label + .beskrivelse-content {
+.radio:checked + .tabs-label + .svg-and-description {
     display: block;
 }
 
@@ -199,6 +200,13 @@
     color: white;
     background-color: #555555;
     border-color: #555555;
+}
+
+.svg-and-description {
+
+    display: none;
+    width: 100%;
+    margin-top: 10px;
 }
 
 
@@ -229,7 +237,6 @@
 .products-table {
     display: none;
 }
-
 
 
 
