@@ -112,7 +112,7 @@ public class OrderController {
         String remark = ctx.formParam("remark");
         int carportWidth;
         int carportLength;
-        double estimatedPrice = 0.00;
+        int estimatedPrice = 0;
         String inquiryDescription = "";
 
         try {
@@ -186,7 +186,7 @@ public class OrderController {
         return carportSvg.toString();
     }
 
-    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, double estimatedPrice) {
+    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
         ctx.sessionAttribute("carportWidthID", carportWidthID);
         ctx.sessionAttribute("carportLengthID", carportLengthID);
         ctx.sessionAttribute("description", inquiryDescription);
@@ -198,11 +198,11 @@ public class OrderController {
         return ctx;
     }
 
-    private static double calculatePrice (double price) {
+    private static int calculatePrice (int price) {
         double degreeOfCoverage = 0.40;
-        double processingFee = 2000.00;
-        double carportPrice = price;
-        carportPrice = (carportPrice * degreeOfCoverage) + price + processingFee;
+        int processingFee = 2000;
+        int carportPrice = price;
+        carportPrice = (int) ((carportPrice * degreeOfCoverage) + price + processingFee);
 
         return carportPrice;
     }

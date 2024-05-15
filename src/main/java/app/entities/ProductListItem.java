@@ -8,9 +8,9 @@ public class ProductListItem {
     private int length;
     private String unit;
     private int quantity;
-    private double price;
+    private int price;
 
-    public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, double price) {
+    public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, int price) {
         this.productID = productID;
         this.productName = productName;
         this.productDescription = productDescription;
@@ -44,7 +44,7 @@ public class ProductListItem {
         return quantity;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return price;
     }
 
