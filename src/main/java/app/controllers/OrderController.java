@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class OrderController {
+    private static final double DEGREE_OF_COVERAGE = 0.40;
+    private static final int PROCESSING_FEE = 2000;
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.post("/godkend-forespoergsel", ctx -> prepareInquiry(ctx, connectionPool));
@@ -56,6 +58,7 @@ public class OrderController {
 
         List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
+        preparePriceDetails(ctx, order.getTotalPrice());
         ctx.attribute("svgDrawing", svgDrawwing);
         ctx.attribute("productListItems", productListItems);
         ctx.attribute("order", order);
@@ -63,6 +66,19 @@ public class OrderController {
 
         ProductListCalc.clearList();
 
+    }
+
+    private static Context preparePriceDetails (Context ctx, int orderPrice) {
+
+        int profitPrice = orderPrice - PROCESSING_FEE;
+        int costPrice = (int) (profitPrice - (profitPrice * DEGREE_OF_COVERAGE));
+
+        ctx.attribute("totalPrice", orderPrice);
+        ctx.attribute("processFee", PROCESSING_FEE);
+        ctx.attribute("profitPrice", profitPrice);
+        ctx.attribute("costPrice", costPrice);
+
+        return ctx;
     }
 
     private static void viewAllOrders(Context ctx, ConnectionPool connectionPool) {
@@ -136,7 +152,7 @@ public class OrderController {
         for (ProductListItem productListItem : productList) {
             estimatedPrice += productListItem.getPrice(); //TODO: Needs the coverage degree added to the price
         }
-        estimatedPrice = calculatePrice(estimatedPrice);
+        estimatedPrice = calculateOrderPrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
@@ -203,11 +219,8 @@ public class OrderController {
         return ctx;
     }
 
-    private static int calculatePrice (int price) {
-        double degreeOfCoverage = 0.40;
-        int processingFee = 2000;
-        int carportPrice = price;
-        carportPrice = (int) ((carportPrice * degreeOfCoverage) + price + processingFee);
+    private static int calculateOrderPrice (int price) {
+        int carportPrice = (int) ((price * DEGREE_OF_COVERAGE) + price + PROCESSING_FEE);
 
         return carportPrice;
     }

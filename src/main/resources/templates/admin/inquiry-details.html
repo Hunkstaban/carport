@@ -132,8 +132,49 @@
 
         <div class="cost-display">
 
+            <h3>Dækningsgrad før prisforslag</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <th>Profit margin</th>
+                    <td th:text="${profitPrice}"></td>
+                </tr>
 
-            <p>akjdhjwaudwahj,dawujdwa</p>
+                <tr>
+                    <th>Kost pris</th>
+                    <td th:text="${costPrice}"></td>
+                </tr>
+
+                <tr>
+                    <th>Dækningsgrad</th>
+                    <td >TBD</td>
+                </tr>
+
+                <h3>Pris og behandlings gebyr</h3>
+                <tr>
+                    <th>Behandlings gebyr</th>
+                    <td th:text="${costPrice}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <h3>Prisforslag</h3>
+            <table>
+                <tbody>
+
+                <tr>
+                    <th>Behandlings gebyr</th>
+                    <td th:text="${costPrice}"></td>
+                </tr>
+
+                <tr>
+                    <th>Behandlings gebyr</th>
+                    <td th:text="${costPrice}"></td>
+                </tr>
+
+                </tbody>
+            </table>
 
         </div>
     </div>
