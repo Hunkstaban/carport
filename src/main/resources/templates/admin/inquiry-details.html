@@ -18,7 +18,7 @@
 
             <div class="order-nav-bar-right">
                 <form>
-                    <button type="submit" formaction="viewAllOrders">Tilbage</button>
+                    <button type="submit" formaction="/alle_ordrer">Tilbage</button>
                 </form>
 
             </div>
@@ -58,9 +58,10 @@
             </div>
 
             <input type="radio" class="radio" id="beskrivelse" name="nav" value="beskrivelse">
-            <label for="beskrivelse" class="tabs-label">Beskrivelse</label>
-
-            <div class="svg-and-description" th:utext="${svgDrawing}">
+            <label for="beskrivelse" class="tabs-label">Beskrivelse og skitse</label>
+            <div class="svg-and-description">
+                <p th:text="${order.description}"></p>
+                <p th:utext="${svgDrawing}">Carport skitse: </p>
 
 
             </div>
@@ -119,6 +120,11 @@
                     <tr>
                         <th>Kunde</th>
                         <td th:text="${order.user.name}"></td>
+                    </tr>
+
+                    <tr>
+                        <th></th>
+                        <td th:text="${order.user.email}"></td>
                     </tr>
 
                     </tbody>
@@ -187,12 +193,12 @@
                     <table>
                         <tbody>
                         <tr>
-                            <th style="color: #00CC66">Profit margin</th>
+                            <th style="color: #00CC66">Profit</th>
                             <td th:text="${profitPrice} + ' kr'" style="color: #00CC66"></td>
                         </tr>
 
                         <tr>
-                            <th>Kost pris</th>
+                            <th>Kostpris</th>
                             <td th:text="${costPrice} + ' kr'"></td>
                         </tr>
 
@@ -216,10 +222,10 @@
                             <td>
                                 <input type="text" name="totalPrice" th:value="${totalPrice}" style="color: #00CC66">
                             </td>
-                            <td style="color:red" th:if="${wrongPrice}">
-                                <p th:text="${wrongPrice}"></p>
-                            </td>
                         </tr>
+                        <div style="color:red" th:if="${wrongPrice}">
+                            <p th:text="${wrongPrice}"></p>
+                        </div>
 
                         </tbody>
                     </table>
