@@ -1,15 +1,21 @@
-.log-på{
+.log-på {
     margin-top: 136px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
 }
 
-.log-på-med-mail{
+.h1-signup-page {
+    display: flex;
+    justify-content: center;
+}
+
+.log-på-med-mail {
     margin-bottom: 12px;
     margin-left: 52px;
 
 }
+
 .login-href {
     color: #337AB7;
     margin-bottom: 16px;
@@ -31,14 +37,17 @@
 
 .create-user-box {
 
+    border-radius: 4px;
     background-color: white;
     display: flex;
     /*justify-content: center;*/
     display: block;
     align-items: center;
     width: 464px; /* Set the width of the box */
-    height: 600px; /* Set the height of the box */
+    height: 400px; /* Set the height of the box */
     padding: 52px;
+    padding-top: 160px;
+    padding-bottom: 136px;
     /*margin: !* Center the box horizontally and add some margin *!*/
     /*padding: !* Add some padding inside the box *!*/
     /*border: 1px solid #ccc; !* Optionally, add a light gray border *!*/
@@ -52,7 +61,9 @@
     height: 50px;
     margin-top: 12px;
     margin-left: 52px;
+
 }
+
 .name-input {
     align-items: center;
     font-family: Segoe UI Variable;
@@ -104,7 +115,7 @@
     margin-right: 52px;
 }
 
-.glemt-kodeord{
+.glemt-kodeord {
     margin-left: 52px;
 }
 
@@ -115,6 +126,7 @@
     height: 50px;
     margin-top: 12px;
     margin-left: 52px;
+    font-size: large;
 }
 
 

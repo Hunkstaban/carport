@@ -18,6 +18,7 @@
 
 }
 
+
 .login-page {
     height: 900px;
     width: 100%;
@@ -30,14 +31,18 @@
 
 .login-box {
 
+    border-radius: 4px;
+    color: white;
     background-color: white;
     display: flex;
     /*justify-content: center;*/
     display: block;
     align-items: center;
     width: 464px; /* Set the width of the box */
-    height: 600px; /* Set the height of the box */
+    height: 400px; /* Set the height of the box */
     padding: 52px;
+    padding-top: 136px;
+    padding-bottom: 136px;
     /*margin: !* Center the box horizontally and add some margin *!*/
     /*padding: !* Add some padding inside the box *!*/
     /*border: 1px solid #ccc; !* Optionally, add a light gray border *!*/
@@ -51,6 +56,7 @@
     height: 50px;
     margin-top: 12px;
     margin-left: 52px;
+    font-size: large;
 }
 
 .email-input {
