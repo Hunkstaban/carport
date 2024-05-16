@@ -216,6 +216,9 @@
                             <td>
                                 <input type="text" name="totalPrice" th:value="${totalPrice}" style="color: #00CC66">
                             </td>
+                            <td style="color:red" th:if="${wrongPrice}">
+                                <p th:text="${wrongPrice}"></p>
+                            </td>
                         </tr>
 
                         </tbody>

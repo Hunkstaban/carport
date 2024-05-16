@@ -98,13 +98,18 @@ public class OrderController {
         int profitPrice = totalPrice - PROCESSING_FEE;
         double newDegreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
 
-        String formattedDegreeOfCoverage = String.format("%.1f", newDegreeOfCoverage);
+        if (newDegreeOfCoverage < 5.0 || newDegreeOfCoverage > 40.0) {
+            String msg = "Dækningsgrad bliver under 5%/over 40% ved denne pris - vælg en anden pris";
+            ctx.attribute("wrongPrice", msg);
+        } else {
+            String formattedDegreeOfCoverage = String.format("%.1f", newDegreeOfCoverage);
 
-        ctx.attribute("totalPrice", totalPrice);
-        ctx.attribute("processFee", PROCESSING_FEE);
-        ctx.attribute("degreeOfCoverage", formattedDegreeOfCoverage);
-        ctx.attribute("profitPrice", profitPrice);
-        ctx.attribute("costPrice", costPrice);
+            ctx.attribute("totalPrice", totalPrice);
+            ctx.attribute("processFee", PROCESSING_FEE);
+            ctx.attribute("degreeOfCoverage", formattedDegreeOfCoverage);
+            ctx.attribute("profitPrice", profitPrice);
+            ctx.attribute("costPrice", costPrice);
+        }
 
         return ctx;
     }
