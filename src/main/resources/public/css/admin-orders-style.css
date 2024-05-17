@@ -94,13 +94,15 @@
     display: flex;
     justify-content: center;
     height: 20vh;
+    gap: 20px;
 }
 .top-nav form {
 
     display: flex;
-    width: 40%;
+    /*width: 40%;*/
+
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: center;
 }
 
 .top-nav button {
@@ -110,6 +112,7 @@
     width: 15vw;
     align-items: center;
     justify-content: center;
+    gap: 15px;
     background-color: #555555;
     border: 1px solid #555555;
     color: white;

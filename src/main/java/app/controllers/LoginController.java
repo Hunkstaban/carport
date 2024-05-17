@@ -48,6 +48,7 @@ public class LoginController {
     private static void adminLogin(Context ctx, ConnectionPool connectionPool, User user) {
 
         ctx.sessionAttribute("currentUser", user);
+
         ctx.render("admin/orders.html");
 
     }
