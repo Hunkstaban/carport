@@ -129,7 +129,7 @@ public class OrderController {
 
         List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
         for (ProductListItem productListItem : productList) {
-            estimatedPrice += productListItem.getPrice(); //TODO: Needs the coverage degree added to the price
+            estimatedPrice += productListItem.getCostPrice(); //TODO: Needs the coverage degree added to the price
         }
         estimatedPrice = calculatePrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);

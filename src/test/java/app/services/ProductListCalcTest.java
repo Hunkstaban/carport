@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class ProductListCalcTest {
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
@@ -18,8 +16,9 @@ class ProductListCalcTest {
     @Test
     void calculateProductList() {
         int carportWidth = 600;
-        int carportLength = 780;
-        ProductListCalc productListCalc = new ProductListCalc(carportWidth,carportLength,false, connectionPool);
+        int carportLength = 490;
+        boolean shed = false;
+        ProductListCalc productListCalc = new ProductListCalc(carportWidth,carportLength,shed, connectionPool);
         productListCalc.calculateProductList();
         List<ProductListItem> productList = productListCalc.getProductList();
         int totalPrice = 0;
@@ -30,9 +29,9 @@ class ProductListCalcTest {
             System.out.println("Beskrivelse: " + productListItem.getProductDescription());
             System.out.println("Længde: " + productListItem.getLength() + " mm.");
             System.out.println("Mængde: " + productListItem.getQuantity() + " " + productListItem.getUnit());
-            System.out.println("Pris: " + productListItem.getPrice() + " kr.\n");
+            System.out.println("Pris: " + productListItem.getCostPrice() + " kr.\n");
 
-            totalPrice += productListItem.getPrice();
+            totalPrice += productListItem.getCostPrice();
         }
 
         System.out.println("Carport pris: " + totalPrice);

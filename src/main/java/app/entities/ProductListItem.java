@@ -8,16 +8,16 @@ public class ProductListItem {
     private int length;
     private String unit;
     private int quantity;
-    private int price;
+    private int costPrice;
 
-    public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, int price) {
+    public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, int costPrice) {
         this.productID = productID;
         this.productName = productName;
         this.productDescription = productDescription;
         this.length = length;
         this.unit = unit;
         this.quantity = quantity;
-        this.price = price;
+        this.costPrice = costPrice;
     }
 
     public int getProductID() {
@@ -44,8 +44,8 @@ public class ProductListItem {
         return quantity;
     }
 
-    public int getPrice() {
-        return price;
+    public int getCostPrice() {
+        return costPrice;
     }
 
     @Override
