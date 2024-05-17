@@ -14,6 +14,7 @@ public class ProductListCalc {
     private static final int POST_TYPEID = 7;
     private static final int RAFTER_AND_BEAM_TYPEID = 6;
     private static final int ROOF_TYPEID = 5;
+    private static final int SCREW_TYPEID = 3;
     private static final int SHED_DIMENSIONS = 1400;
     private static final int CM_TO_MM = 10;
     private static final int UNSUPPORTED_SPACE = 1300;
@@ -190,6 +191,17 @@ public class ProductListCalc {
         if (optimalRoofPlate != null) {
             productList.add(new ProductListItem(optimalRoofPlate.getProductID(), optimalRoofPlate.getName(), description, optimalRoofPlate.getLength(), roofUnit, numberOfRoofPlates, price));
         }
+    }
+
+    private static void shedFacadeCalc() {
+
+    }
+    private static void calcScrews() {
+
+    }
+
+    private static void fittingsCalc() {
+
     }
 
 
