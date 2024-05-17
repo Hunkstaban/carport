@@ -170,6 +170,9 @@
                     <tr>
                         <th style="color: #00CC66" >Prisforslag</th>
                         <td th:text="${totalPrice} + ' kr'" style="color: #00CC66"></td>
+                        <div style="color:red" th:if="${wrongPrice}">
+                            <p th:text="${wrongPrice}"></p>
+                        </div>
                     </tr>
 
                     </tbody>
@@ -223,9 +226,6 @@
                                 <input type="text" name="totalPrice" th:value="${totalPrice}" style="color: #00CC66">
                             </td>
                         </tr>
-                        <div style="color:red" th:if="${wrongPrice}">
-                            <p th:text="${wrongPrice}"></p>
-                        </div>
 
                         </tbody>
                     </table>
