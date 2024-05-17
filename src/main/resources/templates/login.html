@@ -31,11 +31,12 @@
 
         <form method="post">
 
-            <a class="opret-bruger-href" th:href="@{/opret-bruger}">Opret bruger</a>
             <input class="email-input" type="email" name="email" placeholder="E-mailadresse" required>
             <br>
             <input class="password-input" type="password" name="password" placeholder="Kodeord" required>
 
+            <a class="opret-bruger-href" th:href="@{/opret-bruger}">Opret bruger</a>
+            <br>
             <button class="login-button" type="submit" formaction="login">Log ind</button>
 
             <div th:if="${loginError}">
