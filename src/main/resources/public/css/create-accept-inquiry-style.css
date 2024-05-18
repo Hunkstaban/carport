@@ -1,13 +1,16 @@
-.radiobuttontext {
-    color: red;
-    display: none;
-}
+/*.radiobuttontext {*/
+/*    color: red;*/
+/*    display: none;*/
+/*}*/
 
-input[type="radio"]:checked + label + .radiobuttontext {
-    display: block;
-}
+/*input[type="radio"]:checked + label + .radiobuttontext {*/
+/*    display: block;*/
+/*}*/
 
 
+/*body {*/
+/*    background-color: #F5F5F3;*/
+/*}*/
 
 .page {
     display: flex;
@@ -25,22 +28,18 @@ input[type="radio"]:checked + label + .radiobuttontext {
     background-color: #ffffff;
 }
 
-.form-element {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
+/*.form-element {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    gap: 24px;*/
+/*}*/
 
-body {
-    background-color: #F5F5F3;
-}
 
 .content-box {
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-
 
 .element {
     width: 538px;
@@ -69,12 +68,13 @@ input[type=radio] + label {
     /*box-sizing: border-box;*/
     /*border-collapse: collapse;*/
     background-color: #ffffff;
+    transition: 200ms;
 }
 
 input[type=radio]:checked + label {
     background-color: #013D7A;
+    border: #013D7A 1px solid;
     color: #ffffff;
-    border: none;
 }
 
 .radiobuttons {
@@ -101,16 +101,12 @@ input[type=radio]:checked + label {
     width: 100%;
 }
 
-.margin {
-    margin-top: 12px;
-}
-
 .drawing {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-flow: row nowrap;
-    width: 100%;
+    width: 536px;
     height: 100%;
     border-radius: 3px;
     border: #555555 solid 1px;
@@ -123,16 +119,16 @@ input[type=radio]:checked + label {
     justify-content: space-between;
 }
 
-.right {
+.order-right {
     width: 100%;
     display: flex;
     justify-content: flex-end;
 }
 
-button:hover {
-    background-color: #01478d;
-    cursor: pointer;
-}
+/*button:hover {*/
+/*    background-color: #01478d;*/
+/*    cursor: pointer;*/
+/*}*/
 
 
 
@@ -140,18 +136,18 @@ button:hover {
 
 
 
-.btn-override2{
-    width: 105px;
-    /*padding: 8px 32px;*/
-    height: 35px;
-    color: #ffffff;
-    background-color: #013D7A;
-    border-radius: 2px;
-    border: none;
-    transition: 200ms;
-}
+/*.btn-override2{*/
+/*    width: 105px;*/
+/*    !*padding: 8px 32px;*!*/
+/*    height: 35px;*/
+/*    color: #ffffff;*/
+/*    background-color: #013D7A;*/
+/*    border-radius: 2px;*/
+/*    border: none;*/
+/*    transition: 200ms;*/
+/*}*/
 
 
-.btn-override:hover {
-    background-color: #01478d;
-}
+/*.btn-override:hover {*/
+/*    background-color: #01478d;*/
+/*}*/

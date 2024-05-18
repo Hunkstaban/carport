@@ -5,21 +5,21 @@
 }
 
 .h1, h1 {
-    font-family: "Segoe UI Variable";
+    /*font-family: "Segoe UI Variable";*/
     font-weight: 400;
     font-size: 36px;
     color: #333333;
 }
 
 .h2, h2 {
-    font-family: "Segoe UI Variable";
+    /*font-family: "Segoe UI Variable";*/
     font-weight: 500;
     font-size: 20px;
     color: #333333;
 }
 
 .fbody, p, label {
-    font-family: "Segoe UI Variable";
+    /*font-family: "Segoe UI Variable";*/
     font-weight: 400;
     font-size: 14px;
     color: #333333;
@@ -34,9 +34,11 @@
     margin-block-start: 0px;
 }
 
+body {
+    background-color: #F5F5F3;
+}
 
-
-.btn-override {
+.btn-150px {
     width: 150px;
     height: 35px;
     color: #ffffff;
@@ -44,10 +46,37 @@
     border-radius: 2px;
     border: none;
     transition: 200ms;
+    cursor: pointer;
+}
+
+.btn-default {
+    /*width: 150px;*/
+    height: 35px;
+    /*padding: 8px 32px;*/
+    padding: 0px 32px;
+    color: #ffffff;
+    background-color: #013D7A;
+    border-radius: 2px;
+    border: none;
+    transition: 200ms;
+    cursor: pointer;
 }
 
 .btn-link {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.btn-default:hover {
+    background-color: #01478d;
+    cursor: pointer;
+}
+
+.input-field {
+    width: 100%; /* 538px */
+    height: 40px;
+    border-radius: 3px;
+    border: #555555 1px solid;
+    padding: 0px 10px;
 }

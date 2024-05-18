@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
+<!--    <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">-->
     <link rel="stylesheet" href="../../public/css/user/view-orders-style.css" th:href="@{/css/user/view-orders-style.css}">
     <link rel="stylesheet" href="../../public/css/global-styles.css" th:href="@{/css/global-styles.css}">
 
@@ -46,14 +46,14 @@
                 <div class="right-side-elements">
                     <form action="post">
                         <button th:if="${order.status.statusID == 2}" formaction="orderPaid" th:value="${order.orderID}"
-                                class="btn-override fbody"> Betal
+                                class="btn-150px fbody"> Betal
                         </button>
                     </form>
-                    <a class="btn-override btn-link fbody" href="#popup-details">Ordredetaljer</a>
-                    <a class="btn-override btn-link fbody" href="#popup-drawing">Se Tegning</a>
-                    <a th:if="${order.status.statusID >= 3}" class="btn-override btn-link fbody"
+                    <a class="btn-150px btn-link fbody" href="#popup-details">Ordredetaljer</a>
+                    <a class="btn-150px btn-link fbody" href="#popup-drawing">Se Tegning</a>
+                    <a th:if="${order.status.statusID >= 3}" class="btn-150px btn-link fbody"
                        href="#popup-parts-list">Se Stykliste</a>
-                    <button th:if="${order.status.statusID < 3}" class="grey btn-override fbody">Se Stykliste</button>
+                    <button th:if="${order.status.statusID < 3}" class="btn-150px fbody" id="grey">Se Stykliste</button>
                 </div>
             </div>
 

@@ -1,45 +1,45 @@
-* {
-    box-sizing: border-box;
-    font-family: "Segoe UI Variable";
-    text-decoration: none;
-}
+/** {*/
+/*    box-sizing: border-box;*/
+/*    font-family: "Segoe UI Variable";*/
+/*    text-decoration: none;*/
+/*}*/
 
-.h1, h1 {
-    font-family: "Segoe UI Variable";
-    font-weight: 400;
-    font-size: 36px;
-    color: #333333;
-}
+/*.h1, h1 {*/
+/*    font-family: "Segoe UI Variable";*/
+/*    font-weight: 400;*/
+/*    font-size: 36px;*/
+/*    color: #333333;*/
+/*}*/
 
-.h2, h2 {
-    font-family: "Segoe UI Variable";
-    font-weight: 500;
-    font-size: 20px;
-    color: #333333;
-}
+/*.h2, h2 {*/
+/*    font-family: "Segoe UI Variable";*/
+/*    font-weight: 500;*/
+/*    font-size: 20px;*/
+/*    color: #333333;*/
+/*}*/
 
-.fbody, p {
-    font-family: "Segoe UI Variable";
-    font-weight: 400;
-    font-size: 14px;
-    color: #333333;
-}
+/*.fbody, p {*/
+/*    font-family: "Segoe UI Variable";*/
+/*    font-weight: 400;*/
+/*    font-size: 14px;*/
+/*    color: #333333;*/
+/*}*/
 
-.fbodybold {
-    font-weight: 600;
-}
+/*.fbodybold {*/
+/*    font-weight: 600;*/
+/*}*/
 
-.fontfix {
-    margin-block-end: 0px;
-    margin-block-start: 0px;
-}
-
-
+/*.fontfix {*/
+/*    margin-block-end: 0px;*/
+/*    margin-block-start: 0px;*/
+/*}*/
 
 
-body {
-    background-color: #F5F5F3;
-}
+
+
+/*body {*/
+/*    background-color: #F5F5F3;*/
+/*}*/
 
 .page {
     width: 100%;
@@ -98,16 +98,6 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-}
-
-.btn-override {
-    width: 150px;
-    height: 35px;
-    color: #ffffff;
-    background-color: #013D7A;
-    border-radius: 2px;
-    border: none;
-    transition: 200ms;
 }
 
 .btn-link {
@@ -175,7 +165,8 @@ body {
 }
 
 
-.grey {
+#grey {
     background-color: #A6A6A6;
     color: #555555;
+    cursor: default;
 }

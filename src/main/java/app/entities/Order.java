@@ -19,6 +19,7 @@ public class Order {
     private boolean shed;
     private String userRemarks;
 
+    // Everything except user remarks, user, productList, totalPriceRaw
     public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
         this.orderID = orderID;
         this.userID = userID;
@@ -32,6 +33,7 @@ public class Order {
         this.shed = shed;
     }
 
+    // Everything except user, productList, totalPriceRaw
     public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed, String userRemarks) {
         this.orderID = orderID;
         this.userID = userID;
@@ -46,6 +48,7 @@ public class Order {
         this.userRemarks = userRemarks;
     }
 
+    // Everything except userID, productList, totalPriceRaw
     public Order(int orderID, User user, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed, String userRemarks) {
         this.orderID = orderID;
         this.user = user;
@@ -60,6 +63,7 @@ public class Order {
         this.userRemarks = userRemarks;
     }
 
+    // Everything except user remarks, userID, productList, totalPriceRaw
     public Order(int orderID, User user, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
         this.orderID = orderID;
         this.user = user;
@@ -73,6 +77,7 @@ public class Order {
         this.shed = shed;
     }
 
+    // Everything except user, userID, productList, totalPrice
     public Order(int orderID, String totalPriceRaw, String productListRaw, Status status, String date, CarportLength carportLength, CarportWidth carportWidth, boolean shed, String userRemarks, String description) {
         this.orderID = orderID;
         this.totalPriceRaw = totalPriceRaw;
