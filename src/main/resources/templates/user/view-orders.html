@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
-    <link rel="stylesheet" href="../../public/css/user/view-orders-style.css"
-          th:href="@{/css/user/view-orders-style.css}">
+    <link rel="stylesheet" href="../../public/css/user/view-orders-style.css" th:href="@{/css/user/view-orders-style.css}">
+    <link rel="stylesheet" href="../../public/css/global-styles.css" th:href="@{/css/global-styles.css}">
 
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
@@ -50,7 +51,8 @@
                     </form>
                     <a class="btn-override btn-link fbody" href="#popup-details">Ordredetaljer</a>
                     <a class="btn-override btn-link fbody" href="#popup-drawing">Se Tegning</a>
-                    <a th:if="${order.status.statusID >= 3}" class="btn-override btn-link fbody" href="#popup-parts-list">Se Stykliste</a>
+                    <a th:if="${order.status.statusID >= 3}" class="btn-override btn-link fbody"
+                       href="#popup-parts-list">Se Stykliste</a>
                     <button th:if="${order.status.statusID < 3}" class="grey btn-override fbody">Se Stykliste</button>
                 </div>
             </div>

@@ -1,0 +1,53 @@
+* {
+    box-sizing: border-box;
+    font-family: "Segoe UI Variable";
+    text-decoration: none;
+}
+
+.h1, h1 {
+    font-family: "Segoe UI Variable";
+    font-weight: 400;
+    font-size: 36px;
+    color: #333333;
+}
+
+.h2, h2 {
+    font-family: "Segoe UI Variable";
+    font-weight: 500;
+    font-size: 20px;
+    color: #333333;
+}
+
+.fbody, p, label {
+    font-family: "Segoe UI Variable";
+    font-weight: 400;
+    font-size: 14px;
+    color: #333333;
+}
+
+.fbodybold {
+    font-weight: 600;
+}
+
+.fontfix {
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+}
+
+
+
+.btn-override {
+    width: 150px;
+    height: 35px;
+    color: #ffffff;
+    background-color: #013D7A;
+    border-radius: 2px;
+    border: none;
+    transition: 200ms;
+}
+
+.btn-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

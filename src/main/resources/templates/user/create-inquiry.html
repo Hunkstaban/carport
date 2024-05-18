@@ -1,24 +1,98 @@
 <!DOCTYPE html>
+<html lang="en">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Frontpage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
-    <link th:href="@{/css/create-inquiry-style.css}" rel="stylesheet" href="../../public/css/create-inquiry-style.css">
+    <link th:href="@{/css/create-accept-inquiry-style.css}" rel="stylesheet" href="../../public/css/create-accept-inquiry-style.css">
+    <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../../public/css/global-styles.css">
+    <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
 
 <body>
 
 <!--Global header needed with links to customer order page and account info-->
-
 <h1>Velkommen til FOG </h1>
+
+<div class="page">
+
+    <div class="form">
+
+        <h2 class="fontfix">Carport med fladt tag</h2>
+
+        <form method="post" class="content-box">
+
+            <div class="element">
+                <label for="width">Carport bredde</label>
+                <select id="width" name="carportWidth" class="input-field">
+                    <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
+                            th:text="${width.width} + ' Cm' "></option>
+                </select>
+            </div>
+
+            <div class="element">
+                <label for="length">Carport længde</label>
+                <select id="length" name="carportLength" class="input-field">
+                    <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
+                            th:text="${length.length} + ' Cm' ">
+                    </option>
+                </select>
+            </div>
+
+            <div class="element">
+                <label for="roof">Carport trapeztag</label>
+                <select id="roof" name="" class="input-field">
+                    <option value="">Plastmo Ecolite</option>
+                </select>
+            </div>
+
+            <div class="element">
+                <label>Redskabsrum</label>
+                <div class="radiobuttons">
+                    <input id="shedTrue" type="radio" name="shed" value="true">
+                    <label for="shedTrue">Ja</label>
+
+                    <input id="shedFalse" type="radio" name="shed" value="false">
+                    <label for="shedFalse">Nej</label>
+                </div>
+            </div>
+
+            <div class="element">
+                <label for="textarea">Evt. bemærkninger eller særlige ønsker</label>
+                <textarea id="textarea" class="textarea" name="remark" rows="10" cols="40"
+                          placeholder="Skriv din kommentar her ..."></textarea>
+            </div>
+
+        <button formaction="/godkend-forespoergsel" class="btn-override2 margin">Næste</button>
+
+        </form>
+
+
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 
 
 <h2>Carport med fladt tag</h2>
 <div>
     <form method="post">
-            <label><h3>Vælg bredde</h3></label>
+        <label><h3>Vælg bredde</h3></label>
         <select name="carportWidth">
             <br>
             <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"
@@ -27,7 +101,7 @@
             <br>
         </select>
         <br>
-            <label><h3>Vælg længde</h3></label>
+        <label><h3>Vælg længde</h3></label>
         <select name="carportLength">
             <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"
                     th:text="${length.length} + ' Cm' ">
@@ -43,7 +117,7 @@
         <label><h3>Redskabsrum</h3></label>
         <br>
 
-            <input type="radio" name="shed" value="true">
+        <input type="radio" name="shed" value="true">
         <label>
             Ja
         </label>
@@ -57,7 +131,7 @@
         <h3>Evt. bemærkning / særlige ønsker:</h3>
 
 
-        <textarea id="textarea" name="remark" rows="10" cols="40"
+        <textarea id="textarea2" name="remark" rows="10" cols="40"
                   placeholder="Skriv din kommentar her ..."></textarea>
 
         <br>

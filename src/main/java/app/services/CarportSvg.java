@@ -25,7 +25,7 @@ public class CarportSvg {
         int carportOffset = arrowOffset + 20;
 
         //viewbox is min-x, min-y, width and height
-        arrowSvg = new Svg(0, 0, "0 0 " + (length+carportOffset + 5) + " " + width+arrowOffset, "50%"); //Arrows
+        arrowSvg = new Svg(0, 0, "0 0 " + (length+carportOffset + 5) + " " + (width+arrowOffset+15), "100%"); //Arrows
         arrowSvg.addArrow(arrowOffset, 0, arrowOffset, width, "stroke:#000000; marker-start: url(#beginArrow); marker-end: url(#endArrow)");
         arrowSvg.addArrow(carportOffset, width+arrowOffset, length+carportOffset, width+arrowOffset, "stroke:#000000;  marker-start: url(#beginArrow); marker-end: url(#endArrow)");
         arrowSvg.addText(15, width/2, -90, width);

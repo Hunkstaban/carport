@@ -1,0 +1,157 @@
+.radiobuttontext {
+    color: red;
+    display: none;
+}
+
+input[type="radio"]:checked + label + .radiobuttontext {
+    display: block;
+}
+
+
+
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 32px 40px;
+    background-color: #ffffff;
+}
+
+.form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+body {
+    background-color: #F5F5F3;
+}
+
+.content-box {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+.element {
+    width: 538px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.input-field, input {
+    width: 100%;
+    height: 40px;
+    border-radius: 3px;
+    border: #555555 1px solid;
+    padding: 0px 10px;
+}
+
+input[type=radio] {
+    /*visibility: hidden;*/
+    display: none;
+}
+
+input[type=radio] + label {
+    border: #555555 1px solid;
+    border-radius: 2px;
+    padding: 8px 32px;
+    /*box-sizing: border-box;*/
+    /*border-collapse: collapse;*/
+    background-color: #ffffff;
+}
+
+input[type=radio]:checked + label {
+    background-color: #013D7A;
+    color: #ffffff;
+    border: none;
+}
+
+.radiobuttons {
+    display: flex;
+    gap: 8px;
+}
+
+.textarea {
+    height: 48px;
+    padding: 6px 10px;
+    resize: vertical;
+}
+
+.zip-city-elements {
+    display: flex;
+    gap: 12px;
+}
+
+.zip {
+    width: 100%;
+    flex-shrink: 2.5;
+}
+.city {
+    width: 100%;
+}
+
+.margin {
+    margin-top: 12px;
+}
+
+.drawing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: row nowrap;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+    border: #555555 solid 1px;
+    padding: 15px;
+}
+
+.price-element {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.right {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button:hover {
+    background-color: #01478d;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+.btn-override2{
+    width: 105px;
+    /*padding: 8px 32px;*/
+    height: 35px;
+    color: #ffffff;
+    background-color: #013D7A;
+    border-radius: 2px;
+    border: none;
+    transition: 200ms;
+}
+
+
+.btn-override:hover {
+    background-color: #01478d;
+}
