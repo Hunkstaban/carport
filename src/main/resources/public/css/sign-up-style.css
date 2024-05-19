@@ -1,9 +1,4 @@
-.log-on {
-    margin-top: 136px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-}
+
 
 .h1-signup-page {
     display: flex;
@@ -40,13 +35,13 @@
     border-radius: 4px;
     background-color: white;
     display: flex;
-    /*justify-content: center;*/
-    display: block;
-    align-items: center;
-    width: 464px; /* Set the width of the box */
-    height: 400px; /* Set the height of the box */
+    justify-content: flex-start;
+    /*display: block;*/
+    /*align-items: flex-start;*/
+    /*width: 464px; !* Set the width of the box *!*/
+    /*height: 600px; !* Set the height of the box *!*/
     padding: 52px;
-    padding-top: 160px;
+    padding-top: 136px;
     padding-bottom: 136px;
     /*margin: !* Center the box horizontally and add some margin *!*/
     /*padding: !* Add some padding inside the box *!*/
@@ -54,15 +49,15 @@
     /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); !* Optionally, add a subtle shadow *!*/
 }
 
-.login-button {
-    color: #dddddd;
-    background-color: #296EC6;
-    width: 226px;
-    height: 50px;
-    margin-top: 12px;
-    margin-left: 52px;
+/*.login-button {*/
+/*    color: #dddddd;*/
+/*    background-color: #296EC6;*/
+/*    width: 226px;*/
+/*    height: 50px;*/
+/*    !*margin-top: 12px;*!*/
+/*    !*margin-left: 52px;*!*/
 
-}
+/*}*/
 
 .name-input {
     align-items: center;
@@ -73,10 +68,10 @@
     width: 360px;
     height: 50px;
     padding-left: 20px;
-    margin-bottom: 12px;
-    margin-top: 12px;
-    margin-left: 52px;
-    margin-right: 52px;
+    /*margin-bottom: 12px;*/
+    /*margin-top: 12px;*/
+    /*margin-left: 52px;*/
+    /*margin-right: 52px;*/
 }
 
 .name-input-input::placeholder {
@@ -92,10 +87,10 @@
     width: 360px;
     height: 50px;
     padding-left: 20px;
-    margin-bottom: 12px;
-    margin-top: 12px;
-    margin-left: 52px;
-    margin-right: 52px;
+    /*margin-bottom: 12px;*/
+    /*margin-top: 12px;*/
+    /*margin-left: 52px;*/
+    /*margin-right: 52px;*/
 }
 
 .email-input::placeholder {
@@ -109,10 +104,10 @@
     width: 360px;
     height: 50px;
     padding-left: 20px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    margin-left: 52px;
-    margin-right: 52px;
+    /*margin-top: 12px;*/
+    /*margin-bottom: 12px;*/
+    /*margin-left: 52px;*/
+    /*margin-right: 52px;*/
 }
 
 .forgot-password {
@@ -124,14 +119,30 @@
     background-color: #296EC6;
     width: 226px;
     height: 50px;
-    margin-top: 12px;
-    margin-left: 52px;
+    /*margin-top: 12px;*/
+    /*margin-left: 52px;*/
     font-size: large;
 }
 
 .basic-p {
     font-family: "Segoe UI Variable";
     align-items: center;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
+}
+
+.user-box-form{
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    gap: 24px;
+}
+
+.all-inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
 }
 
 

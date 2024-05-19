@@ -1,20 +1,24 @@
-.log-on{
-    margin-top: 136px;
-    margin-bottom: 20px;
+
+.h1-login-page {
     display: flex;
     justify-content: center;
+    margin-block-end: 0px;
+    margin-block-start: 0px;
 }
 
-.log-on-with-mail{
-    margin-bottom: 12px;
-    margin-left: 52px;
+.log-on-with-mail {
+    /*margin-bottom: 12px;*/
+    /*margin-left: 52px;*/
+    margin-block-end: 0px;
+    margin-block-start: 0px;
 
 }
+
 .create-user-href {
     color: #337AB7;
-    margin-bottom: 16px;
-    margin-top: 12px;
-    margin-left: 52px;
+    /*margin-bottom: 16px;*/
+    /*margin-top: 12px;*/
+    /*margin-left: 52px;*/
 
 }
 
@@ -31,14 +35,13 @@
 .login-box {
 
     border-radius: 4px;
-    color: white;
     background-color: white;
-    display: flex;
-    /*justify-content: center;*/
+    /*display: flex;*/
+    justify-content: flex-start;
     display: block;
-    align-items: center;
-    width: 464px; /* Set the width of the box */
-    height: 400px; /* Set the height of the box */
+    /*align-items: center;*/
+    /*width: 464px; !* Set the width of the box *!*/
+    /*height: 600px; !* Set the height of the box *!*/
     padding: 52px;
     padding-top: 136px;
     padding-bottom: 136px;
@@ -46,6 +49,8 @@
     /*padding: !* Add some padding inside the box *!*/
     /*border: 1px solid #ccc; !* Optionally, add a light gray border *!*/
     /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); !* Optionally, add a subtle shadow *!*/
+
+
 }
 
 .login-button {
@@ -53,8 +58,8 @@
     background-color: #296EC6;
     width: 226px;
     height: 50px;
-    margin-top: 12px;
-    margin-left: 52px;
+    /*margin-top: 12px;*/
+    /*margin-left: 52px;*/
     font-size: large;
 }
 
@@ -67,10 +72,10 @@
     width: 360px;
     height: 50px;
     padding-left: 20px;
-    margin-bottom: 12px;
-    margin-top: 12px;
-    margin-left: 52px;
-    margin-right: 52px;
+    /*margin-bottom: 12px;*/
+    /*margin-top: 12px;*/
+    /*margin-left: 52px;*/
+    /*margin-right: 52px;*/
 }
 
 .email-input::placeholder {
@@ -85,15 +90,41 @@
     width: 360px;
     height: 50px;
     padding-left: 20px;
-    margin-top: 12px;
-    margin-bottom: 12px;
-    margin-left: 52px;
-    margin-right: 52px;
+    /*    margin-top: 12px;*/
+    /*    margin-bottom: 12px;*/
+    /*    margin-left: 52px;*/
+    /*    margin-right: 52px;*/
 }
 
-.forgot-password{
+.forgot-password {
     margin-left: 52px;
 }
+
+.all-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-sizing: border-box;
+}
+
+.user-box-form{
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    /*gap: 16px;*/
+}
+
+.all-inputs-and-loginbutton{
+    gap: 16px;
+    display: flex;
+    flex-direction: column;
+}
+.all-item-inside-login-box{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
 
 
 

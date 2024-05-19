@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link th:href="@{https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap}" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap">
-    <link th:href="@{https://fonts.cdnfonts.com/css/segoe-ui-variable}" rel="stylesheet" href="https://fonts.cdnfonts.com/css/segoe-ui-variable">
+
+    <link th:href="@{https://fonts.cdnfonts.com/css/segoe-ui-variable}" rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/segoe-ui-variable">
 
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
@@ -26,24 +26,30 @@
 <div class="login-page">
 
     <div class="login-box">
-        <h1 class="log-on">Log på</h1>
-        <h2 class="log-on-with-mail">Log på med din e-mailadresse</h2>
+        <div class="all-item-inside-login-box">
+            <h1 class="h1-login-page">Log på</h1>
 
-        <form method="post">
+            <form class="user-box-form" method="post">
 
-            <input class="email-input" type="email" name="email" placeholder="E-mailadresse" required>
-            <br>
-            <input class="password-input" type="password" name="password" placeholder="Kodeord" required>
+                <div class="all-inputs-and-loginbutton">
+                    <div class="all-inputs">
+                        <h2 class="log-on-with-mail">Log på med din e-mailadresse</h2>
 
-            <a class="create-user-href" th:href="@{/opret-bruger}">Opret bruger</a>
-            <br>
-            <button class="login-button" type="submit" formaction="login">Log ind</button>
+                        <input class="email-input" type="email" name="email" placeholder="E-mailadresse" required>
 
-            <div th:if="${loginError}">
-                <p th:text="${loginError}"></p>
-                <p class="forgot-password">Har du glemt dit kodeord. Kontakt kundeservice</p>
-            </div>
-        </form>
+                        <input class="password-input" type="password" name="password" placeholder="Kodeord" required>
+
+                        <a class="create-user-href" th:href="@{/opret-bruger}">Opret bruger</a>
+                    </div>
+
+                    <button class="login-button" type="submit" formaction="login">Log ind</button>
+                    <div th:if="${loginError}">
+                        <p th:text="${loginError}"></p>
+                        <p class="forgot-password">Har du glemt dit kodeord. Kontakt kundeservice</p>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
 </div>
