@@ -48,13 +48,11 @@ public class OrderController {
 
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
-        ProductListCalc.clearList();
-
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
 
 
         Order order = OrderMapper.getOrderByID(connectionPool, orderID);
-        String svgDrawwing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed());
+        String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
         List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
@@ -70,12 +68,10 @@ public class OrderController {
             updateInquiryPrice(ctx, order, totalPrice, costPrice);
         }
 
-        ctx.attribute("svgDrawing", svgDrawwing);
+        ctx.attribute("svgDrawing", svgDrawing);
         ctx.attribute("productListItems", productListItems);
         ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");
-
-        ProductListCalc.clearList();
 
     }
 
@@ -164,7 +160,6 @@ public class OrderController {
     }
 
     private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
-        ProductListCalc.clearList();
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
@@ -191,7 +186,7 @@ public class OrderController {
             estimatedPrice += productListItem.getCostPrice();
         }
         estimatedPrice = calculateOrderPrice(estimatedPrice);
-        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
+        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed, connectionPool);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
         ctx.render("user/accept-inquiry.html");
@@ -238,9 +233,9 @@ public class OrderController {
     }
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
-    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
+    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         Locale.setDefault(new Locale("US"));
-        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed);
+        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed, connectionPool);
 
         return carportSvg.toString();
     }
