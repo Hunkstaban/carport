@@ -18,7 +18,7 @@ class ProductListCalcTest {
     @Test
     void calculateProductList() {
         int carportWidth = 600;
-        int carportLength = 780;
+        int carportLength = 600;
         boolean shed = false;
         ProductListCalc productListCalc = new ProductListCalc(carportWidth,carportLength,shed, connectionPool);
         productListCalc.calculateProductList();

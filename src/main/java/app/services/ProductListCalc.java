@@ -90,15 +90,17 @@ public class ProductListCalc {
         String beamUnit = "Stk.";
         int costPrice;
         int beamsNeeded;
+
+        // Calculating the distance inbetween the posts supporting the carport
         numberOfPostsWOShed = numberOfPosts - (shed ? 5 : 0);
         int spaceBetweenPosts = (carportLength - UNSUPPORTED_SPACE) / (numberOfPostsWOShed / 2 - 1) + UNSUPPORTED_SPACE;
 
-        // Variables to keep track of and store the optimal beam option
+        // Variables to keep track of and store woode waste and the optimal beam option
         int leastWoodWaste = Integer.MAX_VALUE;
         Product optimalBeam = null;
 
 
-        //  Go through each wood.
+        // Looping through each beam, finding the optimal length that waste the least wood
         for (Product beam : beamList) {
 
 
@@ -118,8 +120,8 @@ public class ProductListCalc {
                     beamsNeeded = ((int) Math.floor(beamsNeededDouble) + 1) * 2;
                 }
 
-                int totalBeamLength = beam.getLength() * beamsNeeded; // Calculate total beam length
-                int woodWasted = totalBeamLength - totalCarportLength; // Calculate beam wasted with this wood
+                int totalBeamLength = beam.getLength() * beamsNeeded;
+                int woodWasted = totalBeamLength - totalCarportLength;
 
                 if (woodWasted < leastWoodWaste) {
                     leastWoodWaste = woodWasted;
@@ -143,10 +145,11 @@ public class ProductListCalc {
         List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int costPrice;
 
-        // Variable to keep track of and store the optimal rafter option
+        // Variables to keep track of and store the optimal rafter option
         int leastWoodWaste = Integer.MAX_VALUE;
         Product optimalRafter = null;
 
+        // Looping through each rafter, finding the optimal length that waste the least wood
         for (Product rafter : rafterOptions) {
             if (rafter.getLength() >= carportWidth) {
                 int woodWasted = rafter.getLength() - carportWidth;
@@ -171,7 +174,7 @@ public class ProductListCalc {
         String roofUnit = "Stk.";
         int price;
 
-        // Calculate the number of width plates accounting for overlap'
+        // Calculate the number of roof plates needed for the width, accounting for overlap
         int amountWidthPlates = 0;
         int panelWidthAdjusted = DEFAULT_ROOF_PANEL_WIDTH - ROOF_PANEL_OVERLAP;
         double amountWidthPanelsDouble = ((double) carportWidth - ROOF_PANEL_OVERLAP) / panelWidthAdjusted;
@@ -187,6 +190,7 @@ public class ProductListCalc {
         int leastRoofWaste = Integer.MAX_VALUE;
         Product optimalRoofPanel = null;
 
+        // Looping through each roof plate, finding the optimal length that waste the least amount of material
         for (Product roofPanel : roofList) {
 
             int amountLengthPanels = 0;
