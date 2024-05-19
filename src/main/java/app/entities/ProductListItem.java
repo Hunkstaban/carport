@@ -17,12 +17,12 @@ public class ProductListItem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ProductListItem that = (ProductListItem) o;
-        return productID == that.productID && length == that.length && quantity == that.quantity && price == that.price && Objects.equals(productName, that.productName) && Objects.equals(productDescription, that.productDescription) && Objects.equals(unit, that.unit);
+        return productID == that.productID && length == that.length && quantity == that.quantity && costPrice == that.costPrice && Objects.equals(productName, that.productName) && Objects.equals(productDescription, that.productDescription) && Objects.equals(unit, that.unit);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productID, productName, productDescription, length, unit, quantity, price);
+        return Objects.hash(productID, productName, productDescription, length, unit, quantity, costPrice);
     }
 
     public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, int costPrice) {

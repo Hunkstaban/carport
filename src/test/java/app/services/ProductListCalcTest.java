@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class ProductListCalcTest {
     private static final String USER = "postgres";
     private static final String PASSWORD = "postgres";
@@ -16,7 +18,7 @@ class ProductListCalcTest {
     @Test
     void calculateProductList() {
         int carportWidth = 600;
-        int carportLength = 490;
+        int carportLength = 780;
         boolean shed = false;
         ProductListCalc productListCalc = new ProductListCalc(carportWidth,carportLength,shed, connectionPool);
         productListCalc.calculateProductList();

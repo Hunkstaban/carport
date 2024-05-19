@@ -183,7 +183,7 @@ public class OrderController {
 
         List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
         for (ProductListItem productListItem : productList) {
-            estimatedPrice += productListItem.getPrice();
+            estimatedPrice += productListItem.getCostPrice();
         }
         estimatedPrice = calculateOrderPrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);

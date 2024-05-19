@@ -53,10 +53,6 @@ public class ProductListCalc {
         calcRoof(carportWidth, carportLength);
     }
 
-    public void calculatePosts() {
-        calcPosts(carportLength, shed);
-    }
-
     // TODO: Find the option that will waste the least amount of wood/roof AND will be the cheapest
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock
@@ -80,134 +76,11 @@ public class ProductListCalc {
 
         costPrice = numberOfPosts * optimalPost.getCostPrice();
 
-        /* Alternative way to calculate it/Not on one line
-                int remainingLength = carportLength - UNSUPPORTED_SPACE;
-                int ratio = (int) Math.floor((double)remainingLength / MAX_DISTANCE_BETWEEN_POSTS);
-                beamPosts += ratio * 2;
-                numberOfPosts += ratio * 2 + (shed ? 5 : 0);*/
-
         // Add post details to product list
         if (optimalPost != null) {
             productList.add(new ProductListItem(optimalPost.getProductID(), optimalPost.getName(), description, optimalPost.getLength(), postUnit, numberOfPosts, costPrice));
         }
     }
-
-    /*private static void calcBeams(int carportLength) {
-        List<Product> beamOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
-        int totalCarportLength = 2 * carportLength;
-        String description = "Remme i sider - sadles ned i stolper";
-        String beamUnit = "Stk.";
-        int costPrice;
-
-        // Variables to keep track of and store the optimal beam option
-        int leastWoodWaste = Integer.MAX_VALUE;
-        Product optimalBeam = null;
-
-        for (Product beam : beamOptions) {
-            int beamLength = beam.getLength();
-            int beamsNeeded = (int) Math.ceil((double) totalCarportLength / beamLength);
-            int totalBeamLength = beamsNeeded * beamLength;
-            int woodWaste = totalBeamLength - totalCarportLength;
-
-            // Update optimal beam if it results in less wood waste
-            if (woodWaste < leastWoodWaste && numberOfPosts == 4) {
-                leastWoodWaste = woodWaste;
-                numberOfBeams = beamsNeeded;
-                optimalBeam = beam;
-            } else if (woodWaste < leastWoodWaste && beamLength > MAX_DISTANCE_BETWEEN_POSTS + UNSUPPORTED_SPACE && beamLength < 6000) {
-                leastWoodWaste = woodWaste;
-                numberOfBeams = beamsNeeded;
-                optimalBeam = beam;
-            }
-        }
-
-        costPrice = numberOfBeams * optimalBeam.getCostPrice();
-
-        // Add beam details to product list
-        if (optimalBeam != null) {
-            productList.add(new ProductListItem(optimalBeam.getProductID(), optimalBeam.getName(), description, optimalBeam.getLength(), beamUnit, numberOfBeams, costPrice));
-        }
-    }*/
-
-    /*private static void calcRafters(int carportWidth, int carportLength) {
-        String description = "Spær - monteres på rem";
-        String rafterUnit = "Stk.";
-        List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
-        int costPrice;
-
-        // Variable to keep track of and store the optimal rafter option
-        Product optimalRafter = null;
-
-        // Iterate through the list of rafter options to find the suitable option based on carport width
-        for (Product rafter : rafterOptions) {
-            if (carportWidth <= rafter.getLength()) {
-                optimalRafter = rafter;
-                break;
-            }
-        }
-
-        // Calculate the number of rafters needed
-        numberOfRafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
-
-        costPrice = numberOfRafters * optimalRafter.getCostPrice();
-
-        // Add the rafter product to the product list
-        if (optimalRafter != null) {
-            productList.add(new ProductListItem(optimalRafter.getProductID(), optimalRafter.getName(), description, optimalRafter.getLength(), rafterUnit, numberOfRafters, costPrice));
-        }
-    }*/
-
-    /*private static void calcRoof(int carportWidth, int carportLength) {
-        List<Product> roofOptions = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
-        String description = "Tagplader - monteres på spær";
-        String roofUnit = "Stk.";
-        int costPrice;
-
-        // Calculate the number of roof plates needed for the width, accounting for overlap
-        int plateWidthAdjusted = DEFAULT_ROOF_PLATE_WIDTH - ROOF_PANEL_OVERLAP;
-        int amountWidthPlates = (int) Math.ceil(((double) carportWidth / plateWidthAdjusted));
-
-        // If the overlap accounted roof plate doesn't fit the carport width, add an extra plate
-        if (carportWidth % plateWidthAdjusted == 0) {
-            amountWidthPlates += 1;
-        }
-
-
-
-    Can be done with a single line of code, however it's a little messy:
-
-
-       amountWidthPlates = (int)Math.floor((double) carportWidth % plateWidthAdjusted == 0 ? (carportWidth / plateWidthAdjusted) : ((carportWidth / plateWidthAdjusted) + 1));
-
-
-
-        // Variables to keep track of and store optimal roof plate option
-        int leastRoofWaste = Integer.MAX_VALUE;
-        Product optimalRoofPlate = null;
-
-        for (Product roofPlate : roofOptions) {
-            // Calculate the number of plates needed for the length, accounting for overlap
-            int amountLengthPlates = (int) Math.ceil((double) carportLength / (carportLength >= roofPlate.getLength() ? roofPlate.getLength() : roofPlate.getLength() - ROOF_PANEL_OVERLAP));
-
-            // Calculate total panel length and roof waste
-            int totalPanelLength = amountLengthPlates * roofPlate.getLength();
-            int roofWasted = totalPanelLength - carportLength;
-
-            // Update if this roof plate results in less waste
-            if (roofWasted < leastRoofWaste) {
-                leastRoofWaste = roofWasted;
-                numberOfRoofPlates = amountLengthPlates * amountWidthPlates;
-                optimalRoofPlate = roofPlate;
-            }
-        }
-
-        costPrice = numberOfRoofPlates * optimalRoofPlate.getCostPrice();
-
-        // Add the optimal roof plate to the productList
-        if (optimalRoofPlate != null) {
-            productList.add(new ProductListItem(optimalRoofPlate.getProductID(), optimalRoofPlate.getName(), description, optimalRoofPlate.getLength(), roofUnit, numberOfRoofPlates, costPrice));
-        }
-    }*/
 
 
     private static void calcBeams(int carportLength) {
@@ -218,9 +91,12 @@ public class ProductListCalc {
         int costPrice;
         int beamsNeeded;
         numberOfPostsWOShed = numberOfPosts - (shed ? 5 : 0);
+        int spaceBetweenPosts = (carportLength - UNSUPPORTED_SPACE) / (numberOfPostsWOShed / 2 - 1) + UNSUPPORTED_SPACE;
+
         // Variables to keep track of and store the optimal beam option
         int leastWoodWaste = Integer.MAX_VALUE;
         Product optimalBeam = null;
+
 
         //  Go through each wood.
         for (Product beam : beamList) {
@@ -228,16 +104,18 @@ public class ProductListCalc {
 
             if (
                 (numberOfPostsWOShed == 4 && beam.getLength() > carportLength) ||
-                (numberOfPostsWOShed > 4 && beam.getLength() == carportLength) ||
-                (numberOfPostsWOShed > 4 && beam.getLength() >= (carportLength - UNSUPPORTED_SPACE) / (numberOfPostsWOShed / 2 - 1) + UNSUPPORTED_SPACE)
+                (numberOfPostsWOShed > 4 && beam.getLength() == carportLength || beam.getLength() >= spaceBetweenPosts)
+                //(numberOfPostsWOShed > 4 && beam.getLength() >= spaceBetweenPosts)
             ) {
 
-                double beamsNeededDouble = (double) carportLength / beam.getLength(); // Calculate beam needed in decimal
+                //
+                double beamsNeededDouble = (double) carportLength / beam.getLength();
 
+                //
                 if (beamsNeededDouble % 1 == 0) {
                     beamsNeeded = (int) beamsNeededDouble * 2;
                 } else {
-                    beamsNeeded = ((int) Math.floor(beamsNeededDouble) + 1) * 2; // Calculate beam needed
+                    beamsNeeded = ((int) Math.floor(beamsNeededDouble) + 1) * 2;
                 }
 
                 int totalBeamLength = beam.getLength() * beamsNeeded; // Calculate total beam length
