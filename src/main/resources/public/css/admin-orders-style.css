@@ -5,27 +5,16 @@
     justify-content: center;
 }
 
-.top-nav {
-
-    display: flex;
-    justify-content: center;
-}
 
 .centerpage {
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 90%;
 }
 
-.filter-menu {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.flex-filter {
-    flex-direction: row;
-}
 
 .table-container {
     display: flex;
@@ -35,6 +24,7 @@
 }
 
 .orders-table {
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -42,14 +32,36 @@
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    font-family: "Segoe UI Variable", serif;
+    font-weight: 400;
+}
+
+.orders-table button {
+
+    display: flex;
+    height: 30px;
+    width: 80px;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 1px solid #555555;
+    color: #333333;;
+    font-family: "Segoe UI Variable", serif;
+    font-weight: 400;
+}
+
+.orders-table button:hover {
+
+    background-color: #333333;
+    color: white;
 }
 
 .orders-table th {
-    background-color: #f2f2f2;
+    background-color: #ffffff;
 }
 
 .orders-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #ffffff;
 }
 
 .orders-table tbody tr:hover {
@@ -76,4 +88,78 @@
 .orders-table input[type="text"]:disabled {
     background-color: transparent;
     border: none;
+}
+.top-nav {
+
+    display: flex;
+    justify-content: center;
+    height: 20vh;
+}
+.top-nav form {
+
+    display: flex;
+    width: 40%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.top-nav button {
+
+    display: flex;
+    height: 12vh;
+    width: 15vw;
+    align-items: center;
+    justify-content: center;
+    background-color: #555555;
+    border: 1px solid #555555;
+    color: white;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+
+}
+
+.top-nav button:hover {
+
+    background-color: #333333;
+}
+
+.flex-filter {
+
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.filter-menu {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.filter-menu {
+
+    gap: 10px;
+}
+
+.flex-filter button {
+
+    display: flex;
+    height: 3vh;
+    width: 5vw;
+    align-items: center;
+    justify-content: center;
+    background-color: #555555;
+    border: 1px solid #555555;
+    color: white;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 12px;
+}
+
+.flex-filter button:hover {
+
+    background-color: #333333;
 }

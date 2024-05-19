@@ -9,26 +9,113 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
 import app.persistence.UserMapper;
+import app.services.CarportSvg;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderController {
+    private static final double DEGREE_OF_COVERAGE = 0.40;
+    private static final int PROCESSING_FEE = 2000;
 
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.post("/godkend-forespoergsel", ctx -> prepareInquiry(ctx, connectionPool));
         app.post("/ny-ordre", ctx -> newOrder(ctx, connectionPool));
-        app.post("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
-        app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
-        app.post("inquiryDetailsPage", ctx -> inquiryDetailsPage(ctx, connectionPool));
+        app.get("/alle_ordrer", ctx -> viewAllOrders(ctx, connectionPool));
+        app.post("/alle_ordrer_filter", ctx -> filterByStatus(ctx, connectionPool));
+        app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
+        app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
+        app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
+        app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
+    }
 
+    private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
+        User user = ctx.sessionAttribute("currentUser");
+        OrderMapper.setOrderPaid(connectionPool, user);
+        getOrdersByUser(ctx,connectionPool);
+    }
+
+    private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
+
+        User user = ctx.sessionAttribute("currentUser");
+        List<Order> orderList = OrderMapper.getOrdersByUser(connectionPool, user);
+        ctx.attribute("orderList", orderList);
+        ctx.render("user/view-orders.html");
 
     }
 
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
+        ProductListCalc.clearList();
+
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+
+
+        Order order = OrderMapper.getOrderByID(connectionPool, orderID);
+        String svgDrawwing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed());
+
+        List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
+
+
+        if ((ctx.formParam("costPrice")) == null) {
+
+        preparePriceDetails(ctx, order.getTotalPrice());
+
+        } else {
+            int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
+            int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
+
+            updateInquiryPrice(ctx, order, totalPrice, costPrice);
+        }
+
+        ctx.attribute("svgDrawing", svgDrawwing);
+        ctx.attribute("productListItems", productListItems);
+        ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");
+
+        ProductListCalc.clearList();
+
+    }
+
+
+    private static Context preparePriceDetails (Context ctx, int orderPrice) {
+
+        int profitPrice = orderPrice - PROCESSING_FEE;
+        int costPrice = (int) ((profitPrice) / (1 + DEGREE_OF_COVERAGE));
+
+        ctx.attribute("degreeOfCoverage", DEGREE_OF_COVERAGE * 100);
+        ctx.attribute("totalPrice", orderPrice);
+        ctx.attribute("processFee", PROCESSING_FEE);
+        ctx.attribute("profitPrice", profitPrice);
+        ctx.attribute("costPrice", costPrice);
+
+        return ctx;
+    }
+
+    private static Context updateInquiryPrice (Context ctx, Order order, int totalPrice, int costPrice) {
+        int profitPrice = totalPrice - PROCESSING_FEE;
+        double newDegreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
+
+        if (newDegreeOfCoverage < 5.0 || newDegreeOfCoverage > 40.0) {
+            String msg = "Dækningsgrad bliver under 5%/over 40% ved denne pris - vælg en anden pris";
+            ctx.attribute("totalPrice", order.getTotalPrice());
+            ctx.attribute("degreeOfCoverage", DEGREE_OF_COVERAGE * 100);
+            ctx.attribute("profitPrice", order.getTotalPrice() - PROCESSING_FEE);
+            ctx.attribute("wrongPrice", msg);
+        } else {
+            String formattedDegreeOfCoverage = String.format("%.1f", newDegreeOfCoverage);
+
+            ctx.attribute("totalPrice", totalPrice);
+            ctx.attribute("degreeOfCoverage", formattedDegreeOfCoverage);
+            ctx.attribute("profitPrice", profitPrice);
+        }
+
+        ctx.attribute("processFee", PROCESSING_FEE);
+        ctx.attribute("costPrice", costPrice);
+
+        return ctx;
     }
 
     private static void viewAllOrders(Context ctx, ConnectionPool connectionPool) {
@@ -60,6 +147,22 @@ public class OrderController {
         return ctx;
     }
 
+    private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) {
+
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+        int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
+        if (OrderMapper.ApproveOrder(connectionPool, orderID, totalPrice)) {
+
+            String message = "Ordre Godkendt";
+
+            ctx.attribute("approved", message);
+            inquiryDetailsPage(ctx, connectionPool);
+            return true;
+        }
+         return false;
+
+    }
+
     private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
@@ -84,8 +187,9 @@ public class OrderController {
 
         List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
         for (ProductListItem productListItem : productList) {
-            estimatedPrice += productListItem.getPrice(); //TODO: Needs the coverage degree added to the price
+            estimatedPrice += productListItem.getCostPrice();
         }
+        estimatedPrice = calculateOrderPrice(estimatedPrice);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
@@ -126,7 +230,7 @@ public class OrderController {
         }
     }
 
-    private static List<ProductListItem> prepareProductList (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+    private static List<ProductListItem> prepareProductList(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
         productListCalc.calculateProductList();
         return productListCalc.getProductList();
@@ -134,7 +238,10 @@ public class OrderController {
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
     private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
-        return "test";
+        Locale.setDefault(new Locale("US"));
+        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed);
+
+        return carportSvg.toString();
     }
 
     private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
@@ -147,5 +254,11 @@ public class OrderController {
         ctx.sessionAttribute("carportDrawing", svgDrawing);
         ctx.sessionAttribute("estimatedPrice", estimatedPrice);
         return ctx;
+    }
+
+    private static int calculateOrderPrice (int costPrice) {
+        int carportPrice = (int) (((costPrice * DEGREE_OF_COVERAGE) + costPrice) + PROCESSING_FEE);
+
+        return carportPrice;
     }
 }

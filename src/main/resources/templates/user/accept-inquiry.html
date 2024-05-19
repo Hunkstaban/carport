@@ -8,7 +8,7 @@
 
 <p> kontaktinformation </p>
 
-<form method="get">
+<form method="post">
     <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
     <a th:href="@{/renderSignupPage}">Opret bruger</a>
     <div>
@@ -44,21 +44,19 @@
             <br>
         </div>
     </div>
-</form>
-<div class="show-inquiry">
-    <form method="post">
+    <div class="show-inquiry" style="height: 100vh">
+
         <p th:text="${session.description}"></p>
         <br>
         <h3>Tegning:</h3>
-        <p th:text="${session.carportDrawing}"></p>
+        <p th:utext="${session.carportDrawing}"></p>
         <br>
         <h3>Estimeret pris: </h3>
         <p th:text="${session.estimatedPrice}"></p>
         <br>
-    </form>
-</div>
+    </div>
 
-<form method="post">
+
     <button type="submit" formaction="ny-ordre">
         Send forespørgelse
     </button>

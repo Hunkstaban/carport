@@ -11,6 +11,55 @@ import java.util.List;
 
 public class OrderMapper {
 
+
+    public static Order getOrderByID(ConnectionPool connectionPool, int orderID) {
+
+        String sql = "SELECT * FROM public.view_all_orders WHERE order_id = ?";
+        Order order = null;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, orderID);
+
+            ResultSet rs = ps.executeQuery();
+
+
+            if (rs.next()) {
+
+                int userID = rs.getInt("user_id");
+                String userName = rs.getString("user_name");
+                String userEmail = rs.getString("user_email");
+                int roleID = rs.getInt("role_id");
+                int carportLengthID = rs.getInt("carport_length_id");
+                int carportLength = rs.getInt("carport_length");
+                int carportWidthID = rs.getInt("carport_width_id");
+                int carportWidth = rs.getInt("carport_width");
+                String description = rs.getString("description");
+                int totalPrice = rs.getInt("total_price");
+                String productListRaw = rs.getString("product_list");
+                int statusID1 = rs.getInt("status_id");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                boolean shed = rs.getBoolean("shed");
+                String userRemarks = rs.getString("user_remarks");
+
+                User user = new User(userID, userName, userEmail, roleID);
+                Status status1 = new Status(statusID1, status);
+                CarportLength carportLength1 = new CarportLength(carportLengthID, carportLength);
+                CarportWidth carportWidth1 = new CarportWidth(carportWidthID, carportWidth);
+
+                order = new Order(orderID, user, carportLength1, carportWidth1, description,
+                        totalPrice, productListRaw, status1, date, shed, userRemarks);
+
+            }
+            return order;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static List<Order> getOrders(ConnectionPool connectionPool, Integer statusID) {
 
         String sql;
@@ -26,7 +75,7 @@ public class OrderMapper {
         }
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-        if (statusID != null) {
+            if (statusID != null) {
 
                 ps.setInt(1, statusID);
             }
@@ -63,13 +112,13 @@ public class OrderMapper {
 
             }
             return orderList;
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
 
-    public static int getWidthByID (int carportWidthID, ConnectionPool connectionPool) throws DatabaseException {
+    public static int getWidthByID(int carportWidthID, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM carport_widths WHERE carport_width_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
@@ -84,7 +133,7 @@ public class OrderMapper {
             } else {
                 throw new DatabaseException("Error: no width found");
             }
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
@@ -96,7 +145,7 @@ public class OrderMapper {
         List<Status> statusList = new ArrayList<>();
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-          ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
 
@@ -107,18 +156,18 @@ public class OrderMapper {
             }
 
             return statusList;
-           } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static int getLengthByID (int carportLengthID, ConnectionPool connectionPool) throws DatabaseException {
+    public static int getLengthByID(int carportLengthID, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM carport_lengths WHERE carport_length_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-              ps.setInt(1, carportLengthID);
-              ResultSet rs = ps.executeQuery();
+            ps.setInt(1, carportLengthID);
+            ResultSet rs = ps.executeQuery();
 
 
             if (rs.next()) {
@@ -133,7 +182,7 @@ public class OrderMapper {
         }
     }
 
-    public static int newOrder (User user, int carportWidthID, int carportLengthID, String description, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
+    public static int newOrder(User user, int carportWidthID, int carportLengthID, String description, boolean shed, String remark, List<ProductListItem> productList, int totalPrice, String carportDrawing, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "INSERT INTO orders (user_id, carport_width_id, carport_length_id, description, total_price, product_list, shed, user_remark, carport_drawing) VALUES (?,?,?,?,?,?,?,?,?)";
 
         try (
@@ -165,6 +214,103 @@ public class OrderMapper {
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID, int totalPrice) {
+
+        String sql = "UPDATE public.orders SET status_id = ?, total_price = ? WHERE order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, 2);
+            ps.setInt(2, totalPrice);
+            ps.setInt(3, orderID);
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 1) {
+
+                throw new DatabaseException("Fejl i godkend ordre");
+            }
+            return true;
+
+        } catch (DatabaseException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    public static List<Order> getOrdersByUser(ConnectionPool connectionPool, User user) {
+
+        String sql = "SELECT * FROM view_all_orders WHERE user_id = ?";
+        List<Order> orderList = new ArrayList<>();
+//        Map<Integer, Order> orderMap = new TreeMap<>();
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+
+            ps.setInt(1, user.getUserID());
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int orderID = rs.getInt("order_id");
+                int statusID = rs.getInt("status_id");
+                String status = rs.getString("status");
+                String date = String.valueOf(rs.getDate("date"));
+                int totalPrice = rs.getInt("total_price");
+                String totalPriceRaw = totalPrice + " kr inkl. moms";
+                String productListRaw = rs.getString("product_list");
+
+                // Details
+                int carportLength = rs.getInt("carport_length");
+                int carportLengthID = rs.getInt("carport_length_id");
+                int carportWidth = rs.getInt("carport_width");
+                int carportWidthID = rs.getInt("carport_width_id");
+                boolean shed = rs.getBoolean("shed");
+                String userRemarks = rs.getString("user_remarks");
+                String description = rs.getString("description");
+
+//                String drawing = rs.getString("drawing");
+//                String title = -----------------------------;
+
+                orderList.add(new Order(
+                        orderID,
+                        totalPriceRaw,
+                        productListRaw,
+                        new Status(statusID, status),
+                        date,
+                        new CarportLength(carportLengthID, carportLength),
+                        new CarportWidth(carportWidthID, carportWidth),
+                        shed,
+                        userRemarks,
+                        description));
+            }
+            return orderList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void setOrderPaid(ConnectionPool connectionPool, User user) {
+
+        String sql = "UPDATE orders SET status_id = ? WHERE user_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+
+            ps.setInt(1, 3);
+            ps.setInt(2, user.getUserID());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

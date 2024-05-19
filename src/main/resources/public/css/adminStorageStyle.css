@@ -10,23 +10,43 @@
 
     display: flex;
     justify-content: center;
+    height: 20vh;
+}
+.top-nav form {
+
+    display: flex;
+    width: 40%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.top-nav button {
+
+    display: flex;
+    height: 12vh;
+    width: 15vw;
+    align-items: center;
+    justify-content: center;
+    background-color: #555555;
+    border: 1px solid #555555;
+    color: white;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+
+}
+
+.top-nav button:hover {
+
+    background-color: #333333;
 }
 
 .centerpage {
 
+    display: flex;
+    flex-direction: column;
     width: 90%;
 }
 
-.filter-menu {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.flex-filter {
-    flex-direction: row;
-}
 
 .table-container {
     display: flex;
@@ -39,42 +59,143 @@
     border-collapse: collapse;
 }
 
-.products-table th, .products-table td {
+.products-table table th, .products-table table td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+
 }
 
-.products-table th {
+.products-table table th {
     background-color: #f2f2f2;
 }
 
-.products-table tbody tr:nth-child(even) {
+.products-table table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-.products-table tbody tr:hover {
+.products-table table tbody tr:hover {
     background-color: #ddd;
 }
 
-.products-table input[type="text"] {
+.products-table table input[type="text"] {
     width: 100px;
     padding: 5px;
     box-sizing: border-box;
 }
 
-.products-table td:nth-child(1) input[type="text"] {
-    width: 30px;
-}
+/*.products-table td:nth-child(1) input[type="text"] {*/
+/*    width: 30px;*/
+/*}*/
 
-.products-table td:nth-child(2) input[type="text"] {
-    width: 200px;
-}
-.products-table td:nth-child(3) input[type="text"] {
-    width: 100px;
-}
+/*.products-table td:nth-child(2) input[type="text"] {*/
+/*    width: 200px;*/
+/*}*/
+/*.products-table td:nth-child(3) input[type="text"] {*/
+/*    width: 100px;*/
+/*}*/
 
-.products-table input[type="text"]:disabled {
+.products-table table input[type="text"]:disabled {
     background-color: transparent;
     border: none;
+}
+
+
+.flex-filter {
+
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+}
+
+.filter-menu {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.filter-menu {
+
+    gap: 10px;
+}
+
+.flex-filter button {
+
+    display: flex;
+    height: 3vh;
+    width: 5vw;
+    align-items: center;
+    justify-content: center;
+    background-color: #555555;
+    border: 1px solid #555555;
+    color: white;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+}
+
+.flex-filter button:hover {
+
+    background-color: #333333;
+}
+
+/*.add-product {*/
+/*    display: flex;*/
+/*    width: 70%;*/
+/*}*/
+
+
+/*.add-product table th,*/
+/*.add-product table td {*/
+/*    width: 50px; !* Apply specific styles only to the table inside .add-product *!*/
+/*    padding: 8px; !* Ensure proper padding *!*/
+/*    text-align: left; !* Ensure left alignment *!*/
+/*    border-bottom: 1px solid #ddd; !* Apply border *!*/
+/*}*/
+
+
+.add-product form {
+
+    width: 100%;
+}
+
+.add-product {
+    display: flex;
+    flex-direction: column; /* Ensure the content flows in a column */
+    width: 70%;
+
+}
+
+.add-product table {
+    width: 100%; /* Ensure the table takes up the full width of the container */
+    border-collapse: collapse; /* Collapse borders */
+}
+
+.add-product table th,
+.add-product table td {
+    width: auto; /* Allow table cells to adjust width automatically */
+    padding: 8px; /* Ensure proper padding */
+    text-align: left; /* Ensure left alignment */
+    border-bottom: 1px solid #ddd; /* Apply border */
+}
+
+.add-product table th {
+    background-color: #f2f2f2; /* Header background color */
+}
+
+.add-product table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Even row background color */
+}
+
+.add-product table tbody tr:hover {
+    background-color: #ddd; /* Hover row background color */
+}
+
+.add-product table input[type="text"] {
+    width: 100%; /* Ensure input takes full width of the cell */
+    padding: 5px; /* Ensure proper padding */
+    box-sizing: border-box; /* Include padding and border in width */
 }

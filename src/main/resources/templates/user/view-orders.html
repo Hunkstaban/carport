@@ -1,10 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
+    <link rel="stylesheet" href="../../public/css/user/view-orders-style.css" th:href="@{/css/user/view-orders-style.css}">
+
 </head>
 <body>
+
+<h1>My orders :)</h1>
+
+<table class="orders-table">
+    <thead>
+    <tr>
+        <th>Ordrenr.</th>
+        <th>Status</th>
+        <th>Bestillingsdato</th>
+        <th>Pris</th>
+        <th>Liste</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="order : ${orderList}">
+        <td th:text="${order.orderID}"></td>
+        <td th:text="${order.status.name}"></td>
+        <td th:text="${order.date}"></td>
+        <td th:text="${order.totalPriceRaw}"></td>
+        <td th:text="${order.productListRaw}"></td>
+
+        <form action="post">
+            <div th:if="${order.status.statusID == 2}">
+                <button formaction="orderPaid" class="box" th:value="${order.orderID}"> Betal</button>
+            </div>
+        </form>
+
+
+        <button class="box">
+            <a href="#popup-details">Ordredetaljer</a>
+        </button>
+
+        <div id="popup-details" class="modal">
+            <div class="content">
+                <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>
+                <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
+                <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
+                <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
+                <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>
+
+                <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+            </div>
+        </div>
+
+
+
+        <button class="box">
+            <a href="#popup-drawing">Se Tegning</a>
+        </button>
+
+        <div id="popup-drawing" class="modal">
+            <div class="content">
+                <div>Tegning: <span th:text="${order.carportLength.length}"></span> mm</div>
+
+                <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+            </div>
+        </div>
+
+
+
+        <div th:if="${order.status.statusID >= 3}">
+            <button class="box">
+                <a href="#popup-parts-list">Se Stykliste</a>
+            </button>
+        </div>
+        <div th:if="${order.status.statusID < 3}">
+            <button class="grey box">Se Stykliste</button>
+        </div>
+
+
+        <div id="popup-parts-list" class="modal">
+            <div class="content">
+                <div>Stykliste: <span th:text="${order.carportLength.length}"></span> mm</div>
+
+                <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+            </div>
+        </div>
+
+    </tr>
+    </tbody>
+</table>
+
+
+<!--<button th:if="${order.status.statusID == 3}">Stykliste</button>-->
 
 </body>
 </html>
