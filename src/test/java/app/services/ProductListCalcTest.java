@@ -23,6 +23,10 @@ class ProductListCalcTest {
         List<ProductListItem> productList = productListCalc.getProductList();
         int totalPrice = 0;
 
+        assertEquals(4, productList.size());
+
+
+
         for (ProductListItem productListItem : productList) {
             System.out.println("Vare nr.: " + productListItem.getProductID());
             System.out.println("Navn: " + productListItem.getProductName());

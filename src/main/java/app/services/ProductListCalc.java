@@ -53,6 +53,10 @@ public class ProductListCalc {
         calcRoof(carportWidth, carportLength);
     }
 
+    public void calculatePosts() {
+        calcPosts(carportLength, shed);
+    }
+
     // TODO: Find the option that will waste the least amount of wood/roof AND will be the cheapest
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock

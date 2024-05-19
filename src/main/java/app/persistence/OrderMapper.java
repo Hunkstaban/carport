@@ -217,15 +217,16 @@ public class OrderMapper {
         }
     }
 
-    public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID) {
+    public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID, int totalPrice) {
 
-        String sql = "UPDATE public.orders SET status_id = ? WHERE order_id = ?";
+        String sql = "UPDATE public.orders SET status_id = ?, total_price = ? WHERE order_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, 2);
-            ps.setInt(2, orderID);
+            ps.setInt(2, totalPrice);
+            ps.setInt(3, orderID);
 
             int rowsAffected = ps.executeUpdate();
 
