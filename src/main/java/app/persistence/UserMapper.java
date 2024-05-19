@@ -36,7 +36,7 @@ public class UserMapper {
 
         } catch (SQLException e) {
             String msg = "Der er sket en fejl. Prøv igen";
-            if (e.getMessage().startsWith("ERROR: duplicate key value ")) {
+            if (e.getMessage().startsWith("ERROR: duplicate key value")) {
                 msg = "email findes allerede. Prøv igen";
             }
             throw new DatabaseException(msg, e.getMessage());

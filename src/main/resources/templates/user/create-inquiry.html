@@ -170,5 +170,21 @@
 
 
 <!--<button th:action="@{inquiryNext}"></button>-->
+<!--<a th:href="@{/logout}">Logout</a>-->
+  
+<form method="get">
+    <button formaction="/mine-ordre">My Orders</button>
+</form>
+
+<form method="post">
+    <button formaction="storagePage">Storage Page</button>
+</form>
+<form method="post">
+    <button formaction="viewAllOrders">Admin Order Page</button>
+</form>
+
+
+<button th:action="@{inquiryNext}"></button>
+  
 </body>
 </html>
