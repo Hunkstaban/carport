@@ -1,5 +1,7 @@
 package app.entities;
 
+import java.util.Objects;
+
 public class ProductListItem {
 
     private int productID;
@@ -8,16 +10,29 @@ public class ProductListItem {
     private int length;
     private String unit;
     private int quantity;
-    private int price;
+    private int costPrice;
 
-    public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, int price) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductListItem that = (ProductListItem) o;
+        return productID == that.productID && length == that.length && quantity == that.quantity && costPrice == that.costPrice && Objects.equals(productName, that.productName) && Objects.equals(productDescription, that.productDescription) && Objects.equals(unit, that.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productID, productName, productDescription, length, unit, quantity, costPrice);
+    }
+
+    public ProductListItem(int productID, String productName, String productDescription, int length, String unit, int quantity, int costPrice) {
         this.productID = productID;
         this.productName = productName;
         this.productDescription = productDescription;
         this.length = length;
         this.unit = unit;
         this.quantity = quantity;
-        this.price = price;
+        this.costPrice = costPrice;
     }
 
     public int getProductID() {
@@ -44,8 +59,8 @@ public class ProductListItem {
         return quantity;
     }
 
-    public int getPrice() {
-        return price;
+    public int getCostPrice() {
+        return costPrice;
     }
 
     @Override
