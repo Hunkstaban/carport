@@ -103,11 +103,9 @@ public class ProductListCalc {
         // Looping through each beam, finding the optimal length that waste the least wood
         for (Product beam : beamList) {
 
-
             if (
                 (numberOfPostsWOShed == 4 && beam.getLength() > carportLength) ||
                 (numberOfPostsWOShed > 4 && beam.getLength() == carportLength || beam.getLength() >= spaceBetweenPosts)
-                //(numberOfPostsWOShed > 4 && beam.getLength() >= spaceBetweenPosts)
             ) {
 
                 //

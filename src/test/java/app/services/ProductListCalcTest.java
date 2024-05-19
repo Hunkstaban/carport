@@ -2,6 +2,7 @@ package app.services;
 
 import app.entities.ProductListItem;
 import app.persistence.ConnectionPool;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -42,7 +43,6 @@ class ProductListCalcTest {
         // Number of roof panels should be 21, and the length should be 3000 mm.
         assertEquals(21, productListCalc.getNumberOfRoofPanels());
         assertEquals(3000, productList.get(3).getLength());
-
 
         /*for (ProductListItem productListItem : productList) {
             System.out.println("Vare nr.: " + productListItem.getProductID());
