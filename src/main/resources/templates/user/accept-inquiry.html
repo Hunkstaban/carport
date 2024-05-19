@@ -71,10 +71,13 @@
 
             <p class="fontfix drawing" th:utext="${session.carportDrawing}"></p>
 
+            <p th:text="${session.description}"></p>
+
             <div class="price-element">
                 <h2 class="fontfix">Pris estimat</h2>
                 <h2 class="fontfix" th:text="${session.estimatedPrice} + ' kr. inkl. moms'"></h2>
             </div>
+
 
             <div class="order-right">
                 <button class="btn-default" type="submit" formaction="ny-ordre">

@@ -238,7 +238,6 @@ public class ProductListCalc {
     }
 
     public static void clearList() {
-
         productList.clear();
     }
 

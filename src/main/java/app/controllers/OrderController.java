@@ -164,6 +164,7 @@ public class OrderController {
     }
 
     private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
+        ProductListCalc.clearList();
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));

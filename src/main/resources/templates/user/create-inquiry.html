@@ -69,50 +69,6 @@
     </form>
 </div>
 
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-<!--<br>-->
-
-
-<!--<h2>Carport med fladt tag</h2>-->
-<!--<div>-->
-<!--    <form method="post">-->
-<!--        <label><h3>Vælg bredde</h3></label>-->
-<!--        <select name="carportWidth">-->
-<!--            <br>-->
-<!--            <option th:each="width : ${getAllWidth}" th:value="${width.carportWidthID}"-->
-<!--                    th:text="${width.width} + ' Cm' ">-->
-<!--            </option>-->
-<!--            <br>-->
-<!--        </select>-->
-<!--        <br>-->
-<!--        <label><h3>Vælg længde</h3></label>-->
-<!--        <select name="carportLength">-->
-<!--            <option th:each="length : ${getAllLength}" th:value="${length.carportLengthID}"-->
-<!--                    th:text="${length.length} + ' Cm' ">-->
-<!--            </option>-->
-<!--        </select>-->
-<!--        <br>-->
-<!--        <label><h3>Trapez tag</h3></label>-->
-<!--        <br>-->
-<!--        <select name="">-->
-<!--            <option value="">Plastmo Ecolite</option>-->
-<!--        </select>-->
-<!--        <br>-->
-<!--        <label><h3>Redskabsrum</h3></label>-->
-<!--        <br>-->
-
 <!--        <input type="radio" name="shed" value="true">-->
 <!--        <label>-->
 <!--            Ja-->
@@ -123,68 +79,6 @@
 <!--            <input type="radio" name="shed" value="false">-->
 <!--            Nej-->
 <!--        </label>-->
-<!--        <br>-->
-<!--        <h3>Evt. bemærkning / særlige ønsker:</h3>-->
-
-
-<!--        <textarea id="textarea2" name="remark" rows="10" cols="40"-->
-<!--                  placeholder="Skriv din kommentar her ..."></textarea>-->
-
-<!--        <br>-->
-
-<!--        <button formaction="/godkend-forespoergsel">Næste</button>-->
-
-<!--    </form>-->
-<!--    &lt;!&ndash;    route to inquiry-contact-info&ndash;&gt;-->
-
-
-<!--    &lt;!&ndash;used to test if there is null or data in user&ndash;&gt;-->
-<!--    &lt;!&ndash;<p th:text="'Session user: ' + ${session.currentUser}"></p> &ndash;&gt;-->
-
-<!--    <form method="get">-->
-<!--        &lt;!&ndash;    <a th:href="@{/renderLoginPage}">Login</a>&ndash;&gt;-->
-<!--        <a th:href="@{/renderSignupPage}">Opret bruger</a>-->
-<!--        <div>-->
-<!--            <div th:if="${session.currentUser != null}">-->
-<!--                <a th:href="@{/logout}">Logout</a>-->
-<!--            </div>-->
-<!--            <div th:if="${session.currentUser == null}">-->
-<!--                <a th:href="@{/login}">Login</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </form>-->
-
-<!--</div>-->
-
-<!--&lt;!&ndash;<a th:href="@{/logout}">Logout</a>&ndash;&gt;-->
-<!--<form method="get">-->
-<!--    <button formaction="myOrders">My Orders</button>-->
-<!--</form>-->
-
-<!--<form method="post">-->
-<!--    <button formaction="storagePage">Storage Page</button>-->
-<!--</form>-->
-<!--<form method="post">-->
-<!--    <button formaction="viewAllOrders">Admin Order Page</button>-->
-<!--</form>-->
-
-
-<!--<button th:action="@{inquiryNext}"></button>-->
-<!--<a th:href="@{/logout}">Logout</a>-->
-  
-<form method="get">
-    <button formaction="/mine-ordre">My Orders</button>
-</form>
-
-<form method="post">
-    <button formaction="storagePage">Storage Page</button>
-</form>
-<form method="post">
-    <button formaction="viewAllOrders">Admin Order Page</button>
-</form>
-
-
-<button th:action="@{inquiryNext}"></button>
   
 </body>
 </html>

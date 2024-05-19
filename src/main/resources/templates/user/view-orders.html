@@ -98,102 +98,11 @@
                 <p class="h2 fontfix" th:text="${order.totalPriceRaw}">kr inkl. moms</p>
             </div>
 
-
-<!--            &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Popups&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
-<!--            <div id="popup-details" class="popup">-->
-<!--                <div class="content">-->
-<!--                    <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>-->
-<!--                    <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>-->
-<!--                    <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>-->
-<!--                    <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>-->
-<!--                    <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>-->
-
-<!--                    <a href="#"-->
-<!--                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div id="popup-drawing" class="popup">-->
-<!--                <div class="content">-->
-<!--                    <div>-->
-<!--                        <p th:utext="'Tegning: ' + ${order.svg}"></p>-->
-<!--                    </div>-->
-
-<!--                    <a href="#"-->
-<!--                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
-<!--            <div id="popup-parts-list" class="popup">-->
-<!--                <div class="content">-->
-<!--                    <div>-->
-<!--                        <p th:text="'Stykliste: ' + ${order.productListRaw}"></p>-->
-<!--                    </div>-->
-
-<!--                    <a href="#"-->
-<!--                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>-->
-<!--                </div>-->
-<!--            </div>-->
-
         </div>
 
     </div>
 
 </div>
-
-
-<!--<table class="orders-table">-->
-<!--    <thead>-->
-<!--    <tr>-->
-<!--        <th>Ordrenr.</th>-->
-<!--        <th>Status</th>-->
-<!--        <th>Bestillingsdato</th>-->
-<!--        <th>Pris</th>-->
-<!--        <th>Liste</th>-->
-<!--    </tr>-->
-<!--    </thead>-->
-
-<!--    <tbody>-->
-<!--    <tr th:each="order : ${orderList}">-->
-<!--        <td th:text="${order.orderID}"></td>-->
-<!--        <td th:text="${order.status.name}"></td>-->
-<!--        <td th:text="${order.date}"></td>-->
-<!--        <td th:text="${order.totalPriceRaw}"></td>-->
-<!--        <td th:text="${order.productListRaw}"></td>-->
-
-<!--        <form action="post">-->
-<!--            <div th:if="${order.status.statusID == 2}">-->
-<!--                <button formaction="orderPaid" class="box"> Betal</button>-->
-<!--            </div>-->
-<!--        </form>-->
-
-
-<!--        <button class="box">-->
-<!--            <a href="#popup-details">Ordredetaljer</a>-->
-<!--        </button>-->
-
-
-<!--        <button class="box">-->
-<!--            <a href="#popup-drawing">Se Tegning</a>-->
-<!--        </button>-->
-
-
-<!--        <div th:if="${order.status.statusID >= 3}">-->
-<!--            <button class="box">-->
-<!--                <a href="#popup-parts-list">Se Stykliste</a>-->
-<!--            </button>-->
-<!--        </div>-->
-<!--        <div th:if="${order.status.statusID < 3}">-->
-<!--            <button class="grey box">Se Stykliste</button>-->
-<!--        </div>-->
-
-
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--</table>-->
-
-
-<!--<button th:if="${order.status.statusID == 3}">Stykliste</button>-->
 
 </body>
 </html>
