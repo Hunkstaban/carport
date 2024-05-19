@@ -18,6 +18,7 @@ public class UserController {
         app.get("/login", ctx -> renderLoginPage(ctx, connectionPool));
         app.get("/opret-bruger", ctx -> renderSignupPage(ctx, connectionPool));
         app.get("/index", ctx -> renderIndex(ctx, connectionPool));
+        app.get("/mine-ordre", ctx -> myOrders(ctx, connectionPool));
         app.get("/opret-forespoergsel", ctx -> createInquiry(ctx, connectionPool));
     }
 

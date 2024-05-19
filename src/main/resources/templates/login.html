@@ -1,8 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <link th:href="@{https://fonts.cdnfonts.com/css/segoe-ui-variable}" rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/segoe-ui-variable">
+
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    <link th:href="@{/css/login-style.css}" rel="stylesheet" href="../public/css/login-style.css">
+    <link th:href="@{/css/global-style.css}" rel="stylesheet" href="../public/css/global-style.css">
+
+    <title>Login</title>
+
 </head>
 <body>
 
@@ -12,22 +23,35 @@
 
 <!-- en <form></form> er en sektion hvor user får lov til at få eller give data -->
 <!-- "method" = er hvad metode skal være inde i vores <form></form>. altså om det skal værer "post" eller "get" >-->
-<div class="login">
-    <a th:href="@{/opret-bruger}">Opret bruger</a>
+<div class="login-page">
 
-    <form method="post">
-        <label>Email</label>
-        <input type="email" name="email" required>
-        <label>Kodeord</label>
-        <input type="password" name="password" required>
+    <div class="login-box">
+        <div class="all-item-inside-login-box">
+            <h1 class="h1-login-page">Log på</h1>
 
-        <button type="submit" formaction="login">Log ind</button>
+            <form class="user-box-form" method="post">
 
-        <div th:if="${loginError}">
-            <p th:text="${loginError}"></p>
-            <p>Har du glemt dit kodeord. Kontakt kundeservice</p>
+                <div class="all-inputs-and-loginbutton">
+                    <div class="all-inputs">
+                        <h2 class="log-on-with-mail">Log på med din e-mailadresse</h2>
+
+                        <input class="email-input" type="email" name="email" placeholder="E-mailadresse" required>
+
+                        <input class="password-input" type="password" name="password" placeholder="Kodeord" required>
+
+                        <a class="create-user-href" th:href="@{/opret-bruger}">Opret bruger</a>
+                    </div>
+
+                    <button class="login-button" type="submit" formaction="login">Log ind</button>
+                    <div th:if="${loginError}">
+                        <p th:text="${loginError}"></p>
+                        <p class="forgot-password">Har du glemt dit kodeord. Kontakt kundeservice</p>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
+
 </div>
 
 

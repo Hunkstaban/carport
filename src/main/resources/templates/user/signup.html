@@ -1,27 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+
+    <link th:href="@{https://fonts.cdnfonts.com/css/segoe-ui-variable}" rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/segoe-ui-variable">
+
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+    <link th:href="@{/css/sign-up-style.css}" rel="stylesheet" href="../public/css/sign-up-style.css">
+    <link th:href="@{/css/global-style.css}" rel="stylesheet" href="../public/css/global-style.css">
+
+    <title>Sign up</title>
 </head>
 <body>
+<div class="create-user-page">
 
-<form method="post">
-    <label> Navn</label>
-    <input type="text" name="username">
-    <label> Email</label>
-    <input type="email" name="email" required>
-<!--   " type = password " giver os ******* når user skriver kodeordet-->
-    <label> Kodeord</label>
-    <input type="password" name="password" required>
+    <div class="create-user-box">
 
 
-    <button type="submit" formaction="createUser">Opret bruger</button>
+        <form class="user-box-form" method="post">
+            <h1 class="h1-signup-page">Opret FOG konto</h1>
+            <div class="all-inputs">
+                <input class="name-input" placeholder="Navn" type="text" name="username">
 
-    <div th:if="${alreadyExist}">
-        <p th:text="${alreadyExist}"></p>
-        </div>
-</form>
+                <input class="email-input" placeholder="E-mailadresse" type="email" name="email" required>
+                <!--   " type = password " giver os ******* når user skriver kodeordet-->
+
+                <input class="password-input" placeholder="Kodeord" type="password" name="password" required>
+
+                <p class="basic-p">Har du allerede en konto login <a class="login-href" th:href="@{/login}">her</a></p>
+            </div>
+            <button class="create-button" type="submit" formaction="createUser">Opret bruger</button>
+
+            <div th:if="${alreadyExist}">
+                <p th:text="${alreadyExist}"></p>
+            </div>
+
+
+        </form>
+
+    </div>
+</div>
 
 </body>
 </html>
