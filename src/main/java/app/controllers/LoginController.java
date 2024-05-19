@@ -23,7 +23,7 @@ public class LoginController {
         String password = ctx.formParam("password");
 
         try {
-            User user = UserMapper.login(email, password, connectionPool);
+            User user = UserMapper.login(email.toLowerCase(), password, connectionPool);
 
             if (user.getRoleID() == 1) {
                 userLogin(ctx, connectionPool, user);
@@ -59,7 +59,7 @@ public class LoginController {
         String password = ctx.formParam("password");
 
         try {
-            User newUser = UserMapper.createUser(name, email, password, connectionPool);
+            User newUser = UserMapper.createUser(name.toLowerCase(), email.toLowerCase(), password, connectionPool);
 
             userLogin(ctx, connectionPool, newUser);
         } catch (DatabaseException e) {
