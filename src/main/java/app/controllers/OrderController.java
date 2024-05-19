@@ -23,8 +23,8 @@ public class OrderController {
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.post("/godkend-forespoergsel", ctx -> prepareInquiry(ctx, connectionPool));
         app.post("/ny-ordre", ctx -> newOrder(ctx, connectionPool));
-        app.get("viewAllOrders", ctx -> viewAllOrders(ctx, connectionPool));
-        app.post("filterByStatus", ctx -> filterByStatus(ctx, connectionPool));
+        app.get("/alle_ordrer", ctx -> viewAllOrders(ctx, connectionPool));
+        app.post("/alle_ordrer_filter", ctx -> filterByStatus(ctx, connectionPool));
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
@@ -67,7 +67,7 @@ public class OrderController {
             int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
             int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
 
-            updateInquiryPrice(ctx, totalPrice, costPrice);
+            updateInquiryPrice(ctx, order, totalPrice, costPrice);
         }
 
         ctx.attribute("svgDrawing", svgDrawwing);
@@ -94,22 +94,26 @@ public class OrderController {
         return ctx;
     }
 
-    private static Context updateInquiryPrice (Context ctx, int totalPrice, int costPrice) {
+    private static Context updateInquiryPrice (Context ctx, Order order, int totalPrice, int costPrice) {
         int profitPrice = totalPrice - PROCESSING_FEE;
         double newDegreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
 
         if (newDegreeOfCoverage < 5.0 || newDegreeOfCoverage > 40.0) {
             String msg = "Dækningsgrad bliver under 5%/over 40% ved denne pris - vælg en anden pris";
+            ctx.attribute("totalPrice", order.getTotalPrice());
+            ctx.attribute("degreeOfCoverage", DEGREE_OF_COVERAGE * 100);
+            ctx.attribute("profitPrice", order.getTotalPrice() - PROCESSING_FEE);
             ctx.attribute("wrongPrice", msg);
         } else {
             String formattedDegreeOfCoverage = String.format("%.1f", newDegreeOfCoverage);
 
             ctx.attribute("totalPrice", totalPrice);
-            ctx.attribute("processFee", PROCESSING_FEE);
             ctx.attribute("degreeOfCoverage", formattedDegreeOfCoverage);
             ctx.attribute("profitPrice", profitPrice);
-            ctx.attribute("costPrice", costPrice);
         }
+
+        ctx.attribute("processFee", PROCESSING_FEE);
+        ctx.attribute("costPrice", costPrice);
 
         return ctx;
     }
