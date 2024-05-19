@@ -284,6 +284,8 @@ html {
 }
 
 .cost-display-container {
+
+    position: relative;
     width: 100%;
     height: 48%;
     background-color: #ffffff;
@@ -333,7 +335,11 @@ html {
 }
 
 label[for="toggleDivs"] {
-    align-self: flex-end;
+
+    position: absolute; /* Position the label absolutely within the container */
+    z-index: 10; /* Ensure it is on top */
+
+    /*align-self: flex-end;*/
     padding-bottom: 10px;
     margin-top: 10px;
     cursor: pointer;
@@ -403,6 +409,13 @@ label[for="toggleDivs"]::before {
     text-align: right;
 }
 
+.edit-cost input[type="text"] {
+    width: 100%; /* Adjust as necessary */
+    box-sizing: border-box;
+    text-align: right;
+    /*padding: 6px;*/
+}
+
 .cost-display th, .edit-cost th {
     /*background-color: #f2f2f2;*/
     font-size: 12px;
@@ -410,7 +423,7 @@ label[for="toggleDivs"]::before {
 }
 
 .cost-display h3, .edit-cost h3 {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     margin-left: 10px;
     font-size: 16px;
     font-weight: bold;
