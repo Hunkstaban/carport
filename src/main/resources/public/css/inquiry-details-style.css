@@ -243,7 +243,8 @@ html {
     /*justify-content: center;*/
     flex-direction: column;
     font-family: "Segoe UI Variable", serif;
-
+    overflow-y: auto;
+    justify-content: space-evenly;
 
 }
 
@@ -252,16 +253,20 @@ html {
     margin-bottom: 20px;
 }
 
+
 .order-details-table table {
 
+    font-size: 16px;
     width: 100%;
     border-collapse: collapse;
     margin: 0 auto;
+
 }
+
 
 .order-details-table th, .order-details-table td {
 
-    padding: 10px;
+    /*padding-bottom: 5px;*/
     text-align: left;
 }
 
