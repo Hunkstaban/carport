@@ -1,70 +1,171 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>-->
+    <link th:href="@{/css/create-accept-inquiry-style.css}" rel="stylesheet" href="../../public/css/create-accept-inquiry-style.css">
+    <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../../public/css/global-styles.css">
+
+    <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
 <body>
 
-<p> kontaktinformation </p>
 
-<form method="post">
-    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
-    <a th:href="@{/renderSignupPage}">Opret bruger</a>
-    <div>
-        <!--        when logged in show contact info-->
-        <div th:if="${session.currentUser != null}">
+<div class="page">
+        <form method="post" class="form">
 
-            <a th:href="@{/logout}">Logout</a>
-        </div>
-        <div th:if="${session.currentUser == null}">
+            <h2 class="h2 fontfix">Kontaktoplysninger</h2>
 
-            <a th:href="@{/login}">Login</a>
+            <div th:if="${session.currentUser != null}">
+                <p class="fbody fontfix" th:text="'Velkommen tilbage, ' + ${#strings.capitalize(session.currentUser.name)}"></p>
+                <p class="fbody fontfix" th:text="${session.currentUser.email}"></p>
+            </div>
 
-            <label><p>Fornavn</p></label>
-            <input type="text" name="username">
-            <br>
-            <label><p>Efternavn</p></label>
-            <input type="text">
-            <br>
-            <label><p>Email</p></label>
-            <input type="email" name="email" required>
-            <br>
-            <label><p>Kodeord</p></label>
-            <input type="password" name="password">
-            <br>
-            <label><p>Adresse</p></label>
-            <input type="text">
-            <br>
-            <label><p>Post nr.</p></label>
-            <input type="number" min="0">
-            <br>
-            <label><p>By</p></label>
-            <input type="text">
-            <br>
-        </div>
-    </div>
-    <div class="show-inquiry" style="height: 100vh">
+            <div class="content-box" th:if="${session.currentUser == null}">
+                <div class="element">
+                    <label for="fname">Fornavn</label>
+                    <input id="fname" type="text" name="fname" required>
+                </div>
 
-        <p th:text="${session.description}"></p>
-        <br>
-        <h3>Tegning:</h3>
-        <p th:utext="${session.carportDrawing}"></p>
-        <br>
-        <h3>Estimeret pris: </h3>
-        <p th:text="${session.estimatedPrice}"></p>
-        <br>
-    </div>
+                <div class="element">
+                    <label for="lname">Efternavn</label>
+                    <input id="lname" type="text" name="lname">
+                </div>
+            </div>
 
+            <div class="content-box" th:if="${session.currentUser == null}">
+                <div class="element">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email" required>
+                </div>
 
-    <button type="submit" formaction="ny-ordre">
-        Send forespørgelse
-    </button>
-</form>
+                <div class="element">
+                    <label for="password">Adgangskode</label>
+                    <input id="password" type="password" name="password" required>
+                </div>
+            </div>
 
-<div th:if="${alreadyExist}">
-    <p th:text="${alreadyExist}"></p>
+            <div class="content-box" th:if="${session.currentUser == null}">
+                <div class="element">
+                    <label for="address">Adresse</label>
+                    <input id="address" type="text" name="address">
+                </div>
+
+                <div class="zip-city-elements">
+                    <div class="element zip">
+                        <label for="zip">Postnr.</label>
+                        <input id="zip" type="text" name="zip" pattern="\d*" maxlength="4">
+                    </div>
+
+                    <div class="element city">
+                        <label for="city">By</label>
+                        <input id="city" type="text" name="city">
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="fontfix">Tegning</h2>
+
+            <p class="fontfix drawing" th:utext="${session.carportDrawing}"></p>
+
+            <div class="price-element">
+                <h2 class="fontfix">Pris estimat</h2>
+                <h2 class="fontfix" th:text="${session.estimatedPrice} + ' kr. inkl. moms'"></h2>
+            </div>
+
+            <div class="order-right">
+                <button class="btn-default" type="submit" formaction="ny-ordre">
+                    Bestil Tilbud
+                </button>
+            </div>
+
+        </form>
+
+<!--        <button type="" formaction="">-->
+<!--            Tilbage-->
+<!--        </button>-->
+
 </div>
+
+
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+<!--<br>-->
+
+
+<!--<p> kontaktinformation </p>-->
+
+<!--<form method="post">-->
+<!--    &lt;!&ndash;    <a th:href="@{/renderLoginPage}">Login</a>&ndash;&gt;-->
+<!--    <a th:href="@{/renderSignupPage}">Opret bruger</a>-->
+<!--    <div>-->
+<!--        &lt;!&ndash;        when logged in show contact info&ndash;&gt;-->
+<!--        <div th:if="${session.currentUser != null}">-->
+
+<!--            <a th:href="@{/logout}">Logout</a>-->
+<!--        </div>-->
+<!--        <div th:if="${session.currentUser == null}">-->
+
+<!--            <a th:href="@{/login}">Login</a>-->
+
+<!--            <label><p>Fornavn</p></label>-->
+<!--            <input type="text" name="username">-->
+<!--            <br>-->
+<!--            <label><p>Efternavn</p></label>-->
+<!--            <input type="text">-->
+<!--            <br>-->
+<!--            <label><p>Email</p></label>-->
+<!--            <input type="email" name="email" required>-->
+<!--            <br>-->
+<!--            <label><p>Kodeord</p></label>-->
+<!--            <input type="password" name="password">-->
+<!--            <br>-->
+<!--            <label><p>Adresse</p></label>-->
+<!--            <input type="text">-->
+<!--            <br>-->
+<!--            <label><p>Post nr.</p></label>-->
+<!--            <input type="number" min="0">-->
+<!--            <br>-->
+<!--            <label><p>By</p></label>-->
+<!--            <input type="text">-->
+<!--            <br>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="show-inquiry" style="height: 100vh">-->
+
+<!--        <p th:text="${session.description}"></p>-->
+<!--        <br>-->
+<!--        <h3>Tegning:</h3>-->
+<!--        <p th:utext="${session.carportDrawing}"></p>-->
+<!--        <br>-->
+<!--        <h3>Estimeret pris: </h3>-->
+<!--        <p th:text="${session.estimatedPrice}"></p>-->
+<!--        <br>-->
+<!--    </div>-->
+
+
+<!--    <button type="submit" formaction="ny-ordre">-->
+<!--        Send forespørgelse-->
+<!--    </button>-->
+<!--</form>-->
+
+<!--<div th:if="${alreadyExist}">-->
+<!--    <p th:text="${alreadyExist}"></p>-->
+<!--</div>-->
 
 
 </body>
