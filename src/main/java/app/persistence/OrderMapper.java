@@ -3,6 +3,7 @@ package app.persistence;
 
 import app.entities.*;
 import app.exceptions.DatabaseException;
+import app.services.CarportSvg;
 
 
 import java.sql.*;
@@ -272,21 +273,24 @@ public class OrderMapper {
                 boolean shed = rs.getBoolean("shed");
                 String userRemarks = rs.getString("user_remarks");
                 String description = rs.getString("description");
+                String svg = rs.getString("carport_drawing");
 
 //                String drawing = rs.getString("drawing");
 //                String title = -----------------------------;
 
                 orderList.add(new Order(
                         orderID,
+                        new CarportLength(carportLengthID, carportLength),
+                        new CarportWidth(carportWidthID, carportWidth),
+                        description,
+                        totalPrice,
                         totalPriceRaw,
                         productListRaw,
                         new Status(statusID, status),
                         date,
-                        new CarportLength(carportLengthID, carportLength),
-                        new CarportWidth(carportWidthID, carportWidth),
                         shed,
                         userRemarks,
-                        description));
+                        svg));
             }
             return orderList;
 

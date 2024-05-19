@@ -49,11 +49,46 @@
                                 class="btn-150px fbody"> Betal
                         </button>
                     </form>
-                    <a class="btn-150px btn-link fbody" href="#popup-details">Ordredetaljer</a>
-                    <a class="btn-150px btn-link fbody" href="#popup-drawing">Se Tegning</a>
+                    <a class="btn-150px btn-link fbody" th:href="'#popup-details-' + ${order.orderID}">Ordredetaljer</a>
+                    <a class="btn-150px btn-link fbody" th:href="'#popup-drawing-' + ${order.orderID}">Se Tegning</a>
                     <a th:if="${order.status.statusID >= 3}" class="btn-150px btn-link fbody"
-                       href="#popup-parts-list">Se Stykliste</a>
+                       th:href="'#popup-parts-list-' + ${order.orderID}">Se Stykliste</a>
                     <button th:if="${order.status.statusID < 3}" class="btn-150px fbody" id="grey">Se Stykliste</button>
+
+                    <!------------Popups------------>
+                    <div th:id="'popup-details-' + ${order.orderID}" class="popup">
+                        <div class="content">
+                            <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>
+                            <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
+                            <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
+                            <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
+                            <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>
+
+                            <a href="#"
+                               style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+                        </div>
+                    </div>
+
+                    <div th:id="'popup-drawing-' + ${order.orderID}" class="popup">
+                        <div class="content">
+                            <div>
+                                <p th:utext="'Tegning: ' + ${order.svg}"></p>
+                            </div>
+
+                            <a href="#"
+                               style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+                        </div>
+                    </div>
+
+                    <div th:id="'popup-parts-list-' + ${order.orderID}" class="popup">
+                        <div class="content">
+                            <div>
+                                <p th:text="'Stykliste: ' + ${order.productListRaw}"></p>
+                            </div>
+                            <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -63,37 +98,41 @@
             </div>
 
 
-            <!------------Popups------------>
-            <div id="popup-details" class="popup">
-                <div class="content">
-                    <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>
-                    <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
-                    <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
-                    <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
-                    <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>
+<!--            &lt;!&ndash;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;Popups&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;-->
+<!--            <div id="popup-details" class="popup">-->
+<!--                <div class="content">-->
+<!--                    <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>-->
+<!--                    <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>-->
+<!--                    <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>-->
+<!--                    <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>-->
+<!--                    <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>-->
 
-                    <a href="#"
-                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
-                </div>
-            </div>
+<!--                    <a href="#"-->
+<!--                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div id="popup-drawing" class="popup">
-                <div class="content">
-                    <div>Tegning: <span th:text="${order.carportLength.length}"></span> mm</div>
+<!--            <div id="popup-drawing" class="popup">-->
+<!--                <div class="content">-->
+<!--                    <div>-->
+<!--                        <p th:utext="'Tegning: ' + ${order.svg}"></p>-->
+<!--                    </div>-->
 
-                    <a href="#"
-                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
-                </div>
-            </div>
+<!--                    <a href="#"-->
+<!--                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div id="popup-parts-list" class="popup">
-                <div class="content">
-                    <div>Stykliste: <span th:text="${order.productListRaw}"></span> mm</div>
+<!--            <div id="popup-parts-list" class="popup">-->
+<!--                <div class="content">-->
+<!--                    <div>-->
+<!--                        <p th:text="'Stykliste: ' + ${order.productListRaw}"></p>-->
+<!--                    </div>-->
 
-                    <a href="#"
-                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
-                </div>
-            </div>
+<!--                    <a href="#"-->
+<!--                       style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>-->
+<!--                </div>-->
+<!--            </div>-->
 
         </div>
 

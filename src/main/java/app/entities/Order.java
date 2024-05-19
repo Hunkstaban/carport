@@ -1,5 +1,7 @@
 package app.entities;
 
+import app.services.CarportSvg;
+
 import java.util.List;
 
 public class Order {
@@ -18,8 +20,9 @@ public class Order {
     private String date;
     private boolean shed;
     private String userRemarks;
+    private String svg;
 
-    // Everything except user remarks, user, productList, totalPriceRaw
+    // UserID instead of user and not user remark
     public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
         this.orderID = orderID;
         this.userID = userID;
@@ -33,7 +36,7 @@ public class Order {
         this.shed = shed;
     }
 
-    // Everything except user, productList, totalPriceRaw
+    // userID instead of user
     public Order(int orderID, int userID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed, String userRemarks) {
         this.orderID = orderID;
         this.userID = userID;
@@ -48,7 +51,7 @@ public class Order {
         this.userRemarks = userRemarks;
     }
 
-    // Everything except userID, productList, totalPriceRaw
+    // User instead of userID
     public Order(int orderID, User user, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed, String userRemarks) {
         this.orderID = orderID;
         this.user = user;
@@ -63,7 +66,7 @@ public class Order {
         this.userRemarks = userRemarks;
     }
 
-    // Everything except user remarks, userID, productList, totalPriceRaw
+    // User instead of UserID and not user remark
     public Order(int orderID, User user, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String productListRaw, Status status, String date, boolean shed) {
         this.orderID = orderID;
         this.user = user;
@@ -77,7 +80,23 @@ public class Order {
         this.shed = shed;
     }
 
-    // Everything except user, userID, productList, totalPrice
+    // no user/userID and no productList list. Only productListRaw
+    public Order(int orderID, CarportLength carportLength, CarportWidth carportWidth, String description, int totalPrice, String totalPriceRaw, String productListRaw, Status status, String date, boolean shed, String userRemarks, String svg) {
+        this.orderID = orderID;
+//        this.user = user;
+        this.carportLength = carportLength;
+        this.carportWidth = carportWidth;
+        this.description = description;
+        this.totalPrice = totalPrice;
+        this.totalPriceRaw = totalPriceRaw;
+        this.productListRaw = productListRaw;
+        this.status = status;
+        this.date = date;
+        this.shed = shed;
+        this.userRemarks = userRemarks;
+        this.svg = svg;
+    }
+
     public Order(int orderID, String totalPriceRaw, String productListRaw, Status status, String date, CarportLength carportLength, CarportWidth carportWidth, boolean shed, String userRemarks, String description) {
         this.orderID = orderID;
         this.totalPriceRaw = totalPriceRaw;
@@ -145,6 +164,10 @@ public class Order {
 
     public String getUserRemarks() {
         return userRemarks;
+    }
+
+    public String getSvg() {
+        return svg;
     }
 
     public void setProductList (List <ProductListItem> productList) {
