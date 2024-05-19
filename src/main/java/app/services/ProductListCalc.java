@@ -174,7 +174,7 @@ public class ProductListCalc {
         String roofUnit = "Stk.";
         int price;
 
-        // Calculate the number of roof plates needed for the width, accounting for overlap
+        // Calculate the number of roof panels needed for the width, accounting for overlap
         int amountWidthPlates = 0;
         int panelWidthAdjusted = DEFAULT_ROOF_PANEL_WIDTH - ROOF_PANEL_OVERLAP;
         double amountWidthPanelsDouble = ((double) carportWidth - ROOF_PANEL_OVERLAP) / panelWidthAdjusted;
@@ -190,7 +190,7 @@ public class ProductListCalc {
         int leastRoofWaste = Integer.MAX_VALUE;
         Product optimalRoofPanel = null;
 
-        // Looping through each roof plate, finding the optimal length that waste the least amount of material
+        // Looping through each roof panel, finding the optimal length that waste the least amount of material
         for (Product roofPanel : roofList) {
 
             int amountLengthPanels = 0;
@@ -215,7 +215,7 @@ public class ProductListCalc {
 
         price = numberOfRoofPanels * optimalRoofPanel.getPrice();
 
-        // Add the optimal roof plate to the productList
+        // Add the optimal roof panel to the productList
         if (optimalRoofPanel != null) {
             productList.add(new ProductListItem(optimalRoofPanel.getProductID(), optimalRoofPanel.getName(), description, optimalRoofPanel.getLength(), roofUnit, numberOfRoofPanels, price));
         }
