@@ -26,8 +26,8 @@
 <div class="login-page">
 
     <div class="login-box">
-        <h1 class="log-på">Log på</h1>
-        <h2 class="log-på-med-mail">Log på med din e-mailadresse</h2>
+        <h1 class="log-on">Log på</h1>
+        <h2 class="log-on-with-mail">Log på med din e-mailadresse</h2>
 
         <form method="post">
 
@@ -35,13 +35,13 @@
             <br>
             <input class="password-input" type="password" name="password" placeholder="Kodeord" required>
 
-            <a class="opret-bruger-href" th:href="@{/opret-bruger}">Opret bruger</a>
+            <a class="create-user-href" th:href="@{/opret-bruger}">Opret bruger</a>
             <br>
             <button class="login-button" type="submit" formaction="login">Log ind</button>
 
             <div th:if="${loginError}">
                 <p th:text="${loginError}"></p>
-                <p class="glemt-kodeord">Har du glemt dit kodeord. Kontakt kundeservice</p>
+                <p class="forgot-password">Har du glemt dit kodeord. Kontakt kundeservice</p>
             </div>
         </form>
     </div>

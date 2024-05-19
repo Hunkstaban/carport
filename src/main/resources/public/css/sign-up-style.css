@@ -1,4 +1,4 @@
-.log-på {
+.log-on {
     margin-top: 136px;
     margin-bottom: 20px;
     display: flex;
@@ -10,7 +10,7 @@
     justify-content: center;
 }
 
-.log-på-med-mail {
+.log-on-with-mail {
     margin-bottom: 12px;
     margin-left: 52px;
 
@@ -115,7 +115,7 @@
     margin-right: 52px;
 }
 
-.glemt-kodeord {
+.forgot-password {
     margin-left: 52px;
 }
 
