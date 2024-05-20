@@ -148,6 +148,22 @@ html {
     border-color: #013D7A;
 }
 
+.order-nav-bar-right .cancel-button {
+    background-color: #EC3F3F;
+    border: 1px solid #EC3F3F;
+
+}
+
+.order-nav-bar-right .cancel-button:hover {
+    background-color: #b00000;
+    border-color: #b00000;
+}
+
+.order-nav-bar-right .cancel-button:active {
+    background-color: #b00000;
+    border-color: #b00000;
+}
+
 .tabs {
 
     display: flex;

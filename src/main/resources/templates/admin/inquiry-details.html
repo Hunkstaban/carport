@@ -17,9 +17,15 @@
         <div class="right-nav-bar-container">
 
             <div class="order-nav-bar-right">
+
+                <form method="post">
+                    <button type="submit" formaction="/anuller-ordre" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3">Anuller</button>
+                </form>
+
                 <form>
                     <button type="submit" formaction="/alle_ordrer">Tilbage</button>
                 </form>
+
 
             </div>
 
