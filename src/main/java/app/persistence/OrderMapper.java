@@ -245,7 +245,7 @@ public class OrderMapper {
 
     public static List<Order> getOrdersByUser(ConnectionPool connectionPool, User user) {
 
-        String sql = "SELECT * FROM view_all_orders WHERE user_id = ?";
+        String sql = "SELECT * FROM view_all_orders WHERE user_id = ? ORDER BY order_id DESC";
         List<Order> orderList = new ArrayList<>();
 //        Map<Integer, Order> orderMap = new TreeMap<>();
 
@@ -300,20 +300,46 @@ public class OrderMapper {
         }
     }
 
-    public static void setOrderPaid(ConnectionPool connectionPool, User user) {
-
-        String sql = "UPDATE orders SET status_id = ? WHERE user_id = ?";
+    public static void setOrderPaid(ConnectionPool connectionPool, User user, int orderID) {
+        int statusPaid = 3;
+        String sql = "UPDATE orders SET status_id = ? WHERE user_id = ? AND order_id = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
                 PreparedStatement ps = connection.prepareStatement(sql);
         ) {
 
-            ps.setInt(1, 3);
+            ps.setInt(1, statusPaid);
             ps.setInt(2, user.getUserID());
+            ps.setInt(3, orderID);
             ps.executeUpdate();
 
         } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean cancelOrder(ConnectionPool connectionPool, int orderID) {
+
+        String sql = "UPDATE public.orders SET status_id = ? WHERE order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, 5);
+            ps.setInt(2, orderID);
+
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 1) {
+
+                throw new DatabaseException("Fejl i godkend ordre");
+            }
+            return true;
+
+
+        } catch (SQLException | DatabaseException e) {
             throw new RuntimeException(e);
         }
     }

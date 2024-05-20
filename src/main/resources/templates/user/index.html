@@ -7,6 +7,7 @@
     <link th:href="@{/css/global-styles.css}" rel="stylesheet"/>
     <link th:href="@{/css/index-styles.css}" rel="stylesheet"/>
     <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
+
 </head>
 
 <div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>

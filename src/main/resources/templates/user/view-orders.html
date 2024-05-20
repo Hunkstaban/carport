@@ -48,10 +48,11 @@
                 </div>
 
                 <div class="right-side-elements">
-                    <form action="post">
-                        <button th:if="${order.status.statusID == 2}" formaction="orderPaid" th:value="${order.orderID}"
-                                class="btn-150px fbody"> Betal
-                        </button>
+                    <form method="post" th:if="${order.status.statusID == 2}">
+
+                        <input type="hidden" name="orderID" th:value="${order.orderID}">
+
+                        <button formaction="orderPaid" class="btn-150px fbody">Betal</button>
                     </form>
                     <a class="btn-150px btn-link fbody" th:href="'#popup-details-' + ${order.orderID}">Ordredetaljer</a>
                     <a class="btn-150px btn-link fbody" th:href="'#popup-drawing-' + ${order.orderID}">Se Tegning</a>
@@ -66,7 +67,7 @@
                             <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
                             <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
                             <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
-                            <div>Konstruktionsbeskrivelse: <span th:text="${order.description}"></span></div>
+<!--                            <div>Konstruktionsbeskrivelse: <span th:utext="${order.description}"></span></div>-->
 
                             <a href="#"
                                style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>

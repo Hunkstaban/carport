@@ -23,6 +23,7 @@ public class ProductController {
         app.get("/lager", ctx -> loadProducts(ctx, connectionPool));
         app.post("filterByType", ctx -> filterByType(ctx, connectionPool));
         app.post("updateProduct", ctx -> updateProduct(ctx, connectionPool));
+        app.post("deleteProduct", ctx -> deleteProduct(ctx, connectionPool));
         app.post("addProduct", ctx -> addProduct(ctx, connectionPool));
 
         /*app.post("login", ctx -> login(ctx, connectionPool));
@@ -57,6 +58,16 @@ public class ProductController {
 
     }
 
+    private static void deleteProduct(Context ctx, ConnectionPool connectionPool) {
+        int productID = Integer.parseInt(ctx.formParam("productID"));
+
+        ProductMapper.deleteProduct(connectionPool, productID);
+
+        loadProducts(ctx,connectionPool);
+
+//        ctx.render("admin/storage.html");
+    }
+
     // takes input from the frontend to get the 'filter' parameter to dertemine which type to load from the database
     private static void filterByType(Context ctx, ConnectionPool connectionPool) {
 
@@ -86,9 +97,11 @@ public class ProductController {
 
         List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
         List<Product> productList = ProductMapper.getProducts(typeID, connectionPool);
+        List<Unit> unitList = ProductMapper.loadUnits(connectionPool);
 
         ctx.attribute("filtersList", filtersList);
         ctx.attribute("productList", productList);
+        ctx.attribute("unitList", unitList);
 
         return ctx;
     }
@@ -109,8 +122,8 @@ public class ProductController {
         Integer height = tryParseInt(ctx.formParam("height"));
         Integer width = tryParseInt(ctx.formParam("width"));
         Integer length = tryParseInt(ctx.formParam("length"));
-        Integer unitID = tryParseInt(ctx.formParam("unit-id"));
-        Integer typeID = tryParseInt(ctx.formParam("type-id"));
+        Integer unitID = tryParseInt(ctx.formParam("unitID"));
+        Integer typeID = tryParseInt(ctx.formParam("typeID"));
         Integer price = tryParseInt(ctx.formParam("price"));
         Integer costPrice = tryParseInt(ctx.formParam("cost-price"));
         Integer quantity = tryParseInt(ctx.formParam("amount"));
@@ -137,6 +150,7 @@ public class ProductController {
 
         try {
             StorageMapper.addProduct(connectionPool, name, description, height, width, length, unitID, typeID, price, costPrice, quantity);
+            loadProducts(ctx,connectionPool);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
