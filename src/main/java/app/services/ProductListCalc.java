@@ -138,7 +138,7 @@ public class ProductListCalc {
         }
     }
 
-    private void calcRafters(int carportWidth, int carportLength) {
+    void calcRafters(int carportWidth, int carportLength) {
         String description = "Spær - monteres på rem";
         String rafterUnit = "Stk.";
         List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
