@@ -1,0 +1,27 @@
+.header-container {
+    display: flex;
+    max-height: 100px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+
+    /*border-bottom: 1px solid #ccc;*/
+}
+
+.logo button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+.logo img {
+    height: 80px;
+}
+
+.user-actions {
+    padding-right: 10px;
+}
+
+.user-actions img {
+    height: 60px;
+}

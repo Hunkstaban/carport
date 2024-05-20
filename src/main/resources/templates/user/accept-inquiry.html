@@ -7,9 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/user/create-accept-inquiry-style.css}" rel="stylesheet" href="../../public/css/user/create-accept-inquiry-style.css">
     <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../../public/css/global-styles.css">
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
 
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
+
 <body>
 
 

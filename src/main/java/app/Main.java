@@ -27,8 +27,18 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
         }).start(7070);
 
+        // Middleware to initialize currentUser session attribute
+        app.before(ctx -> {
+            if (ctx.sessionAttribute("currentUser") == null) {
+                ctx.sessionAttribute("currentUser", null);
+            }
+        });
+
         // Routing
-        app.get("/", ctx ->  ctx.render("user/index.html"));
+        app.get("/", ctx ->  {
+            ctx.attribute("isLoggedIn", ctx.sessionAttribute("currentUser") != null);
+            ctx.render("user/index.html");
+        });
 
         LoginController.addRoute(app, connectionPool);
         UserController.addRoute(app, connectionPool);

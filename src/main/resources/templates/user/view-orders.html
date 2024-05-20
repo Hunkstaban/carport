@@ -11,6 +11,9 @@
 
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
+
 <body>
 
 
