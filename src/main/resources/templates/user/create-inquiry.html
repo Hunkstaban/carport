@@ -5,9 +5,8 @@
     <title>Frontpage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
-    <link th:href="@{/css/create-accept-inquiry-style.css}" rel="stylesheet"
-          href="../../public/css/create-accept-inquiry-style.css">
+    <link th:href="@{/css/user/create-accept-inquiry-style.css}" rel="stylesheet"
+          href="../../public/css/user/create-accept-inquiry-style.css">
     <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../../public/css/global-styles.css">
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
@@ -56,11 +55,12 @@
                     <input id="shedFalse" type="radio" name="shed" value="false" required checked>
                     <label for="shedFalse">Nej</label>
                 </div>
+                <p class="fontfix">OBS. carporten vil få extra 140 cm. i længden</p>
             </div>
 
             <div class="element">
                 <label for="textarea">Evt. bemærkninger eller særlige ønsker</label>
-                <textarea id="textarea" class="textarea" name="remark" rows="10" cols="40"
+                <textarea id="textarea" class="textarea" name="remark" rows="10" cols="40" maxlength="240"
                           placeholder="Skriv din kommentar her ..."></textarea>
             </div>
         </div>
@@ -79,6 +79,6 @@
 <!--            <input type="radio" name="shed" value="false">-->
 <!--            Nej-->
 <!--        </label>-->
-  
+
 </body>
 </html>

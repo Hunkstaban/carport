@@ -42,6 +42,31 @@ public class ProductMapper {
         }
     }
 
+    public static List<Unit> loadUnits(ConnectionPool connectionPool) {
+
+        // gets all the types from the DB and returns a List which is used in the filter controller
+        // to filter by the chosen type on the frontend.
+
+        String sql = "SELECT * FROM units";
+        List<Unit> units = new ArrayList<>();
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                int typeID = rs.getInt("unit_id");
+                String name = rs.getString("name");
+                units.add(new Unit(typeID, name));
+            }
+
+            return units;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static List<Product> getProducts(Integer typeID, ConnectionPool connectionPool) {
 
@@ -128,6 +153,26 @@ public class ProductMapper {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public static void deleteProduct(ConnectionPool connectionPool, int productID) {
+        String sql = "DELETE FROM public.products WHERE product_id = ?";
+
+        try (
+                Connection connection = connectionPool.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
+
+            ps.setInt(1,productID);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 1) {
+                throw new DatabaseException("Fejl ved sletning af produkt");
+            }
+
+        } catch (SQLException | DatabaseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static List<CarportLength> getAllLength(ConnectionPool connectionPool) throws DatabaseException {
