@@ -6,7 +6,11 @@
     <title>Title</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="../../public/css/adminStorageStyle.css" th:href="@{/css/adminStorageStyle.css}">
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
 </head>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
+
 <body>
 
 <header>

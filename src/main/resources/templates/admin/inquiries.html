@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
 </head>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
+
 <body>
 <button th:action="@{viewInquiries}"></button>
 <button th:action="@{viewOrders}"></button>
