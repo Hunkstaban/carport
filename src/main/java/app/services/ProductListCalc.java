@@ -58,7 +58,7 @@ public class ProductListCalc {
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock
 
-    private void calcPosts(int carportLength) {
+    void calcPosts(int carportLength) {
         Product optimalPost = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
         String postUnit = "Stk.";
@@ -84,7 +84,7 @@ public class ProductListCalc {
     }
 
 
-    private void calcBeams(int carportLength) {
+    void calcBeams(int carportLength) {
         List<Product> beamList = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int totalCarportLength = 2 * carportLength;
         String description = "Remme i sider - sadles ned i stolper";
@@ -167,7 +167,7 @@ public class ProductListCalc {
         }
     }
 
-    private void calcRoof(int carportWidth, int carportLength) {
+    void calcRoof(int carportWidth, int carportLength) {
         List<Product> roofList = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
         String description = "Tagplader - monteres på spær";
         String roofUnit = "Stk.";
@@ -221,15 +221,15 @@ public class ProductListCalc {
     }
 
 
-    private void shedFacadeCalc() {
+    void shedFacadeCalc() {
 
     }
 
-    private void calcScrews() {
+    void calcScrews() {
 
     }
 
-    private void fittingsCalc() {
+    void fittingsCalc() {
 
     }
 
