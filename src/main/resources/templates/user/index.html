@@ -4,15 +4,23 @@
     <title>Frontpage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../public/css/styles.css" th:href="@{/css/global-styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/global-styles.css}"  rel="stylesheet"/>
+    <link th:href="@{/css/header-styles.css}"  rel="stylesheet"/>
 </head>
 
 <body>
 
-<!--Global header needed with links to customer order page and account info-->
-<div th:replace="fragments/header :: header(isLoggedIn=${currentUser})"></div>
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
 
 <h1>Velkommen til FOG </h1>
+
+<div class="standard-carport">
+
+</div>
+
+<div class="custom-carport">
+
+</div>
 
 <form method="get">
     <button formaction="/opret-forespoergsel">Byg selv carport</button>

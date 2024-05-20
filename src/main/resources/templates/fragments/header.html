@@ -1,32 +1,22 @@
-<!-- src/main/resources/templates/fragments/header.html -->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" type="text/css" href="/css/header-styles.css">
-</head>
-<body>
 <header th:fragment="header(isLoggedIn)">
     <div class="header-container">
         <div class="logo">
-            <img src="/images/foglogo.png" alt="Logo">
+            <a href="/">
+                <img src="/images/foglogo.png" alt="Logo">
+            </a>
         </div>
-        <nav class="navigation">
-            <ul>
-                <li><a href="/standard-carport">Standard Carport</a></li>
-                <li><a href="/byg-selv">Byg-Selv</a></li>
-            </ul>
-        </nav>
         <div class="user-actions">
-            <span th:if="${currentUser}">
-                <a href="/account">Fog Konto</a>
-                <a href="/orders">Mine Ordrer</a>
+            <span th:if="${isLoggedIn}">
+                <a href="/logout">Log ud</a>
+                <a href="/mine-ordrer">
+                    <img src="/images/profileicon.png">
+                </a>
             </span>
-            <span th:if="${!currentUser}">
-                <a href="/login">Log ind</a>
+            <span th:if="${!isLoggedIn}">
+                <a href="/login">
+                    <img src="/images/profileiconlogin.png">
+                </a>
             </span>
-            <a href="/cart"><img src="/images/cart.png" alt="Cart"></a>
         </div>
     </div>
 </header>
-</body>
-</html>
