@@ -28,7 +28,19 @@ public class OrderController {
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
-        app.post("orderPaid", ctx -> setOrderPaid(ctx, connectionPool));
+        app.post("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
+        app.post("/anuller-ordre", ctx -> cancelOrderByID(ctx, connectionPool));
+    }
+
+    private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) {
+
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+
+        if (OrderMapper.cancelOrder(connectionPool, orderID)) {
+
+            ctx.attribute("orderID", orderID);
+            inquiryDetailsPage(ctx, connectionPool);
+        }
     }
 
     private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {

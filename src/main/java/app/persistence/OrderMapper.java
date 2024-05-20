@@ -318,4 +318,29 @@ public class OrderMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public static boolean cancelOrder(ConnectionPool connectionPool, int orderID) {
+
+        String sql = "UPDATE public.orders SET status_id = ? WHERE order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, 5);
+            ps.setInt(2, orderID);
+
+
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected != 1) {
+
+                throw new DatabaseException("Fejl i godkend ordre");
+            }
+            return true;
+
+
+        } catch (SQLException | DatabaseException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
