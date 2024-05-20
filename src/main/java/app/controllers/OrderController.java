@@ -13,6 +13,7 @@ import app.services.CarportSvg;
 import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -28,8 +29,19 @@ public class OrderController {
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
-        app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
+        app.get("orderPaid", ctx -> setOrderPaid(ctx, connectionPool));
         app.post("/anuller-ordre", ctx -> cancelOrderByID(ctx, connectionPool));
+    }
+
+    private static boolean verifyAdmin(Context ctx) {
+
+        User user = ctx.sessionAttribute("currentUser");
+
+        if (user != null && user.getRoleID() == 2) {
+
+            return true;
+        }
+        return false;
     }
 
     private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) {
@@ -47,7 +59,7 @@ public class OrderController {
     private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
         OrderMapper.setOrderPaid(connectionPool, user);
-        getOrdersByUser(ctx,connectionPool);
+        getOrdersByUser(ctx, connectionPool);
     }
 
     private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
@@ -74,7 +86,7 @@ public class OrderController {
 
         if ((ctx.formParam("costPrice")) == null) {
 
-        preparePriceDetails(ctx, order.getTotalPrice());
+            preparePriceDetails(ctx, order.getTotalPrice());
 
         } else {
             int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
@@ -93,7 +105,7 @@ public class OrderController {
     }
 
 
-    private static Context preparePriceDetails (Context ctx, int orderPrice) {
+    private static Context preparePriceDetails(Context ctx, int orderPrice) {
 
         int profitPrice = orderPrice - PROCESSING_FEE;
         int costPrice = (int) ((profitPrice) / (1 + DEGREE_OF_COVERAGE));
@@ -107,7 +119,7 @@ public class OrderController {
         return ctx;
     }
 
-    private static Context updateInquiryPrice (Context ctx, Order order, int totalPrice, int costPrice) {
+    private static Context updateInquiryPrice(Context ctx, Order order, int totalPrice, int costPrice) {
         int profitPrice = totalPrice - PROCESSING_FEE;
         double newDegreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
 
@@ -133,20 +145,32 @@ public class OrderController {
 
     private static void viewAllOrders(Context ctx, ConnectionPool connectionPool) {
 
-        globalOrderAttributes(ctx, connectionPool, null);
+        if (verifyAdmin(ctx)) {
 
-        ctx.render("admin/orders.html");
+            globalOrderAttributes(ctx, connectionPool, null);
 
+            ctx.render("admin/orders.html");
+        } else {
+
+            ctx.attribute("message", "403 adgang nægtet");
+            ctx.render("errors.html");
+        }
     }
 
     private static void filterByStatus(Context ctx, ConnectionPool connectionPool) {
 
-        int statusID = Integer.parseInt(ctx.formParam("filter"));
+        if (verifyAdmin(ctx)) {
 
-        globalOrderAttributes(ctx, connectionPool, statusID);
+            int statusID = Integer.parseInt(ctx.formParam("filter"));
 
-        ctx.render("admin/orders.html");
+            globalOrderAttributes(ctx, connectionPool, statusID);
 
+            ctx.render("admin/orders.html");
+        } else {
+            ctx.attribute("message", "403 adgang nægtet");
+            ctx.render("errors.html");
+
+        }
     }
 
     private static Context globalOrderAttributes(Context ctx, ConnectionPool connectionPool, Integer statusID) {
@@ -172,7 +196,7 @@ public class OrderController {
             inquiryDetailsPage(ctx, connectionPool);
             return true;
         }
-         return false;
+        return false;
 
     }
 
@@ -251,14 +275,14 @@ public class OrderController {
     }
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
-    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed) {
+    private static String prepareCarportDrawing(int carportWidth, int carportLength, boolean shed) {
         Locale.setDefault(new Locale("US"));
         CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed);
 
         return carportSvg.toString();
     }
 
-    private static Context prepareOrderAttributes (Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
+    private static Context prepareOrderAttributes(Context ctx, int carportWidthID, int carportLengthID, String inquiryDescription, boolean shed, String remark, List<ProductListItem> productList, String svgDrawing, int estimatedPrice) {
         ctx.sessionAttribute("carportWidthID", carportWidthID);
         ctx.sessionAttribute("carportLengthID", carportLengthID);
         ctx.sessionAttribute("description", inquiryDescription);
@@ -270,7 +294,7 @@ public class OrderController {
         return ctx;
     }
 
-    private static int calculateOrderPrice (int costPrice) {
+    private static int calculateOrderPrice(int costPrice) {
         int carportPrice = (int) (((costPrice * DEGREE_OF_COVERAGE) + costPrice) + PROCESSING_FEE);
 
         return carportPrice;
