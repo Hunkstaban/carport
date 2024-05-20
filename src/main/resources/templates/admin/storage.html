@@ -88,10 +88,10 @@
 
                 <div class="left-side-elements">
                     <form>
-                        <button class="filter-menu" type="submit" name="filter" formaction="/lager">Alle</button>
+                        <button class="filter-menu fbodybold" type="submit" name="filter" formaction="/lager">Alle</button>
                     </form>
                     <form method="post" th:each="type : ${filtersList}">
-                        <button class="filter-menu" type="submit" name="filter" th:value="${type.typeID}"
+                        <button class="filter-menu fbodybold" type="submit" name="filter" th:value="${type.typeID}"
                                 formaction="filterByType" th:text="${type.name}"></button>
                     </form>
                 </div>
