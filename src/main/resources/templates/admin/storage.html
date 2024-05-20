@@ -40,8 +40,8 @@
 
             <form method="post" class="add-to-storage-form">
 
-                <div class="tables">
-                    <div class="add-product">
+                <div class="add-to-storage-input">
+                    <div class="table">
                         <p class="fontfix add-name">Navn</p>
                         <p class="fontfix add-description">Beskrivelse</p>
                         <p class="fontfix add-type">Vare Type</p>
@@ -53,15 +53,16 @@
                         <p class="fontfix add-height">Højde</p>
                         <p class="fontfix add-amount">Lagerbeholdning</p>
                     </div>
-                    <div class="add-product">
+
+                    <div class="table">
                         <input class="add-name" type="text" id="product-name" name="product-name" maxlength="100"
                                required/>
                         <input class="add-description" type="text" id="description" name="description" maxlength="250"/>
-                        <select required class="add-type">
+                        <select class="add-type" name="typeID" required>
                             <option th:each="type : ${filtersList}" th:value="${type.typeID}"
                                     th:text="${type.name}"></option>
                         </select>
-                        <select required class="add-unit">
+                        <select class="add-unit" name="unitID" required>
                             <option th:each="unit : ${unitList}" th:value="${unit.unitID}"
                                     th:text="${unit.name}"></option>
                         </select>
@@ -81,8 +82,10 @@
         </div>
 
 
-        <div class="product-storage">
+        <div class="view-products">
+
             <div class="top-elements">
+
                 <div class="left-side-elements">
                     <form>
                         <button class="filter-menu" type="submit" name="filter" formaction="/lager">Alle</button>
@@ -93,15 +96,17 @@
                     </form>
                 </div>
 
-                <div class="right-side-elements">
-                    <form action="">
-                        <button class="btn-default" type="submit" formaction="saveAll">Gem alle</button>
-                    </form>
-                </div>
+<!--                <div class="right-side-elements">-->
+<!--                    <form>-->
+<!--                        <button class="btn-default" type="submit" formaction="saveAll">Gem alle</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+
             </div>
 
             <div>
-                <div class="product-header">
+                <div class="table">
+
                     <p class="fontfix product-nr">Vare Nr.</p>
                     <p class="fontfix product-name">Navn</p>
                     <p class="fontfix product-description">Beskrivelse</p>
@@ -115,29 +120,33 @@
                     <p class="fontfix product-update" style="cursor:default;"><i class="fa-solid fa-arrows-rotate"></i>
                     </p>
                     <p class="fontfix product-delete" style="cursor:default;"><i class="fa-solid fa-trash"></i></p>
+
                 </div>
 
 
-                <form method="post" th:each="product : ${productList}" class="product-header">
-                    <input class="product-nr" type="text" name="productID" th:value="${product.productID}" disabled/>
+                <form method="post" th:each="product : ${productList}" class="table hover-grey">
+
+                    <input type="hidden" name="productID" th:value="${product.productID}"/>
+                    <input class="product-nr" type="number" th:value="${product.productID}" disabled/>
                     <input class="product-name" type="text" name="name" th:value="${product.name}"/>
                     <input class="product-description" type="text" name="description"
                            th:value="${product.description}"/>
-                    <input class="product-type" type="text" th:value="${product.type.name}" disabled/></td>
-                    <input class="" type="hidden" name="typeID" th:value="${product.type.typeID}"/>
+                    <input class="product-type" type="text" th:value="${product.type.name}" disabled/>
+                    <input type="hidden" name="typeID" th:value="${product.type.typeID}"/>
                     <input class="product-width" type="text" name="width" th:value="${product.width}"/>
                     <input class="product-height" type="text" name="height" th:value="${product.height}"/>
                     <input class="product-length" type="text" name="length" th:value="${product.length}"/>
                     <input class="product-unit" type="text" th:value="${product.unit.name}" disabled/>
-                    <input class="" type="hidden" name="unitID" th:value="${product.unit.unitID}"/>
+                    <input type="hidden" name="unitID" th:value="${product.unit.unitID}"/>
                     <input class="product-price" type="text" name="price" th:value="${product.price}"/>
-                    <input class="" type="hidden" name="costPrice" th:value="${product.costPrice}"/>
+                    <input type="hidden" name="costPrice" th:value="${product.costPrice}"/>
                     <input class="product-amount" type="text" name="quantity" th:value="${product.quantity}"/>
 
                     <button class="product-update" type="submit" formaction="updateProduct"><i
                             class="fa-solid fa-arrows-rotate"></i></button>
                     <button class="product-delete" type="submit" formaction="deleteProduct"><i
                             class="fa-solid fa-trash"></i></button>
+
                 </form>
 
             </div>

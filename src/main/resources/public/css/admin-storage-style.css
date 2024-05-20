@@ -21,11 +21,11 @@
     gap: 24px;
 }
 
-.tables {
+.add-to-storage-input {
     width: 100%;
 }
 
-.add-product {
+.table {
     /*width: 83%;*/
     /*box-sizing: border-box;*/
     display: flex;
@@ -89,7 +89,7 @@ input:focus, select:focus {
 }
 
 
-.product-storage {
+.view-products {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -120,15 +120,18 @@ input:focus, select:focus {
 
 .filter-menu:focus {
     background-color: #555555;
+    color: white;
 }
 
-
-.product-header {
+.right-side-elements {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding: 16px 32px;
-    border-bottom: 1px #555555 solid;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 20px;
+}
+
+.hover-grey:hover {
+    background-color: #fafafa;
 }
 
 .product-nr {
@@ -137,10 +140,12 @@ input:focus, select:focus {
 
 .product-name {
     width: 30%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-description {
     width: 10%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-type {
@@ -149,14 +154,17 @@ input:focus, select:focus {
 
 .product-width {
     width: 4%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-height {
     width: 4%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-length {
     width: 4%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-unit {
@@ -165,16 +173,18 @@ input:focus, select:focus {
 
 .product-price {
     width: 5%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-amount {
     width: 6%;
+    background-color: rgba(0,0,0,0);
 }
 
 .product-update {
     text-align: center;
     width: 2%;
-    background-color: white;
+    background-color: rgba(0,0,0,0);
     border: none;
     cursor: pointer;
     transition-duration: 200ms;
@@ -188,7 +198,7 @@ input:focus, select:focus {
 .product-delete {
     text-align: center;
     width: 2%;
-    background-color: white;
+    background-color: rgba(0,0,0,0);
     border: none;
     cursor: pointer;
     transition-duration: 200ms;
