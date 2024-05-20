@@ -4,15 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link rel="stylesheet" href="../../public/css/admin-storage-style.css" th:href="@{/css/adminStorageStyle.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../public/css/global-styles.css" th:href="@{/css/global-styles.css}">
+    <link rel="stylesheet" href="../../public/css/admin-storage-style.css" th:href="@{/css/admin-storage-style.css}">
+
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
 <body>
 
 <header>
 
-    <div class="top-nav">
+    <div>
 
         <form>
             <button type="submit" formaction="/alle_ordrer">Ordrer</button>
@@ -29,121 +32,121 @@
 
 
 <div>
-    <div>
+    <div class="storage-elements">
 
-        <div>
+        <div class="add-to-storage">
 
-            <form method="post">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Navn</th>
-                        <th>Beskrivelse</th>
-                        <th>Vare Type</th>
-                        <th>Enhed</th>
-                        <th>Kost Pris</th>
-                        <th>Pris</th>
-                        <th>Længde</th>
-                        <th>Bredde</th>
-                        <th>Højde</th>
-                        <th>Lagerbeholdning</th>
-                    </tr>
-                    </thead>
+            <h2 class="fontfix">Tilføj vare til lager</h2>
 
-                    <tbody>
-                    <tr>
-                        <td><input type="text" id="product-name" name="product-name" maxlength="100" required></td>
-                        <td><input type="text" id="description" name="description" maxlength="250"></td>
-                        <td>
-                            <select required>
-                                <option th:each="type : ${filtersList}" th:value="${type.typeID}" th:text="${type.name}"></option>
-                            </select>
-                            <!--                            <input type="text" id="type-id" name="type-id"></td>-->
-                        <td>
-                            <select required>
-                                <option th:each="unit : ${unitList}" th:value="${unit.unitID}" th:text="${unit.name}"></option>
-                            </select>
-                            <!--                        <input type="text" id="unit-id" name="unit-id"></td>-->
-                        <td><input type="number" id="cost-price" name="cost-price" required></td>
-                        <td><input type="number" id="price" name="price" required></td>
-                        <td><input type="number" id="length" name="length"></td>
-                        <td><input type="number" id="width" name="width"></td>
-                        <td><input type="number" id="height" name="height"></td>
-                        <td><input type="number" id="amount" name="amount" value="0"></td>
-                    </tr>
-                    </tbody>
-                </table>
+            <form method="post" class="add-to-storage-form">
 
-                <button type="submit" formaction="addProduct">Tilføj</button>
+                <div class="tables">
+                    <div class="add-product">
+                        <p class="fontfix add-name">Navn</p>
+                        <p class="fontfix add-description">Beskrivelse</p>
+                        <p class="fontfix add-type">Vare Type</p>
+                        <p class="fontfix add-unit">Enhed</p>
+                        <p class="fontfix add-costprice">Kost Pris</p>
+                        <p class="fontfix add-price">Pris</p>
+                        <p class="fontfix add-length">Længde</p>
+                        <p class="fontfix add-width">Bredde</p>
+                        <p class="fontfix add-height">Højde</p>
+                        <p class="fontfix add-amount">Lagerbeholdning</p>
+                    </div>
+                    <div class="add-product">
+                        <input class="add-name" type="text" id="product-name" name="product-name" maxlength="100"
+                               required/>
+                        <input class="add-description" type="text" id="description" name="description" maxlength="250"/>
+                        <select required class="add-type">
+                            <option th:each="type : ${filtersList}" th:value="${type.typeID}"
+                                    th:text="${type.name}"></option>
+                        </select>
+                        <select required class="add-unit">
+                            <option th:each="unit : ${unitList}" th:value="${unit.unitID}"
+                                    th:text="${unit.name}"></option>
+                        </select>
+                        <input class="add-costprice" type="number" id="cost-price" name="cost-price" required/>
+                        <input class="add-price" type="number" id="price" name="price" required/>
+                        <input class="add-length" type="number" id="length" name="length"/>
+                        <input class="add-width" type="number" id="width" name="width"/>
+                        <input class="add-height" type="number" id="height" name="height"/>
+                        <input class="add-amount" type="number" id="amount" name="amount" value="0"/>
+                    </div>
+                </div>
+
+                <button type="submit" formaction="addProduct" class="btn-default">Tilføj</button>
 
             </form>
 
         </div>
 
-        <div>
 
-            <form>
-                <div>
-                    <button type="submit" name="filter" formaction="/lager">Alle</button>
-                </div>
-            </form>
-            <form method="post">
-                <div th:each="type : ${filtersList}">
-                    <button type="submit" name="filter" th:value="${type.typeID}" formaction="filterByType"
-                            th:text="${type.name}"></button>
-                </div>
-            </form>
-        </div>
-
-
-        <div>
-
-            <table>
-                <thead>
-                <tr>
-                    <th>Vare Nr.</th>
-                    <th>Navn</th>
-                    <th>Beskrivelse</th>
-                    <th>Vare type</th>
-                    <th>Bredde</th>
-                    <th>Højde</th>
-                    <th>Længde</th>
-                    <th>Enhed</th>
-                    <th>Enhed Pris</th>
-                    <th>Lagerbeholdning</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <!--                fills the table with data from the product list on each row from the database-->
-                <!--                some inputs are hidden and not displayed but still sent with the form so all data from the object-->
-                <!--                can be used to update in the BD-->
-
-                <tr th:each="product : ${productList}">
-                    <form method="post">
-                        <td><input type="text" name="productID" th:value="${product.productID}" disabled/></td>
-                        <td><input type="text" name="name" th:value="${product.name}"/></td>
-                        <td><input type="text" name="description" th:value="${product.description}"></td>
-                        <td>
-                            <!--                            <select>-->
-                            <!--                                <option th:each="unit : ${unitList}" th:value="${unit.unitID}" th:text="${unit.name}"></option>-->
-                            <!--                            </select>-->
-                            <input type="text" th:value="${product.type.name}" disabled/></td>
-                        <input type="hidden" name="typeID" th:value="${product.type.typeID}">
-                        <td><input type="text" name="width" th:value="${product.width}"/></td>
-                        <td><input type="text" name="height" th:value="${product.height}"/></td>
-                        <td><input type="text" name="length" th:value="${product.length}"/></td>
-                        <td><input type="text"  th:value="${product.unit.name}" disabled/></td>
-                        <input type="hidden" name="unitID" th:value="${product.unit.unitID}">
-                        <td><input type="text" name="price" th:value="${product.price}"/></td>
-                        <input type="hidden" name="costPrice" th:value="${product.costPrice}">
-                        <td><input type="text" name="quantity"  th:value="${product.quantity}"/></td>
-                        <td><button type="submit" formaction="updateProduct">Opdater</button></td>
+        <div class="product-storage">
+            <div class="top-elements">
+                <div class="left-side-elements">
+                    <form>
+                        <button class="filter-menu" type="submit" name="filter" formaction="/lager">Alle</button>
                     </form>
-                </tr>
-                </tbody>
-            </table>
+                    <form method="post" th:each="type : ${filtersList}">
+                        <button class="filter-menu" type="submit" name="filter" th:value="${type.typeID}"
+                                formaction="filterByType" th:text="${type.name}"></button>
+                    </form>
+                </div>
+
+                <div class="right-side-elements">
+                    <form action="">
+                        <button class="btn-default" type="submit" formaction="saveAll">Gem alle</button>
+                    </form>
+                </div>
+            </div>
+
+            <div>
+                <div class="product-header">
+                    <p class="fontfix product-nr">Vare Nr.</p>
+                    <p class="fontfix product-name">Navn</p>
+                    <p class="fontfix product-description">Beskrivelse</p>
+                    <p class="fontfix product-type">Vare type</p>
+                    <p class="fontfix product-width">Bredde</p>
+                    <p class="fontfix product-height">Højde</p>
+                    <p class="fontfix product-length">Længde</p>
+                    <p class="fontfix product-unit">Enhed</p>
+                    <p class="fontfix product-price">Enhed Pris</p>
+                    <p class="fontfix product-amount">Lagerbeholdning</p>
+                    <p class="fontfix product-update" style="cursor:default;"><i class="fa-solid fa-arrows-rotate"></i>
+                    </p>
+                    <p class="fontfix product-delete" style="cursor:default;"><i class="fa-solid fa-trash"></i></p>
+                </div>
+
+
+                <form method="post" th:each="product : ${productList}" class="product-header">
+                    <input class="product-nr" type="text" name="productID" th:value="${product.productID}" disabled/>
+                    <input class="product-name" type="text" name="name" th:value="${product.name}"/>
+                    <input class="product-description" type="text" name="description"
+                           th:value="${product.description}"/>
+                    <input class="product-type" type="text" th:value="${product.type.name}" disabled/></td>
+                    <input class="" type="hidden" name="typeID" th:value="${product.type.typeID}"/>
+                    <input class="product-width" type="text" name="width" th:value="${product.width}"/>
+                    <input class="product-height" type="text" name="height" th:value="${product.height}"/>
+                    <input class="product-length" type="text" name="length" th:value="${product.length}"/>
+                    <input class="product-unit" type="text" th:value="${product.unit.name}" disabled/>
+                    <input class="" type="hidden" name="unitID" th:value="${product.unit.unitID}"/>
+                    <input class="product-price" type="text" name="price" th:value="${product.price}"/>
+                    <input class="" type="hidden" name="costPrice" th:value="${product.costPrice}"/>
+                    <input class="product-amount" type="text" name="quantity" th:value="${product.quantity}"/>
+
+                    <button class="product-update" type="submit" formaction="updateProduct"><i
+                            class="fa-solid fa-arrows-rotate"></i></button>
+                    <button class="product-delete" type="submit" formaction="deleteProduct"><i
+                            class="fa-solid fa-trash"></i></button>
+                </form>
+
+            </div>
         </div>
+
+        <!--                fills the table with data from the product list on each row from the database-->
+        <!--                some inputs are hidden and not displayed but still sent with the form so all data from the object-->
+        <!--                can be used to update in the BD-->
+
     </div>
 </div>
 
