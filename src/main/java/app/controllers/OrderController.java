@@ -28,12 +28,13 @@ public class OrderController {
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
-        app.get("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
+        app.post("orderPaid", ctx -> setOrderPaid(ctx, connectionPool));
     }
 
     private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
-        OrderMapper.setOrderPaid(connectionPool, user);
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+        OrderMapper.setOrderPaid(connectionPool, user, orderID);
         getOrdersByUser(ctx,connectionPool);
     }
 
@@ -178,10 +179,10 @@ public class OrderController {
             carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
             carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
             inquiryDescription = "Bredde: " + carportWidth + " cm."
-                    + "\nLængde: " + carportLength + " cm."
-                    + "\nTag: Plastmo Ecolite"
-                    + "\nSkur: " + (shed ? "Ja" : "Nej")
-                    + "\nBemærkning: " + remark;
+                    + "<br>Længde: " + carportLength + " cm."
+                    + "<br>Tag: Plastmo Ecolite"
+                    + "<br>Skur: " + (shed ? "Ja" : "Nej")
+                    + "<br>Bemærkning: " + remark;
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
@@ -210,11 +211,14 @@ public class OrderController {
 
         // If user has not logged in, create an account TODO: If they have already have an account, there is no option currently to simply log in
         if (user == null) {
-            String name = ctx.formParam("username");
+            String fname = ctx.formParam("fname");
+            String lname = ctx.formParam("lname");
+            String name = fname + " " + lname;
             String email = ctx.formParam("email");
             String password = ctx.formParam("password");
             try {
-                user = UserMapper.createUser(name, email, password, connectionPool);
+                user = UserMapper.createUser(name.toLowerCase(), email.toLowerCase(), password, connectionPool);
+                ctx.sessionAttribute("currentUser", user);
             } catch (DatabaseException e) {
                 String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer. Prøv igen.";
                 ctx.attribute("inquiryFailed", msg);
@@ -225,7 +229,8 @@ public class OrderController {
         try {
             int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, description, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
             ctx.attribute("orderID", orderID);
-            ctx.render("user/index.html");
+//            ctx.render("user/view-orders.html");
+            getOrdersByUser(ctx,connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }

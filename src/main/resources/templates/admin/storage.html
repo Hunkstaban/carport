@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
-    <link rel="stylesheet" href="../../public/css/adminStorageStyle.css" th:href="@{/css/adminStorageStyle.css}">
+    <link rel="stylesheet" href="../../public/css/admin-storage-style.css" th:href="@{/css/adminStorageStyle.css}">
+    <link rel="stylesheet" href="../../public/css/global-styles.css" th:href="@{/css/global-styles.css}">
 </head>
 <body>
 
@@ -27,10 +28,10 @@
 </header>
 
 
-<div id="page">
-    <div class="centerpage">
+<div>
+    <div>
 
-        <div class="add-product">
+        <div>
 
             <form method="post">
                 <table>
@@ -53,8 +54,16 @@
                     <tr>
                         <td><input type="text" id="product-name" name="product-name" maxlength="100" required></td>
                         <td><input type="text" id="description" name="description" maxlength="250"></td>
-                        <td><input type="text" id="type-id" name="type-id"></td>
-                        <td><input type="text" id="unit-id" name="unit-id"></td>
+                        <td>
+                            <select required>
+                                <option th:each="type : ${filtersList}" th:value="${type.typeID}" th:text="${type.name}"></option>
+                            </select>
+                            <!--                            <input type="text" id="type-id" name="type-id"></td>-->
+                        <td>
+                            <select required>
+                                <option th:each="unit : ${unitList}" th:value="${unit.unitID}" th:text="${unit.name}"></option>
+                            </select>
+                            <!--                        <input type="text" id="unit-id" name="unit-id"></td>-->
                         <td><input type="number" id="cost-price" name="cost-price" required></td>
                         <td><input type="number" id="price" name="price" required></td>
                         <td><input type="number" id="length" name="length"></td>
@@ -71,14 +80,14 @@
 
         </div>
 
-        <div class="flex-filter">
+        <div>
 
             <form>
                 <div>
                     <button type="submit" name="filter" formaction="/lager">Alle</button>
                 </div>
             </form>
-            <form method="post" class="filter-menu">
+            <form method="post">
                 <div th:each="type : ${filtersList}">
                     <button type="submit" name="filter" th:value="${type.typeID}" formaction="filterByType"
                             th:text="${type.name}"></button>
@@ -87,9 +96,9 @@
         </div>
 
 
-        <div class="table-container">
+        <div>
 
-            <table class="products-table">
+            <table>
                 <thead>
                 <tr>
                     <th>Vare Nr.</th>
@@ -106,21 +115,25 @@
                 </thead>
 
                 <tbody>
-<!--                fills the table with data from the product list on each row from the database-->
-<!--                some inputs are hidden and not displayed but still sent with the form so all data from the object-->
-<!--                can be used to update in the BD-->
+                <!--                fills the table with data from the product list on each row from the database-->
+                <!--                some inputs are hidden and not displayed but still sent with the form so all data from the object-->
+                <!--                can be used to update in the BD-->
 
                 <tr th:each="product : ${productList}">
                     <form method="post">
-                        <td><input type="text" name="productID" th:value="${product.productID}"/></td>
+                        <td><input type="text" name="productID" th:value="${product.productID}" disabled/></td>
                         <td><input type="text" name="name" th:value="${product.name}"/></td>
                         <td><input type="text" name="description" th:value="${product.description}"></td>
-                        <td><input type="text" th:value="${product.type.name}"/></td>
+                        <td>
+                            <!--                            <select>-->
+                            <!--                                <option th:each="unit : ${unitList}" th:value="${unit.unitID}" th:text="${unit.name}"></option>-->
+                            <!--                            </select>-->
+                            <input type="text" th:value="${product.type.name}" disabled/></td>
                         <input type="hidden" name="typeID" th:value="${product.type.typeID}">
                         <td><input type="text" name="width" th:value="${product.width}"/></td>
                         <td><input type="text" name="height" th:value="${product.height}"/></td>
                         <td><input type="text" name="length" th:value="${product.length}"/></td>
-                        <td><input type="text"  th:value="${product.unit.name}"/></td>
+                        <td><input type="text"  th:value="${product.unit.name}" disabled/></td>
                         <input type="hidden" name="unitID" th:value="${product.unit.unitID}">
                         <td><input type="text" name="price" th:value="${product.price}"/></td>
                         <input type="hidden" name="costPrice" th:value="${product.costPrice}">
