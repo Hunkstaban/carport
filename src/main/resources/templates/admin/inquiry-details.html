@@ -19,7 +19,21 @@
             <div class="order-nav-bar-right">
 
                 <form method="post">
-                    <button type="submit" formaction="/anuller-ordre" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3">Anuller</button>
+
+                    <a class="popup-button cancel-button" th:href="'#popup-confirm-cancel-' + ${order.orderID}" th:if="${order.status.statusID} < 3">Annuller</a>
+
+                    <div th:id="'popup-confirm-cancel-' + ${order.orderID}" class="popup">
+                        <div class="content">
+
+                            <p>Er du sikker på du vil annulere ordren?</p>
+                            <button type="submit" formaction="/anuller-ordre" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3"
+
+                            style="position: absolute; right: 10px; bottom: 10px;">Annuller</button>
+
+                            <a href="#"
+                               style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+                        </div>
+                    </div>
                 </form>
 
                 <form>
