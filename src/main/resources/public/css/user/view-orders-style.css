@@ -77,6 +77,7 @@
     display: flex;
     flex-direction: row;
     width: 360px;
+    flex-wrap: wrap;
 }
 
 .info {
@@ -90,6 +91,7 @@
     gap: 32px;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .bottom-elements {
@@ -155,18 +157,75 @@
 
 .content {
     position: relative;
-    background: white;
+    background: #ffffff;
     padding: 1em 2em;
     border-radius: 4px;
+    max-width: 75%;
+    /*min-width: 50%;*/
+    max-height: 90%;
+}
+
+.content-drawing {
+    min-width: 50%;
+}
+
+.drawing {
+    height: auto;
 }
 
 .popup:target {
     display: flex;
 }
 
-
 #grey {
     background-color: #A6A6A6;
     color: #555555;
     cursor: default;
+}
+
+.exit-popup {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #000000;
+    font-size: 30px;
+    text-decoration: none;
+}
+
+
+
+
+
+
+@media (max-width: 600px) {
+    .top-elements {
+        flex-direction: column;
+        gap: 24px;
+    }
+    .right-side-elements {
+        /*transform: scale(75%);*/
+        justify-content: center;
+        gap: 20px;
+    }
+    .left-side-elements {
+        flex-direction: column;
+        width: 100%;
+    }
+    .content-box {
+        padding: 16px 20px;
+        gap: 24px;
+    }
+    .info {
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .bottom-elements{
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    .elements {
+        width: 90%;
+    }
 }

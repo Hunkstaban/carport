@@ -98,6 +98,7 @@ input[type=radio]:checked + label {
     width: 100%;
     flex-shrink: 2.5;
 }
+
 .city {
     width: 100%;
 }
@@ -126,13 +127,31 @@ input[type=radio]:checked + label {
     justify-content: flex-end;
 }
 
+
+@media (max-width: 600px) {
+    .form {
+        /*transform: scale(60%);*/
+    }
+    .element {
+        width: 100%;
+    }
+    .textarea {
+        height: 60px;
+    }
+    .content-box {
+        width: 100%;
+        gap: 24px;
+    }
+    .drawing {
+        width: auto;
+    }
+}
+
+
 /*button:hover {*/
 /*    background-color: #01478d;*/
 /*    cursor: pointer;*/
 /*}*/
-
-
-
 
 
 /*.btn-override2{*/
