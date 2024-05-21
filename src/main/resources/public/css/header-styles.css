@@ -1,6 +1,6 @@
 .header-container {
     display: flex;
-    max-height: 100px;
+    max-height: 70px;
     align-items: center;
     justify-content: space-between;
     background-color: white;
@@ -15,7 +15,7 @@
 }
 
 .logo img {
-    height: 80px;
+    height: 70px;
 }
 
 .user-actions {
@@ -24,4 +24,9 @@
 
 .user-actions img {
     height: 60px;
+    transition-duration: 200ms;
+}
+
+.user-actions:hover {
+    transform: scale(105%);
 }

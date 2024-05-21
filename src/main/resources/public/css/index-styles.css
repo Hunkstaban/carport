@@ -2,6 +2,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 100px 60px;
+    gap: 2%;
+    padding: 150px 5vw;
+
     /*border-bottom: 1px solid #ccc;*/
+}
+
+.carports img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 50%;
+    transition-duration: 200ms;
+}
+
+.carports img:hover {
+    transform: scale(105%);
 }
