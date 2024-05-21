@@ -89,42 +89,7 @@
     background-color: transparent;
     border: none;
 }
-.top-nav {
 
-    display: flex;
-    justify-content: center;
-    height: 20vh;
-    gap: 20px;
-}
-.top-nav form {
-
-    display: flex;
-    /*width: 40%;*/
-
-    align-items: center;
-    justify-content: center;
-}
-
-.top-nav button {
-
-    display: flex;
-    height: 12vh;
-    width: 15vw;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    background-color: #555555;
-    border: 1px solid #555555;
-    color: white;
-    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-    font-size: 14px;
-
-}
-
-.top-nav button:hover {
-
-    background-color: #333333;
-}
 
 .flex-filter {
 

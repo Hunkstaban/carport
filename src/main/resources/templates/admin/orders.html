@@ -6,29 +6,16 @@
     <title>Title</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">
+    <link th:href="@{/css/global-styles.css}" rel="stylesheet"/>
     <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
 
 </head>
 
 <div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
+<div th:replace="~{fragments/admin-header}"></div>
 
 <body>
 
-<header>
-    <div class="top-nav">
-
-        <form>
-            <button type="submit" formaction="/alle_ordrer">Ordrer</button>
-        </form>
-        <form method="post">
-            <button type="submit" formaction="/alle_ordrer_filter" name="filter" th:value="1">Forespørgsler</button>
-        </form>
-        <form method="get">
-            <button type="submit" formaction="/lager">Lager</button>
-        </form>
-    </div>
-
-</header>
 
 <div id="page">
     <div class="centerpage">
@@ -36,7 +23,7 @@
         <div class="flex-filter">
 
             <form class="filter-menu">
-                <div>
+                <div th:if="${orderList}">
                     <button type="submit" name="filter" formaction="/alle_ordrer">Alle</button>
                 </div>
             </form>
@@ -48,8 +35,10 @@
             </form>
         </div>
 
-
-        <div class="table-container">
+        <div class="table-container" th:if="${!orderList}">
+            Velkommen, Admin.
+        </div>
+        <div class="table-container" th:if="${orderList}">
 
             <table class="orders-table">
                 <thead>

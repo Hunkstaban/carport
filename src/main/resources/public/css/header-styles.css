@@ -1,6 +1,6 @@
 .header-container {
     display: flex;
-    max-height: 100px;
+    max-height: 70px;
     align-items: center;
     justify-content: space-between;
     background-color: white;
@@ -15,7 +15,8 @@
 }
 
 .logo img {
-    height: 80px;
+    padding-left: 4vw;
+    height: 70px;
 }
 
 .user-actions {
@@ -23,5 +24,52 @@
 }
 
 .user-actions img {
+    padding-right: 4vw;
     height: 60px;
+    transition-duration: 200ms;
 }
+
+.user-actions img:hover {
+    transform: scale(105%);
+}
+
+/*Admin header styles*/
+
+.top-nav {
+
+    display: flex;
+    justify-content: center;
+    height: 20vh;
+    gap: 20px;
+}
+.top-nav form {
+
+    display: flex;
+    /*width: 40%;*/
+
+    align-items: center;
+    justify-content: center;
+}
+
+.top-nav button {
+
+    display: flex;
+    height: 12vh;
+    width: 15vw;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: #555555;
+    border: 1px solid #555555;
+    color: white;
+    font-family: Graphik, -apple-system, system-ui, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    font-size: 14px;
+
+}
+
+.top-nav button:hover {
+
+    background-color: #333333;
+}
+
+.top-nav

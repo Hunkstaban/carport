@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<body>
+<header>
+    <div class="top-nav">
+
+        <form>
+            <button type="submit" formaction="/alle_ordrer">Ordrer</button>
+        </form>
+        <form method="post">
+            <button type="submit" formaction="/alle_ordrer_filter" name="filter" th:value="1">Forespørgsler</button>
+        </form>
+        <form method="get">
+            <button type="submit" formaction="/lager">Lager</button>
+        </form>
+    </div>
+
+</header>
+
+</body>
+</html>

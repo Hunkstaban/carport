@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Frontpage</title>
+    <title>Forside</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link th:href="@{/css/global-styles.css}" rel="stylesheet"/>
@@ -9,6 +9,7 @@
     <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
 
 </head>
+
 
 <div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
 
@@ -21,7 +22,7 @@
 
 <div class="carports">
     <div class="standard-carport">
-        <a href="https://www.johannesfog.dk/soegning?q=carport">
+        <a href="https://www.johannesfog.dk/have-fritid/carporte">
             <img src="/images/standardcarport.png">
         </a>
     </div>
@@ -32,7 +33,6 @@
         </a>
     </div>
 </div>
-
 
 
 <br>

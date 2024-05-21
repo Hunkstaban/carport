@@ -331,10 +331,16 @@ html {
 }
 
 .svg-and-description {
-
     display: none;
     width: 100%;
     margin-top: 10px;
+}
+
+.svg-drawing {
+    width: auto;
+    max-width: 80%;
+    height: auto;
+    max-height: 80vh;
 }
 
 
