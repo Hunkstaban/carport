@@ -21,16 +21,18 @@ class ProductListCalcTest {
 
     @BeforeEach
     void setUp() {
+
+    }
+
+    @Test
+    void testProductList() {
         int carportWidth = 600;
         int carportLength = 780;
         boolean shed = false; // adding a shed will result in posts increasing by 5
         productListCalc = new ProductListCalc(carportWidth, carportLength,  shed, connectionPool);
         productListCalc.calculateProductList();
         productList = productListCalc.getProductList();
-    }
 
-    @Test
-    void testProductList() {
         // We add posts, beams, rafters and roof plates objects, so we expect the product list has 4 objects
 
         // Expected
@@ -46,6 +48,12 @@ class ProductListCalcTest {
 
     @Test
     void calcPosts() {
+        int carportWidth = 600;
+        int carportLength = 780;
+        boolean shed = false; // adding a shed will result in posts increasing by 5
+        productListCalc = new ProductListCalc(carportWidth, carportLength,  shed, connectionPool);
+
+
         // Arrange
         productListCalc.calcPosts(7800);
 
@@ -61,6 +69,13 @@ class ProductListCalcTest {
 
     @Test
     void calcBeams() {
+        int carportWidth = 600;
+        int carportLength = 780;
+        boolean shed = false; // adding a shed will result in posts increasing by 5
+        productListCalc = new ProductListCalc(carportWidth, carportLength,  shed, connectionPool);
+        productListCalc.calculateProductList();
+        productList = productListCalc.getProductList();
+
         // Arrange
         productListCalc.calcBeams(7800);
 
@@ -79,6 +94,13 @@ class ProductListCalcTest {
 
     @Test
     void calcRafters() {
+        int carportWidth = 600;
+        int carportLength = 780;
+        boolean shed = false; // adding a shed will result in posts increasing by 5
+        productListCalc = new ProductListCalc(carportWidth, carportLength,  shed, connectionPool);
+        productListCalc.calculateProductList();
+        productList = productListCalc.getProductList();
+
         // Arrange
         productListCalc.calcRafters(6000, 7800);
 
@@ -98,6 +120,13 @@ class ProductListCalcTest {
 
     @Test
     void calcRoof() {
+        int carportWidth = 600;
+        int carportLength = 780;
+        boolean shed = false; // adding a shed will result in posts increasing by 5
+        productListCalc = new ProductListCalc(carportWidth, carportLength,  shed, connectionPool);
+        productListCalc.calculateProductList();
+        productList = productListCalc.getProductList();
+
         // Arrange
         productListCalc.calcRoof(6000, 7800);
 

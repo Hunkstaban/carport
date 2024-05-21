@@ -139,7 +139,7 @@ public class ProductListCalc {
     }
 
     void calcRafters(int carportWidth, int carportLength) {
-        String description = "Spær - monteres på rem";
+        String description = "Spær - monteres på rem";
         String rafterUnit = "Stk.";
         List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int costPrice;
@@ -148,24 +148,26 @@ public class ProductListCalc {
         int leastWoodWaste = Integer.MAX_VALUE;
         Product optimalRafter = null;
 
-        // Looping through each rafter, finding the optimal length that waste the least wood
+        // Looping through each rafter, finding the optimal length that wastes the least wood
         for (Product rafter : rafterOptions) {
             if (rafter.getLength() >= carportWidth) {
                 int woodWasted = rafter.getLength() - carportWidth;
                 if (woodWasted < leastWoodWaste) {
+                    leastWoodWaste = woodWasted;
                     optimalRafter = rafter;
                 }
             }
         }
 
-        numberOfRafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
-        costPrice = numberOfRafters * optimalRafter.getCostPrice();
-
-        // Add the rafter product to the product list
         if (optimalRafter != null) {
+            numberOfRafters = (int) Math.ceil((double) carportLength / DISTANCE_BETWEEN_RAFTERS);
+            costPrice = numberOfRafters * optimalRafter.getCostPrice();
+
+            // Add the rafter product to the product list
             productList.add(new ProductListItem(optimalRafter.getProductID(), optimalRafter.getName(), description, optimalRafter.getLength(), rafterUnit, numberOfRafters, costPrice));
         }
     }
+
 
     void calcRoof(int carportWidth, int carportLength) {
         List<Product> roofList = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
