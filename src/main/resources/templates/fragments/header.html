@@ -1,4 +1,19 @@
-<header th:fragment="header(isLoggedIn)">
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <link th:href="@{https://fonts.cdnfonts.com/css/segoe-ui-variable}" rel="stylesheet"
+          href="https://fonts.cdnfonts.com/css/segoe-ui-variable">
+
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
+</head>
+
+
+
+    <header th:fragment="header(isLoggedIn)">
     <div class="header-container">
         <div class="logo">
             <a href="/">

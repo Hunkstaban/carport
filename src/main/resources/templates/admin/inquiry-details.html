@@ -84,9 +84,7 @@
             <label for="beskrivelse" class="tabs-label">Beskrivelse og skitse</label>
             <div class="svg-and-description">
                 <p th:text="${order.description}"></p>
-                <p th:utext="${svgDrawing}">Carport skitse: </p>
-
-
+                <p class="svg-drawing" th:utext="${svgDrawing}">Carport skitse: </p>
             </div>
 
         </div>

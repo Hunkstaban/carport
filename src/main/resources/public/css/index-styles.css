@@ -12,10 +12,23 @@
     width: auto;
     max-width: 100%;
     height: auto;
-    max-height: 50%;
+    max-height: 80vh;
     transition-duration: 200ms;
 }
 
 .carports img:hover {
     transform: scale(105%);
+}
+
+@media (max-width: 600px) {
+    .carports {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 2%;
+        padding: 150px 5vw;
+
+        /*border-bottom: 1px solid #ccc;*/
+    }
 }
