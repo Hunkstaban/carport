@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">-->
-    <link rel="stylesheet" href="../../public/css/user/view-orders-style.css" th:href="@{/css/user/view-orders-style.css}">
+    <!--    <link rel="stylesheet" href="../../public/css/admin-orders-style.css" th:href="@{/css/admin-orders-style.css}">-->
+    <link rel="stylesheet" href="../../public/css/user/view-orders-style.css"
+          th:href="@{/css/user/view-orders-style.css}">
     <link rel="stylesheet" href="../../public/css/global-styles.css" th:href="@{/css/global-styles.css}">
 
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
@@ -67,30 +68,28 @@
                             <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
                             <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
                             <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
-<!--                            <div>Konstruktionsbeskrivelse: <span th:utext="${order.description}"></span></div>-->
+                            <!--                            <div>Konstruktionsbeskrivelse: <span th:utext="${order.description}"></span></div>-->
 
-                            <a href="#"
-                               style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+                            <a href="#" class="exit-popup">&times;</a>
                         </div>
                     </div>
 
                     <div th:id="'popup-drawing-' + ${order.orderID}" class="popup">
-                        <div class="content">
-                            <div>
-                                <p th:utext="'Tegning: ' + ${order.svg}"></p>
-                            </div>
+                        <div class="content content-drawing">
 
-                            <a href="#"
-                               style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+                            <p class="drawing" th:utext="'Tegning: ' + ${order.svg}"></p>
+
+
+                            <a href="#" class="exit-popup">&times;</a>
                         </div>
                     </div>
 
                     <div th:id="'popup-parts-list-' + ${order.orderID}" class="popup">
                         <div class="content">
-                            <div>
-                                <p th:text="'Stykliste: ' + ${order.productListRaw}"></p>
-                            </div>
-                            <a href="#" style="position: absolute; top: 10px; right: 10px; color: #000000; font-size: 30px; text-decoration: none;">&times;</a>
+
+                            <p th:utext="'Stykliste: ' + ${order.productListRaw}"></p>
+
+                            <a href="#" class="exit-popup">&times;</a>
                         </div>
                     </div>
 
