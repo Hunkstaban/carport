@@ -23,16 +23,17 @@ public class ProductListCalc {
     private static final int DEFAULT_ROOF_PANEL_WIDTH = 1090;
     private static final int ROOF_PANEL_OVERLAP = 200;
     private static final int INITIAL_POSTS = 4;
-    private static List<ProductListItem> productList = new ArrayList<>();
-    private static int carportWidth;
-    private static int carportLength;
-    private static boolean shed;
-    private static int numberOfPosts;
-    private static int numberOfPostsWOShed;
-    private static int numberOfBeams;
-    private static int numberOfRafters;
-    private static int numberOfRoofPanels;
-    private static ConnectionPool connectionPool;
+
+    private List<ProductListItem> productList = new ArrayList<>();
+    private int carportWidth;
+    private int carportLength;
+    private boolean shed;
+    private int numberOfPosts;
+    private int numberOfPostsWOShed;
+    private int numberOfBeams;
+    private int numberOfRafters;
+    private int numberOfRoofPanels;
+    private ConnectionPool connectionPool;
 
     public ProductListCalc(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         // Making sure all cm becomes mm for easier calculations
@@ -57,7 +58,7 @@ public class ProductListCalc {
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock
 
-    private static void calcPosts(int carportLength) {
+    void calcPosts(int carportLength) {
         Product optimalPost = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
         String postUnit = "Stk.";
@@ -83,7 +84,7 @@ public class ProductListCalc {
     }
 
 
-    private static void calcBeams(int carportLength) {
+    void calcBeams(int carportLength) {
         List<Product> beamList = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int totalCarportLength = 2 * carportLength;
         String description = "Remme i sider - sadles ned i stolper";
@@ -137,7 +138,7 @@ public class ProductListCalc {
         }
     }
 
-    private static void calcRafters(int carportWidth, int carportLength) {
+    void calcRafters(int carportWidth, int carportLength) {
         String description = "Spær - monteres på rem";
         String rafterUnit = "Stk.";
         List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
@@ -166,7 +167,7 @@ public class ProductListCalc {
         }
     }
 
-    private static void calcRoof(int carportWidth, int carportLength) {
+    void calcRoof(int carportWidth, int carportLength) {
         List<Product> roofList = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
         String description = "Tagplader - monteres på spær";
         String roofUnit = "Stk.";
@@ -220,40 +221,43 @@ public class ProductListCalc {
     }
 
 
-    private static void shedFacadeCalc() {
+    void shedFacadeCalc() {
 
     }
 
-    private static void calcScrews() {
+    void calcScrews() {
 
     }
 
-    private static void fittingsCalc() {
+    void fittingsCalc() {
 
     }
 
-
-    public static List<ProductListItem> getProductList() {
-        return productList;
-    }
-
-    public static void clearList() {
+    public void clearList() {
         productList.clear();
     }
 
-    public static int getNumberOfPosts() {
+    public List<ProductListItem> getProductList() {
+        return productList;
+    }
+
+    public int getNumberOfPosts() {
         return numberOfPosts;
     }
 
-    public static int getNumberOfBeams() {
+    public int getNumberOfPostsWOShed() {
+        return numberOfPostsWOShed;
+    }
+
+    public int getNumberOfBeams() {
         return numberOfBeams;
     }
 
-    public static int getNumberOfRafters() {
+    public int getNumberOfRafters() {
         return numberOfRafters;
     }
 
-    public static int getNumberOfRoofPanels() {
+    public int getNumberOfRoofPanels() {
         return numberOfRoofPanels;
     }
 }

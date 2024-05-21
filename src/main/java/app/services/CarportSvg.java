@@ -1,11 +1,13 @@
 package app.services;
 
+import app.persistence.ConnectionPool;
+
 public class CarportSvg {
     private static final double DISTANCE_BETWEEN_RAFTERS = 55.714;
     private static final int TOP_BOTTOM_OFFSET = 35;
     private static final int FRONT_OFFSET = 110;
     private static final double BACK_OFFSET = 27.5;
-    private static int numberOfPosts = ProductListCalc.getNumberOfPosts();
+    private static int numberOfPosts;
     private static int postSize = 10;
 //    private static String style = "stroke-width:1px; stroke:#000000; fill: rgba(0,0,0,0)";
     private static String style = "stroke-width:1px; stroke:#000000; fill: #ffffff";
@@ -15,8 +17,13 @@ public class CarportSvg {
     private boolean shed;
     private Svg carportSvg;
     private Svg arrowSvg;
+    private ConnectionPool connectionPool;
 
-    public CarportSvg(int clength, int width, boolean shed) {
+    public CarportSvg(int clength, int width, boolean shed, ConnectionPool connectionPool) {
+        ProductListCalc productListCalc = new ProductListCalc(width, clength, shed, connectionPool);
+        productListCalc.calculateProductList();
+        numberOfPosts = productListCalc.getNumberOfPosts();
+
         this.length = clength + (shed ? shed_width : 0);
         this.width = width;
         this.shed = shed;

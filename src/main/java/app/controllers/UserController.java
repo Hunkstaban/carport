@@ -17,7 +17,6 @@ public class UserController {
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.get("/login", ctx -> renderLoginPage(ctx, connectionPool));
         app.get("/opret-bruger", ctx -> renderSignupPage(ctx, connectionPool));
-        app.get("/index", ctx -> renderIndex(ctx, connectionPool));
         app.get("/opret-forespoergsel", ctx -> createInquiry(ctx, connectionPool));
     }
 
@@ -29,13 +28,6 @@ public class UserController {
         ctx.attribute("getAllLength", getAllLengthList);
         ctx.attribute("getAllWidth", getAllWidthList);
         ctx.render("user/create-inquiry.html");
-
-    }
-
-
-    private static void renderIndex(Context ctx, ConnectionPool connectionPool) {
-
-        ctx.render("user/index.html");
 
     }
 

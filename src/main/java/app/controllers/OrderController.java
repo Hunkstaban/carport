@@ -29,7 +29,7 @@ public class OrderController {
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
         app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
-        app.get("orderPaid", ctx -> setOrderPaid(ctx, connectionPool));
+        app.post("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
         app.post("/anuller-ordre", ctx -> cancelOrderByID(ctx, connectionPool));
     }
 
@@ -53,13 +53,14 @@ public class OrderController {
             ctx.attribute("orderID", orderID);
             inquiryDetailsPage(ctx, connectionPool);
         }
-
     }
 
     private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
         User user = ctx.sessionAttribute("currentUser");
-        OrderMapper.setOrderPaid(connectionPool, user);
-        getOrdersByUser(ctx, connectionPool);
+        int orderID = Integer.parseInt(ctx.formParam("orderID"));
+        OrderMapper.setOrderPaid(connectionPool, user, orderID);
+        getOrdersByUser(ctx,connectionPool);
+
     }
 
     private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
@@ -73,13 +74,11 @@ public class OrderController {
 
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
-        ProductListCalc.clearList();
-
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
 
 
         Order order = OrderMapper.getOrderByID(connectionPool, orderID);
-        String svgDrawwing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed());
+        String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
         List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
@@ -95,12 +94,10 @@ public class OrderController {
             updateInquiryPrice(ctx, order, totalPrice, costPrice);
         }
 
-        ctx.attribute("svgDrawing", svgDrawwing);
+        ctx.attribute("svgDrawing", svgDrawing);
         ctx.attribute("productListItems", productListItems);
         ctx.attribute("order", order);
         ctx.render("admin/inquiry-details.html");
-
-        ProductListCalc.clearList();
 
     }
 
@@ -201,7 +198,6 @@ public class OrderController {
     }
 
     private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
-        ProductListCalc.clearList();
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
@@ -215,10 +211,10 @@ public class OrderController {
             carportWidth = OrderMapper.getWidthByID(carportWidthID, connectionPool);
             carportLength = OrderMapper.getLengthByID(carportLengthID, connectionPool);
             inquiryDescription = "Bredde: " + carportWidth + " cm."
-                    + "\nLængde: " + carportLength + " cm."
-                    + "\nTag: Plastmo Ecolite"
-                    + "\nSkur: " + (shed ? "Ja" : "Nej")
-                    + "\nBemærkning: " + remark;
+                    + "<br>Længde: " + carportLength + " cm."
+                    + "<br>Tag: Plastmo Ecolite"
+                    + "<br>Skur: " + (shed ? "Ja" : "Nej")
+                    + "<br>Bemærkning: " + remark;
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
@@ -228,7 +224,7 @@ public class OrderController {
             estimatedPrice += productListItem.getCostPrice();
         }
         estimatedPrice = calculateOrderPrice(estimatedPrice);
-        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed);
+        String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed, connectionPool);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
         ctx.render("user/accept-inquiry.html");
@@ -247,11 +243,14 @@ public class OrderController {
 
         // If user has not logged in, create an account TODO: If they have already have an account, there is no option currently to simply log in
         if (user == null) {
-            String name = ctx.formParam("username");
+            String fname = ctx.formParam("fname");
+            String lname = ctx.formParam("lname");
+            String name = fname + " " + lname;
             String email = ctx.formParam("email");
             String password = ctx.formParam("password");
             try {
-                user = UserMapper.createUser(name, email, password, connectionPool);
+                user = UserMapper.createUser(name.toLowerCase(), email.toLowerCase(), password, connectionPool);
+                ctx.sessionAttribute("currentUser", user);
             } catch (DatabaseException e) {
                 String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer. Prøv igen.";
                 ctx.attribute("inquiryFailed", msg);
@@ -262,7 +261,8 @@ public class OrderController {
         try {
             int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, description, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
             ctx.attribute("orderID", orderID);
-            ctx.render("user/index.html");
+//            ctx.render("user/view-orders.html");
+            getOrdersByUser(ctx,connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
@@ -275,9 +275,10 @@ public class OrderController {
     }
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
-    private static String prepareCarportDrawing(int carportWidth, int carportLength, boolean shed) {
+
+    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         Locale.setDefault(new Locale("US"));
-        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed);
+        CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed, connectionPool);
 
         return carportSvg.toString();
     }

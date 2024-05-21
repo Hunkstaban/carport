@@ -1,11 +1,11 @@
-/*.radiobuttontext {*/
-/*    color: red;*/
-/*    display: none;*/
-/*}*/
+.radiobuttontext {
+    color: red;
+    display: block;
+}
 
-/*input[type="radio"]:checked + label + .radiobuttontext {*/
-/*    display: block;*/
-/*}*/
+input[type="radio"]:checked + label + .radiobuttontext {
+    display: none;
+}
 
 
 /*body {*/
@@ -79,6 +79,7 @@ input[type=radio]:checked + label {
 
 .radiobuttons {
     display: flex;
+    align-items: flex-end;
     gap: 8px;
 }
 
@@ -129,8 +130,6 @@ input[type=radio]:checked + label {
 /*    background-color: #01478d;*/
 /*    cursor: pointer;*/
 /*}*/
-
-
 
 
 

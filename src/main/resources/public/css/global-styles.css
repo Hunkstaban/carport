@@ -4,6 +4,10 @@
     text-decoration: none;
 }
 
+body {
+    background-color: #f5f5f3;
+}
+
 .h1, h1 {
     /*font-family: "Segoe UI Variable";*/
     font-weight: 400;
@@ -80,3 +84,4 @@ body {
     border: #555555 1px solid;
     padding: 0px 10px;
 }
+

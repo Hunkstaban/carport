@@ -4,56 +4,51 @@
     <title>Frontpage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/global-styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/index-styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
+
 </head>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
 
 <body>
 
-<!--Global header needed with links to customer order page and account info-->
 
-<h1>Velkommen til FOG </h1>
+<!--<div th:if="${session.currentUser}">
+    <h1 class="fontfix" th:text="'Velkommen, ' + ${#strings.capitalize(session.currentUser.name)}"></h1>
+</div>-->
 
-<form method="get">
-    <button formaction="/opret-forespoergsel">Byg selv carport</button>
-</form>
-<br>
-<form method="get">
-    <a href="https://www.johannesfog.dk/soegning?q=carport">Standard carport</a>
-</form>
-<br>
-
-<form method="get">
-    <!--    <a th:href="@{/renderLoginPage}">Login</a>-->
-    <a th:href="@{/opret-bruger}">Opret bruger</a>
-    <div>
-        <br>
-        <!-- if currentuser is not equal to null // if a user logged in. show logout link-->
-        <div th:if="${session.currentUser != null}">
-            <a th:href="@{/logout}">Logout</a>
-        </div>
-        <br>
-        <!--   if currentuser is equal to null // if there is not a user logged in. show login link-->
-        <div th:if="${session.currentUser == null}">
-            <a th:href="@{/login}">Login</a>
-        </div>
-        <br>
+<div class="carports">
+    <div class="standard-carport">
+        <a href="https://www.johannesfog.dk/soegning?q=carport">
+            <img src="/images/standardcarport.png">
+        </a>
     </div>
-</form>
+
+    <div class="custom-carport">
+        <a href="/opret-forespoergsel">
+            <img src="/images/bygselvcarport.png">
+        </a>
+    </div>
+</div>
+
+
 
 <br>
 </div>
 
 <!--<a th:href="@{/logout}">Logout</a>-->
-<form method="get">
-    <button formaction="/mine-ordrer">My Orders</button>
-</form>
+<!--&lt;!&ndash;<form method="get">-->
+<!--    <button formaction="/mine-ordrer">My Orders</button>-->
+<!--</form>-->
 
-<form method="get">
+<!--<form method="get">
     <button formaction="/lager">Storage Page</button>
 </form>
 <form method="get">
     <button formaction="/alle_ordrer">Admin Order Page</button>
-</form>
+</form>&ndash;&gt;-->
 
 
 <button th:action="@{inquiryNext}"></button>

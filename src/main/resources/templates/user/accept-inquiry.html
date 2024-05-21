@@ -5,12 +5,15 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!--    <link href="../../public/css/styles.css" th:href="@{/css/styles.css}" rel="stylesheet"/>-->
-    <link th:href="@{/css/create-accept-inquiry-style.css}" rel="stylesheet" href="../../public/css/create-accept-inquiry-style.css">
+    <link th:href="@{/css/user/create-accept-inquiry-style.css}" rel="stylesheet" href="../../public/css/user/create-accept-inquiry-style.css">
     <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../../public/css/global-styles.css">
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
 
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
+
 <body>
 
 
@@ -20,7 +23,7 @@
             <h2 class="h2 fontfix">Kontaktoplysninger</h2>
 
             <div th:if="${session.currentUser != null}">
-                <p class="fbody fontfix" th:text="'Velkommen tilbage, ' + ${#strings.capitalize(session.currentUser.name)}"></p>
+                <p class="fbody fontfix" th:text="${#strings.capitalize(session.currentUser.name)}"></p>
                 <p class="fbody fontfix" th:text="${session.currentUser.email}"></p>
             </div>
 
@@ -71,7 +74,7 @@
 
             <p class="fontfix drawing" th:utext="${session.carportDrawing}"></p>
 
-            <p th:text="${session.description}"></p>
+            <p class="fontfix element" th:utext="${session.description}"></p>
 
             <div class="price-element">
                 <h2 class="fontfix">Pris estimat</h2>
