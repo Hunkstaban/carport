@@ -24,12 +24,12 @@
 
             <form class="filter-menu">
                 <div th:if="${orderList}">
-                    <button type="submit" name="filter" formaction="/alle_ordrer">Alle</button>
+                    <button type="submit" name="filter" formaction="/alle-ordrer">Alle</button>
                 </div>
             </form>
             <form method="post" class="filter-menu">
                 <div th:each="status : ${statusList}">
-                    <button type="submit" name="filter" th:value="${status.statusID}" formaction="/alle_ordrer_filter"
+                    <button type="submit" name="filter" th:value="${status.statusID}" formaction="/alle-ordrer-filter"
                             th:text="${status.name}"></button>
                 </div>
             </form>

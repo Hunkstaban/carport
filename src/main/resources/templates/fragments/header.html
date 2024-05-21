@@ -25,8 +25,11 @@
                 <a href="/logout">
                     <img src="/images/logout.png">
                 </a>
-                <a href="/mine-ordrer">
+                <a href="/mine-ordrer" th:if="${session.currentUser.roleID == 1}">
                     <img src="/images/profileicon.png">
+                </a>
+                <a href="/alle-ordrer" th:if="${session.currentUser.roleID == 2}">
+                    <img src="/images/profileiconadmin.png">
                 </a>
             </span>
             <span th:if="${!isLoggedIn}">
