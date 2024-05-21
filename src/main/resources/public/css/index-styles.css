@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 2%;
-    padding: 150px 5vw;
+    padding: 80px 5vw;
 
     /*border-bottom: 1px solid #ccc;*/
 }
@@ -27,7 +27,7 @@
         justify-content: center;
         flex-wrap: wrap;
         gap: 2%;
-        padding: 150px 5vw;
+        padding: 0px 5vw;
 
         /*border-bottom: 1px solid #ccc;*/
     }
