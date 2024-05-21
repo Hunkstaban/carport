@@ -69,6 +69,7 @@ public class ProductController {
             return true;
         }
         return false;
+    }
 
     private static void deleteProduct(Context ctx, ConnectionPool connectionPool) {
         int productID = Integer.parseInt(ctx.formParam("productID"));
