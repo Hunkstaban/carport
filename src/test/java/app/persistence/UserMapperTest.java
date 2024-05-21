@@ -104,7 +104,23 @@ class UserMapperTest {
 
     }
 
-    // TODO: create allready existing user. = should give exception
+    @Test
+    void createUserWithUpperCase() throws DatabaseException {
+
+
+        String nameExpected = "bob";
+        String emailExpected = "bob@bob.dk";
+        String passwordExpected = "1234";
+
+
+        User user = UserMapper.createUser("BOB", "BOB@BOB.dk", "1234", connectionPool);
+
+        assertEquals(nameExpected, user.getName());
+        assertEquals(emailExpected, user.getEmail());
+
+    }
+
+
     // A INTEGRATION-TEST ON CREATING A USER THAT ALLREADY EXIST. THAT SHOULD THROWS AN DATABASE EXCEPTION
     @Test
     void createUserException() {

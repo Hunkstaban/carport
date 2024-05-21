@@ -27,6 +27,9 @@ public class UserMapper {
              PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ) {
 
+            name = name.toLowerCase();
+            email = email.toLowerCase();
+
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, password);
@@ -53,8 +56,8 @@ public class UserMapper {
         ) {
 
 //            preparedStatement.setString(1, "name");
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
+            preparedStatement.setString(1, email.toLowerCase());
+            preparedStatement.setString(2, password.toLowerCase());
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

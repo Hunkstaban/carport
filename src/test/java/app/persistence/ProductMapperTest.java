@@ -91,6 +91,7 @@ class ProductMapperTest {
             int expected = 2;
             List<CarportLength> actualLenghts = ProductMapper.getAllLength(connectionPool);
             assertEquals(expected, actualLenghts.size());
+
         }
         catch (DatabaseException e)
         {
