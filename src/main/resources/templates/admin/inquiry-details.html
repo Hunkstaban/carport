@@ -29,7 +29,7 @@
                         <div class="content">
 
                             <p>Er du sikker på du vil annulere ordren?</p>
-                            <button type="submit" formaction="/anuller-ordre" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3"
+                            <button type="submit" formaction="/annuller-ordre" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3"
 
                             style="position: absolute; right: 10px; bottom: 10px;">Annuller</button>
 
@@ -83,7 +83,7 @@
             <input type="radio" class="radio" id="beskrivelse" name="nav" value="beskrivelse">
             <label for="beskrivelse" class="tabs-label">Beskrivelse og skitse</label>
             <div class="svg-and-description">
-                <p th:text="${order.description}"></p>
+                <p th:utext="${order.description}"></p>
                 <p class="svg-drawing" th:utext="${svgDrawing}">Carport skitse: </p>
             </div>
 

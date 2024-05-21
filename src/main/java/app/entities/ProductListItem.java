@@ -70,6 +70,6 @@ public class ProductListItem {
                 " Beskrivelse: " + productDescription + " ||" +
                 " Længde: " + length + " mm. ||" +
                 " Mængde: " + quantity + " " + unit +
-                "\n";
+                "<br>";
     }
 }

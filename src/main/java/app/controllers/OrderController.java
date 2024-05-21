@@ -30,7 +30,7 @@ public class OrderController {
         app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
         app.post("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
-        app.post("/anuller-ordre", ctx -> cancelOrderByID(ctx, connectionPool));
+        app.post("/annuller-ordre", ctx -> cancelOrderByID(ctx, connectionPool));
     }
 
     private static boolean verifyAdmin(Context ctx) {
@@ -127,7 +127,7 @@ public class OrderController {
             ctx.attribute("profitPrice", order.getTotalPrice() - PROCESSING_FEE);
             ctx.attribute("wrongPrice", msg);
         } else {
-            String formattedDegreeOfCoverage = String.format("%.1f", newDegreeOfCoverage);
+            String formattedDegreeOfCoverage = String.format("%.2f", newDegreeOfCoverage);
 
             ctx.attribute("totalPrice", totalPrice);
             ctx.attribute("degreeOfCoverage", formattedDegreeOfCoverage);
@@ -237,6 +237,7 @@ public class OrderController {
         String description = ctx.sessionAttribute("description");
         boolean shedChosen = ctx.sessionAttribute("shed");
         String remark = ctx.sessionAttribute("orderRemark");
+        remark = remark.replace("<br>", " ");
         List<ProductListItem> productList = ctx.sessionAttribute("productList");
         String carportDrawing = ctx.sessionAttribute("carportDrawing");
         int orderPrice = ctx.sessionAttribute("estimatedPrice");
