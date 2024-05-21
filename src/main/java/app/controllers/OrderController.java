@@ -75,21 +75,24 @@ public class OrderController {
     private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
-
+        int costPrice = 0;
 
         Order order = OrderMapper.getOrderByID(connectionPool, orderID);
         String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
         List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
+        for (ProductListItem productListItem : productListItems) {
+            costPrice += productListItem.getCostPrice();
+        }
 
         if ((ctx.formParam("costPrice")) == null) {
 
-            preparePriceDetails(ctx, order.getTotalPrice());
+            preparePriceDetails(ctx, order.getTotalPrice(), costPrice);
 
         } else {
             int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
-            int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
+            costPrice = Integer.parseInt(ctx.formParam("costPrice"));
 
             updateInquiryPrice(ctx, order, totalPrice, costPrice);
         }
@@ -102,12 +105,17 @@ public class OrderController {
     }
 
 
-    private static Context preparePriceDetails(Context ctx, int orderPrice) {
+    private static Context preparePriceDetails(Context ctx, int orderPrice, int costPrice) {
 
         int profitPrice = orderPrice - PROCESSING_FEE;
-        int costPrice = (int) ((profitPrice) / (1 + DEGREE_OF_COVERAGE));
+        double degreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
+        degreeOfCoverage = Math.round(degreeOfCoverage * 100.0) / 100.0;
 
-        ctx.attribute("degreeOfCoverage", DEGREE_OF_COVERAGE * 100);
+        if (degreeOfCoverage >= 39.9) {
+            degreeOfCoverage = DEGREE_OF_COVERAGE * 100;
+        }
+
+        ctx.attribute("degreeOfCoverage", degreeOfCoverage);
         ctx.attribute("totalPrice", orderPrice);
         ctx.attribute("processFee", PROCESSING_FEE);
         ctx.attribute("profitPrice", profitPrice);

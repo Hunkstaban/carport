@@ -191,13 +191,13 @@
                     <tr>
                         <th style="color: #00CC66" >Prisforslag</th>
                         <td th:text="${totalPrice} + ' kr'" style="color: #00CC66"></td>
-                        <div style="color:red" th:if="${wrongPrice}">
-                            <p th:text="${wrongPrice}"></p>
-                        </div>
                     </tr>
 
                     </tbody>
                 </table>
+                <div style="color:red" th:if="${wrongPrice}">
+                    <p th:text="${wrongPrice}"></p>
+                </div>
                 <form method="post">
                 <div class="cost-display-container-buttons" th:if="${order.status.statusID == 1}">
                     <!--                    <input type="hidden" name="newTotalPrice" value="5000">-->
