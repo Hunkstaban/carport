@@ -3,6 +3,7 @@ package app.controllers;
 import app.entities.Product;
 import app.entities.Type;
 import app.entities.Unit;
+import app.entities.User;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
 import io.javalin.Javalin;
@@ -57,6 +58,17 @@ public class ProductController {
 
     }
 
+    private static boolean verifyAdmin(Context ctx) {
+
+        User user = ctx.sessionAttribute("currentUser");
+
+        if (user != null && user.getRoleID() == 2) {
+
+            return true;
+        }
+        return false;
+    }
+
     // takes input from the frontend to get the 'filter' parameter to dertemine which type to load from the database
     private static void filterByType(Context ctx, ConnectionPool connectionPool) {
 
@@ -72,11 +84,19 @@ public class ProductController {
     // loads all products from the database and sends an attribute to the frontend for the admin
     private static void loadProducts(Context ctx, ConnectionPool connectionPool) {
 
-        // TODO: make a check if user is admin before rendering the admin page
 
-        globalStorageAttributes(ctx, connectionPool, null);
+        if (verifyAdmin(ctx)) {
 
-        ctx.render("admin/storage.html");
+            globalStorageAttributes(ctx, connectionPool, null);
+
+            ctx.render("admin/storage.html");
+
+        } else {
+
+            ctx.attribute("message", "403 adgang nægtet");
+            ctx.render("errors.html");
+        }
+
 
     }
 
