@@ -12,14 +12,13 @@
 </head>
 
 
-
-    <header th:fragment="header(isLoggedIn)">
+<header th:fragment="header(isLoggedIn)">
     <div class="header-container">
-        <div class="logo">
-            <a href="/">
-                <img src="/images/foglogo.png" alt="Logo">
-            </a>
-        </div>
+
+        <a href="/" class="logo">
+            <img src="/images/foglogo.png" alt="Logo">
+        </a>
+
         <div class="user-actions">
             <span th:if="${isLoggedIn}">
                 <a href="/logout">

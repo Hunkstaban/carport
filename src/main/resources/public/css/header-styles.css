@@ -4,17 +4,18 @@
     align-items: center;
     justify-content: space-between;
     background-color: white;
+    margin-bottom: 64px;
 
     /*border-bottom: 1px solid #ccc;*/
 }
 
-.logo button {
-    border: none;
-    background-color: transparent;
-    padding: 0;
+.logo {
+    height: 100%;
 }
 
 .logo img {
+    display: flex;
+    align-items: center;
     padding-left: 4vw;
     height: 70px;
 }
