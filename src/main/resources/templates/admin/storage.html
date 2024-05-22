@@ -13,8 +13,8 @@
     <!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
     <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 
-    <link rel="stylesheet" th:href="@{../../public/icons/css/solid.css}" href="../../public/icons/css/solid.css">
-    <link rel="stylesheet" th:href="@{../../public/icons/css/fontawesome.css}" href="../../public/icons/css/fontawesome.css">
+    <link rel="stylesheet" th:href="@{../../public/icons/css/fontawesome.css}" href="../../public/icons/css/fontawesome.css" />
+    <link rel="stylesheet" th:href="@{../../public/icons/css/solid.css}" href="../../public/icons/css/solid.css" />
 
 </head>
 
@@ -136,10 +136,10 @@
                     <input type="hidden" name="costPrice" th:value="${product.costPrice}"/>
                     <input class="product-amount" type="text" name="quantity" th:value="${product.quantity}"/>
 
-                    <button class="product-update" type="submit" formaction="updateProduct"><i
-                            class="fa-solid fa-arrows-rotate"></i></button>
-                    <button class="product-delete" type="submit" formaction="deleteProduct"><i
-                            class="fa-solid fa-trash"></i></button>
+                    <button class="product-update" type="submit" formaction="updateProduct" title="Update Changes">
+                        <i class="fa-solid fa-arrows-rotate"></i></button>
+                    <button class="product-delete" type="submit" formaction="deleteProduct" title="Delete Product">
+                        <i class="fa-solid fa-trash"></i></button>
 
                 </form>
 
@@ -155,4 +155,5 @@
 
 
 </body>
+<script src="https://kit.fontawesome.com/e7d05ad319.js" crossorigin="anonymous"></script>
 </html>
