@@ -113,6 +113,7 @@ html {
 
 .popup:target {
     display: flex;
+    z-index: 1;
 }
 
 

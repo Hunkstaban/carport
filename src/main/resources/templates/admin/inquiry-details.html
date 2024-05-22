@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Detaljer</title>
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="../../public/css/inquiry-details-style.css" th:href="@{/css/inquiry-details-style.css}">
     <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
@@ -29,7 +29,7 @@
                         <div class="content">
 
                             <p>Er du sikker på du vil annulere ordren?</p>
-                            <button type="submit" formaction="/annuller-ordre" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3"
+                            <button type="submit" formaction="annuller" name="orderID" class="cancel-button" th:value="${order.orderID}" th:if="${order.status.statusID} < 3"
 
                             style="position: absolute; right: 10px; bottom: 10px;">Annuller</button>
 
@@ -205,7 +205,7 @@
                     <input type="hidden" name="costPrice" th:value="${costPrice}">
                     <input type="hidden" name="orderID" th:value="${order.orderID}">
 
-                    <button formaction="/godkend-forespoergelse">Godkend</button>
+                    <button formaction="godkend">Godkend</button>
                 </div>
                 </form>
             </div>

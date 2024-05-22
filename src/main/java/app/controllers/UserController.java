@@ -33,6 +33,7 @@ public class UserController {
 
     private static void renderLoginPage(Context ctx, ConnectionPool connectionPool) {
 
+
         ctx.render("login.html");
     }
 

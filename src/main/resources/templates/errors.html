@@ -1,10 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <title>Forside</title>
     <meta charset="UTF-8">
-    <title>Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/global-styles.css}" rel="stylesheet"/>
+    <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
+    <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
+
 </head>
-<body>
+
+<div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
 
 <h1 th:text="${message}"></h1>
 
