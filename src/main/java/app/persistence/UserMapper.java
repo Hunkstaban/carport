@@ -38,9 +38,9 @@ public class UserMapper {
             return login(email, password, connectionPool);
 
         } catch (SQLException e) {
-            String msg = "Der er sket en fejl. Prøv igen";
+            String msg = "Something went wrong. try again;
             if (e.getMessage().startsWith("ERROR: duplicate key value")) {
-                msg = "email findes allerede. Prøv igen";
+                msg = "email allready exist";
             }
             throw new DatabaseException(msg, e.getMessage());
         }
@@ -71,7 +71,7 @@ public class UserMapper {
             } else throw new DatabaseException("could not get user from database");
 
         } catch (SQLException e) {
-            throw new DatabaseException("der skete en fejl med database." + e.getMessage());
+            throw new DatabaseException("Something went wrong with the database." + e.getMessage());
         }
 
     }

@@ -196,7 +196,7 @@ public class ProductMapper {
 
 
         } catch (SQLException e) {
-            throw new DatabaseException("Der skete en fejl med databasen " + e.getMessage());
+            throw new DatabaseException("Something went wrong with the database" + e.getMessage());
         }
 
         return getAllLengthList;
@@ -223,7 +223,7 @@ public class ProductMapper {
             }
 
         } catch (SQLException e) {
-            throw new DatabaseException("Der skete en fejl i databasen" + e.getMessage());
+            throw new DatabaseException("Something went wrong with the database" + e.getMessage());
 
         }
         return getAllWidthList;

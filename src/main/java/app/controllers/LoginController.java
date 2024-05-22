@@ -32,7 +32,7 @@ public class LoginController {
                 adminLogin(ctx, connectionPool, user);
             }
         } catch (DatabaseException e) {
-            String msg = "forkert email eller kodeord. Prøv igen";
+            String msg = "Forkert email eller kodeord. Prøv igen";
             ctx.attribute("loginError", msg);
             ctx.render("login.html");
         }
