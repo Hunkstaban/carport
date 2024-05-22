@@ -130,10 +130,16 @@ html, body {
     display: flex;
     flex-direction: column;
 }
+
 .all-item-inside-login-box{
     gap: 20px;
     display: flex;
     flex-direction: column;
+}
+
+.all-item-inside-login-box img {
+    height: 60px;
+    object-fit: contain;
 }
 
 @media (max-width: 600px) {

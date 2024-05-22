@@ -48,7 +48,6 @@ public class OrderController {
 
         User user = ctx.sessionAttribute("currentUser");
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
-        User user = ctx.sessionAttribute("currentUser");
         int customer = 1;
         int admin = 2;
 
@@ -266,20 +265,23 @@ public class OrderController {
             String name = fname + " " + lname;
             String email = ctx.formParam("email");
             String password = ctx.formParam("password");
+
             try {
                 user = UserMapper.createUser(name.toLowerCase(), email.toLowerCase(), password, connectionPool);
-                ctx.sessionAttribute("currentUser", user);
             } catch (DatabaseException e) {
-                String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer. Prøv igen.";
+                String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer.<br>Prøv igen.";
                 ctx.attribute("inquiryFailed", msg);
+                ctx.render("user/accept-inquiry.html");
+                return;
             }
+            ctx.sessionAttribute("currentUser", user);
+
         }
 
         // Create new order/inquiry, and redirect back to the landing page, sending orderID as an attribute to be displayed to the user
         try {
             int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, description, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
             ctx.attribute("orderID", orderID);
-//            ctx.render("user/view-orders.html");
             getOrdersByUser(ctx, connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);

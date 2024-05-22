@@ -21,6 +21,7 @@
 
 
         <form class="user-box-form" method="post">
+            <img src="/images/foglogo.png" alt="Logo">
             <h1 class="h1-signup-page fontfix">Opret FOG konto</h1>
             <div class="all-inputs">
                 <input class="name-input" placeholder="Navn" type="text" name="username" required>
@@ -30,7 +31,10 @@
 
                 <input class="password-input" placeholder="Kodeord" type="password" name="password" required>
 
-                <p class="basic-p">Har du allerede en konto login <a class="login-href" th:href="@{/login}">her</a></p>
+                <p class="basic-p fontfix">
+                    Har du allerede en konto?
+                    <a class="login-href fontfix" th:href="@{/login}">Login</a>
+                </p>
             </div>
             <button class="create-button fbody" type="submit" formaction="createUser">Opret bruger</button>
 

@@ -67,7 +67,6 @@ public class LoginController {
             String msg = "Bruger med denne email eksisterer allerede.";
             ctx.attribute("alreadyExist", msg);
             ctx.render("user/signup.html");
-
         }
     }
 

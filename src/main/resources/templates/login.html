@@ -28,19 +28,24 @@
 
     <div class="login-box">
         <div class="all-item-inside-login-box">
+            <img src="/images/foglogo.png" alt="Logo">
             <h1 class="h1-login-page fontfix">Log på</h1>
 
             <form class="user-box-form" method="post">
-
                 <div class="all-inputs-and-loginbutton">
+
                     <div class="all-inputs">
-                        <h2 class="log-on-with-mail">Log på med din e-mailadresse</h2>
+                        <!--<h2 class="log-on-with-mail">Log på med din e-mailadresse</h2>-->
 
                         <input class="email-input fbody" type="email" name="email" placeholder="E-mailadresse" required>
 
                         <input class="password-input fbody" type="password" name="password" placeholder="Kodeord" required>
 
-                        <a class="create-user-href" th:href="@{/opret-bruger}">Opret bruger</a>
+
+                        <p class="fontfix">
+                            Har du ikke en bruger?
+                            <a class="create-user-href fontfix" th:href="@{/opret-bruger}">Opret bruger</a>
+                        </p>
                     </div>
 
                     <button class="login-button fbody" type="submit" formaction="login">Log ind</button>

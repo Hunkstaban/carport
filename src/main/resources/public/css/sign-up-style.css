@@ -147,6 +147,11 @@ html, body {
     gap: 24px;
 }
 
+.user-box-form img {
+    height: 60px;
+    object-fit: contain;
+}
+
 .all-inputs{
     display: flex;
     flex-direction: column;

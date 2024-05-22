@@ -9,7 +9,10 @@ public class ErrorController {
     public static void addRoute(Javalin app, ConnectionPool connectionPool) {
         app.error(403, ctx -> html403(ctx, connectionPool));
         app.error(404, ctx -> html404(ctx, connectionPool));
+        app.error(500, ctx -> html500(ctx, connectionPool));
+
     }
+
 
     private static void html403 (Context ctx, ConnectionPool connectionPool) {
         String msg = "403: ADGANG NÆGTET";
@@ -22,4 +25,12 @@ public class ErrorController {
         ctx.attribute("message", msg);
         ctx.render("errors.html");
     }
+
+    private static void html500(Context ctx, ConnectionPool connectionPool) {
+        String msg = "500: SERVER FEJL";
+        ctx.attribute("message", msg);
+        ctx.render("errors.html");
+    }
+
 }
+
