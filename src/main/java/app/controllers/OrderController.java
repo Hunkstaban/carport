@@ -44,74 +44,106 @@ public class OrderController {
         return false;
     }
 
-    private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) {
 
         User user = ctx.sessionAttribute("currentUser");
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         int customer = 1;
         int admin = 2;
 
-        if (OrderMapper.cancelOrder(connectionPool, orderID, user)) {
+        try {
 
-            ctx.attribute("orderID", orderID);
-            if (user.getRoleID() == customer) {
-                ctx.redirect("/mine-ordrer");
-            } else if (user.getRoleID() == admin) {
-                inquiryDetailsPage(ctx, connectionPool);
+
+            if (OrderMapper.cancelOrder(connectionPool, orderID, user)) {
+
+                ctx.attribute("orderID", orderID);
+                if (user.getRoleID() == customer) {
+                    ctx.redirect("/mine-ordrer");
+                } else if (user.getRoleID() == admin) {
+                    inquiryDetailsPage(ctx, connectionPool);
+                }
+            } else {
+                String msg = "Kan ikke annnullere ordre";
+                ctx.attribute("cancelError", msg);
             }
-        } else {
-            String msg = "Kan ikke annnullere ordre";
-            ctx.attribute("cancelError", msg);
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
         }
     }
 
     private static void setOrderPaid(Context ctx, ConnectionPool connectionPool) {
-        User user = ctx.sessionAttribute("currentUser");
-        int orderID = Integer.parseInt(ctx.formParam("orderID"));
-        OrderMapper.setOrderPaid(connectionPool, user, orderID);
-        getOrdersByUser(ctx, connectionPool);
+
+        try {
+
+            User user = ctx.sessionAttribute("currentUser");
+            int orderID = Integer.parseInt(ctx.formParam("orderID"));
+            OrderMapper.setOrderPaid(connectionPool, user, orderID);
+            getOrdersByUser(ctx, connectionPool);
+
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
+        }
 
     }
 
     private static void getOrdersByUser(Context ctx, ConnectionPool connectionPool) {
 
-        User user = ctx.sessionAttribute("currentUser");
-        List<Order> orderList = OrderMapper.getOrdersByUser(connectionPool, user);
-        ctx.attribute("orderList", orderList);
-        ctx.render("user/view-orders.html");
+        try {
+
+            User user = ctx.sessionAttribute("currentUser");
+            List<Order> orderList = OrderMapper.getOrdersByUser(connectionPool, user);
+            ctx.attribute("orderList", orderList);
+            ctx.render("user/view-orders.html");
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
+        }
 
     }
 
-    private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         int costPrice = 0;
 
-        Order order = OrderMapper.getOrderByID(connectionPool, orderID);
-        String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
+        try {
 
-        List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
+            Order order = OrderMapper.getOrderByID(connectionPool, orderID);
+            String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
-        for (ProductListItem productListItem : productListItems) {
-            costPrice += productListItem.getCostPrice();
+            List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
+
+
+            for (ProductListItem productListItem : productListItems) {
+                costPrice += productListItem.getCostPrice();
+            }
+
+            if ((ctx.formParam("costPrice")) == null) {
+
+                preparePriceDetails(ctx, order.getTotalPrice(), costPrice);
+
+            } else {
+                int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
+                costPrice = Integer.parseInt(ctx.formParam("costPrice"));
+
+                updateInquiryPrice(ctx, order, totalPrice, costPrice);
+            }
+
+            ctx.attribute("svgDrawing", svgDrawing);
+            ctx.attribute("productListItems", productListItems);
+            ctx.attribute("order", order);
+            ctx.render("admin/inquiry-details.html");
+
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
         }
-
-        if ((ctx.formParam("costPrice")) == null) {
-
-            preparePriceDetails(ctx, order.getTotalPrice(), costPrice);
-
-        } else {
-            int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
-            costPrice = Integer.parseInt(ctx.formParam("costPrice"));
-
-            updateInquiryPrice(ctx, order, totalPrice, costPrice);
-        }
-
-        ctx.attribute("svgDrawing", svgDrawing);
-        ctx.attribute("productListItems", productListItems);
-        ctx.attribute("order", order);
-        ctx.render("admin/inquiry-details.html");
-
     }
 
 
@@ -188,26 +220,42 @@ public class OrderController {
 
     private static Context globalOrderAttributes(Context ctx, ConnectionPool connectionPool, Integer statusID) {
 
-        List<Status> statusList = OrderMapper.loadStatusList(connectionPool);
-        List<Order> orderList = OrderMapper.getOrders(connectionPool, statusID);
+        try {
 
-        ctx.attribute("orderList", orderList);
-        ctx.attribute("statusList", statusList);
+            List<Status> statusList = OrderMapper.loadStatusList(connectionPool);
+            List<Order> orderList = OrderMapper.getOrders(connectionPool, statusID);
 
+            ctx.attribute("orderList", orderList);
+            ctx.attribute("statusList", statusList);
+
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
+        }
         return ctx;
     }
 
-    private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
-        if (OrderMapper.ApproveOrder(connectionPool, orderID, totalPrice)) {
 
-            String message = "Ordre Godkendt";
+        try {
 
-            ctx.attribute("approved", message);
-            inquiryDetailsPage(ctx, connectionPool);
-            return true;
+
+            if (OrderMapper.ApproveOrder(connectionPool, orderID, totalPrice)) {
+
+                String message = "Ordre Godkendt";
+
+                ctx.attribute("approved", message);
+                inquiryDetailsPage(ctx, connectionPool);
+                return true;
+            }
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
         }
         return false;
 
@@ -300,6 +348,7 @@ public class OrderController {
     }
 
     private static List<ProductListItem> prepareProductList(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) throws DatabaseException {
+
         ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
         productListCalc.calculateProductList();
         return productListCalc.getProductList();

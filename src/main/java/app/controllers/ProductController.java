@@ -15,7 +15,6 @@ import java.util.List;
 import app.persistence.StorageMapper;
 
 
-
 public class ProductController {
 
     // To push
@@ -35,29 +34,37 @@ public class ProductController {
     }
 
     // controller to take data inputs from the front end and update the database through the ProductMapper.updateProduct mapper method
-    private static void updateProduct(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void updateProduct(Context ctx, ConnectionPool connectionPool) {
 
         // method gets all the formparams from the frontend and created a 'product' object to send as a variable to the mapper
-        int productID = Integer.parseInt(ctx.formParam("productID"));
-        String name = ctx.formParam("name");
-        String description = ctx.formParam("description");
-        int typeID = Integer.parseInt(ctx.formParam("typeID"));
-        int width = Integer.parseInt(ctx.formParam("width"));
-        int height = Integer.parseInt(ctx.formParam("height"));
-        int length = Integer.parseInt(ctx.formParam("length"));
-        int unitID = Integer.parseInt(ctx.formParam("unitID"));
-        int price = Integer.parseInt(ctx.formParam("price"));
-        int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
-        int quantity = Integer.parseInt(ctx.formParam("quantity"));
 
-        Type type = new Type(typeID);
-        Unit unit = new Unit(unitID);
-        Product product = new Product(productID, name, description, height, width, length, unit, type, price, costPrice,quantity);
+        try {
 
-        ProductMapper.updateProduct(product, connectionPool);
+            int productID = Integer.parseInt(ctx.formParam("productID"));
+            String name = ctx.formParam("name");
+            String description = ctx.formParam("description");
+            int typeID = Integer.parseInt(ctx.formParam("typeID"));
+            int width = Integer.parseInt(ctx.formParam("width"));
+            int height = Integer.parseInt(ctx.formParam("height"));
+            int length = Integer.parseInt(ctx.formParam("length"));
+            int unitID = Integer.parseInt(ctx.formParam("unitID"));
+            int price = Integer.parseInt(ctx.formParam("price"));
+            int costPrice = Integer.parseInt(ctx.formParam("costPrice"));
+            int quantity = Integer.parseInt(ctx.formParam("quantity"));
 
-        loadProducts(ctx, connectionPool);
+            Type type = new Type(typeID);
+            Unit unit = new Unit(unitID);
+            Product product = new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity);
 
+            ProductMapper.updateProduct(product, connectionPool);
+
+            loadProducts(ctx, connectionPool);
+
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
+        }
     }
 
 
@@ -72,25 +79,32 @@ public class ProductController {
         return false;
     }
 
-    private static void deleteProduct(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void deleteProduct(Context ctx, ConnectionPool connectionPool) {
+
         int productID = Integer.parseInt(ctx.formParam("productID"));
 
-        ProductMapper.deleteProduct(connectionPool, productID);
+        try {
 
-        loadProducts(ctx,connectionPool);
+            ProductMapper.deleteProduct(connectionPool, productID);
 
-//        ctx.render("admin/storage.html");
+            loadProducts(ctx, connectionPool);
+        } catch (DatabaseException e) {
+
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
+        }
     }
 
     // takes input from the frontend to get the 'filter' parameter to dertemine which type to load from the database
-    private static void filterByType(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+    private static void filterByType(Context ctx, ConnectionPool connectionPool) {
 
         int typeID = Integer.parseInt(ctx.formParam("filter"));
 
         // loads the different types from the database to filter the productList
-        globalStorageAttributes(ctx, connectionPool, typeID);
+            globalStorageAttributes(ctx, connectionPool, typeID);
 
-        ctx.render("admin/storage.html");
+            ctx.render("admin/storage.html");
+
 
     }
 
@@ -112,8 +126,9 @@ public class ProductController {
     }
 
 
+    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID)  {
 
-    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID) throws DatabaseException {
+        try {
 
         List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
         List<Product> productList = ProductMapper.getProducts(typeID, connectionPool);
@@ -123,6 +138,10 @@ public class ProductController {
         ctx.attribute("productList", productList);
         ctx.attribute("unitList", unitList);
 
+        } catch (DatabaseException e) {
+            ctx.status(500);
+            System.err.println("DatabaseException: " + e.getMessage());
+        }
         return ctx;
     }
 
@@ -136,7 +155,7 @@ public class ProductController {
     }
 
 
-    public static void addProduct(Context ctx, ConnectionPool connectionPool){
+    public static void addProduct(Context ctx, ConnectionPool connectionPool) {
         String name = ctx.formParam("product-name");
         String description = ctx.formParam("description");
         Integer height = tryParseInt(ctx.formParam("height"));
@@ -170,7 +189,7 @@ public class ProductController {
 
         try {
             StorageMapper.addProduct(connectionPool, name, description, height, width, length, unitID, typeID, price, costPrice, quantity);
-            loadProducts(ctx,connectionPool);
+            loadProducts(ctx, connectionPool);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
