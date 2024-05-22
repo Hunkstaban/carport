@@ -37,9 +37,13 @@ class UserMapperTest {
 
                 // Create sequences for auto generating id's for users and orders
                 stmt.execute("CREATE SEQUENCE test.users_user_id_seq");
+                // altering our test.users to set user_id to nextval as default. so it will count up ever time we make a new user.
                 stmt.execute("ALTER TABLE test.users ALTER COLUMN user_id SET DEFAULT nextval('test.users_user_id_seq')");
+                // altering our test.users to add a foreign key to our role_id. because our original database (not the test-database) have a foreign key from a role table
                 stmt.execute("ALTER TABLE test.users ADD CONSTRAINT fk_role_id FOREIGN KEY (role_id) REFERENCES test.roles(role_id)");
+                // altering our test.users to have role_id default as = 1. -- 1 is user role (2 is admin)
                 stmt.execute("ALTER TABLE test.users ALTER COLUMN role_id SET DEFAULT 1");
+                // altering our test.users to make our email unique like in the original database. so cant have dublicate
                 stmt.execute("ALTER TABLE test.users ADD CONSTRAINT email_unique UNIQUE (email)");
 
 

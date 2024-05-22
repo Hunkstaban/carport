@@ -100,7 +100,7 @@ class ProductMapperTest {
     }
 
     @Test
-    void getAllwidth() {
+    void getAllWidth() {
         try
         {
             int expected = 3;
