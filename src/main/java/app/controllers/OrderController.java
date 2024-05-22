@@ -54,7 +54,7 @@ public class OrderController {
         if (OrderMapper.cancelOrder(connectionPool, orderID, user)) {
 
             ctx.attribute("orderID", orderID);
-            if (user.getUserID() == customer) {
+            if (user.getRoleID() == customer) {
                 ctx.redirect("/mine-ordrer");
             } else if (user.getRoleID() == admin) {
                 inquiryDetailsPage(ctx, connectionPool);
@@ -267,14 +267,25 @@ public class OrderController {
             String password = ctx.formParam("password");
 
             try {
-                user = UserMapper.createUser(name.toLowerCase(), email.toLowerCase(), password, connectionPool);
+                // Attempt to login
+                user = UserMapper.login(email.toLowerCase(), password, connectionPool);
+
+                // If login fails, DatabaseException should be thrown.
+                // If login succeeds, proceed to set the session attribute.
+                ctx.sessionAttribute("currentUser", user);
             } catch (DatabaseException e) {
-                String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer.<br>Prøv igen.";
-                ctx.attribute("inquiryFailed", msg);
-                ctx.render("user/accept-inquiry.html");
-                return;
+                // If login fails, try to create the user.
+                try {
+                    user = UserMapper.createUser(name.toLowerCase(), email.toLowerCase(), password, connectionPool);
+                    ctx.sessionAttribute("currentUser", user);
+                } catch (DatabaseException ex) {
+                    // Handle the case where user creation fails (e.g., email already exists).
+                    String msg = "Kan ikke oprette forespørgsel, da en bruger med denne email allerede eksisterer.<br>Prøv igen.";
+                    ctx.attribute("inquiryFailed", msg);
+                    ctx.render("user/accept-inquiry.html");
+                    return; // Stop execution of the method if user creation fails
+                }
             }
-            ctx.sessionAttribute("currentUser", user);
 
         }
 

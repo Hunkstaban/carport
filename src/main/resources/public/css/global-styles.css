@@ -72,7 +72,7 @@ body {
     align-items: center;
 }
 
-.btn-default:hover {
+.btn-default:hover, .btn-150px:hover {
     background-color: #01478d;
     cursor: pointer;
 }
