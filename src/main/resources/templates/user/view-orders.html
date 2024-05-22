@@ -34,7 +34,7 @@
                 <div class="left-side-elements">
 
                     <div class="info">
-                        <p class="fbody fontfix">Ordrenr.</p>
+                        <p class="fbody fontfix">Ordre Nr.</p>
                         <p class="fbody fontfix" th:text="${order.orderID}"></p>
                     </div>
 
@@ -68,10 +68,11 @@
                     <!------------Popups------------>
                     <div th:id="'popup-details-' + ${order.orderID}" class="popup">
                         <div class="content">
-                            <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> mm</div>
-                            <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> mm</div>
+                            <div>Carport Længde: <span th:text="${order.carportLength.length}"></span> cm.</div>
+                            <div>Carport Bredde: <span th:text="${order.carportWidth.width}"></span> cm.</div>
                             <div>Skur: <span th:text="${order.shed} ? 'Ja' : 'Nej'"></span></div>
-                            <div>Kommentar: <span th:text="${order.userRemarks}"></span></div>
+                            <div>Bemærkning: <span th:text="${order.userRemarks != null && !order.userRemarks.isEmpty()} ? ${order.userRemarks} : 'Ingen bemærkning eller særlige ønsker givet'">
+                            </span></div>
                             <!--                            <div>Konstruktionsbeskrivelse: <span th:utext="${order.description}"></span></div>-->
 
                             <a href="#" class="exit-popup">&times;</a>
@@ -101,8 +102,13 @@
             </div>
 
             <div class="bottom-elements">
-                <p class="fbody fontfix">DOBBELT CARPORT 6,00X4,80 M CAR01DU UDEN MIDTERSTOLPE - FLADT TAG</p>
-                <p class="h2 fontfix" th:text="${order.totalPriceRaw}">kr inkl. moms</p>
+                <p class="fbody fontfix" style="text-transform: uppercase;"
+                   th:text="'CARPORT ' + ${order.carportLength.length} + ' CM x '
+                   + ${order.carportWidth.width} + ' CM '
+                   + (${order.shed} ? 'MED REDSKABSSKUR' : 'UDEN REDSKABSSKUR')
+                   + ' - FLADT TAG'">
+                </p>
+                <p class="h2 fontfix" th:text="${order.totalPrice} + ' kr. inkl. moms'"></p>
             </div>
 
         </div>
