@@ -9,8 +9,8 @@
 
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
 
-    <link th:href="@{/css/sign-up-style.css}" rel="stylesheet" href="../public/css/sign-up-style.css">
-    <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../public/css/global-styles.css">
+    <link th:href="@{/css/global-styles.css}" rel="stylesheet" href="../../public/css/global-styles.css">
+    <link th:href="@{/css/sign-up-style.css}" rel="stylesheet" href="../../public/css/sign-up-style.css">
 
     <title>Sign up</title>
 </head>
@@ -21,7 +21,7 @@
 
 
         <form class="user-box-form" method="post">
-            <h1 class="h1-signup-page">Opret FOG konto</h1>
+            <h1 class="h1-signup-page fontfix">Opret FOG konto</h1>
             <div class="all-inputs">
                 <input class="name-input" placeholder="Navn" type="text" name="username" required>
 
@@ -32,10 +32,10 @@
 
                 <p class="basic-p">Har du allerede en konto login <a class="login-href" th:href="@{/login}">her</a></p>
             </div>
-            <button class="create-button" type="submit" formaction="createUser">Opret bruger</button>
+            <button class="create-button fbody" type="submit" formaction="createUser">Opret bruger</button>
 
             <div th:if="${alreadyExist}">
-                <p th:text="${alreadyExist}"></p>
+                <p class="fbody fontfix" th:text="${alreadyExist}"></p>
             </div>
 
 
