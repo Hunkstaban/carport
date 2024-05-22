@@ -27,10 +27,10 @@ public class OrderController {
         app.get("/alle-ordrer", ctx -> viewAllOrders(ctx, connectionPool));
         app.post("/alle-ordrer-filter", ctx -> filterByStatus(ctx, connectionPool));
         app.post("/forespoergelses-detaljer", ctx -> inquiryDetailsPage(ctx, connectionPool));
-        app.post("/godkend-forespoergelse", ctx -> approveInquiry(ctx, connectionPool));
+        app.post("godkend", ctx -> approveInquiry(ctx, connectionPool));
         app.get("/mine-ordrer", ctx -> getOrdersByUser(ctx, connectionPool));
-        app.post("orderPaid",ctx -> setOrderPaid(ctx, connectionPool));
-        app.post("/annuller-ordre", ctx -> cancelOrderByID(ctx, connectionPool));
+        app.post("orderPaid", ctx -> setOrderPaid(ctx, connectionPool));
+        app.post("annuller", ctx -> cancelOrderByID(ctx, connectionPool));
     }
 
     private static boolean verifyAdmin(Context ctx) {
@@ -47,11 +47,21 @@ public class OrderController {
     private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
+        User user = ctx.sessionAttribute("currentUser");
+        int customer = 1;
+        int admin = 2;
 
         if (OrderMapper.cancelOrder(connectionPool, orderID)) {
 
             ctx.attribute("orderID", orderID);
-            inquiryDetailsPage(ctx, connectionPool);
+            if (user.getUserID() == customer) {
+                ctx.redirect("/mine-ordrer");
+            } else if (user.getRoleID() == admin) {
+                inquiryDetailsPage(ctx, connectionPool);
+            }
+        } else {
+            String msg = "Kan ikke annnullere ordre";
+            ctx.attribute("cancelError", msg);
         }
     }
 
@@ -59,7 +69,7 @@ public class OrderController {
         User user = ctx.sessionAttribute("currentUser");
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         OrderMapper.setOrderPaid(connectionPool, user, orderID);
-        getOrdersByUser(ctx,connectionPool);
+        getOrdersByUser(ctx, connectionPool);
 
     }
 
@@ -157,8 +167,7 @@ public class OrderController {
             ctx.render("admin/orders.html");
         } else {
 
-            ctx.attribute("message", "403 adgang nægtet");
-            ctx.render("errors.html");
+            ctx.status(403);
         }
     }
 
@@ -172,8 +181,7 @@ public class OrderController {
 
             ctx.render("admin/orders.html");
         } else {
-            ctx.attribute("message", "403 adgang nægtet");
-            ctx.render("errors.html");
+            ctx.status();
 
         }
     }
@@ -271,7 +279,7 @@ public class OrderController {
             int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, description, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
             ctx.attribute("orderID", orderID);
 //            ctx.render("user/view-orders.html");
-            getOrdersByUser(ctx,connectionPool);
+            getOrdersByUser(ctx, connectionPool);
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
@@ -285,7 +293,7 @@ public class OrderController {
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
 
-    private static String prepareCarportDrawing (int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+    private static String prepareCarportDrawing(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
         Locale.setDefault(new Locale("US"));
         CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed, connectionPool);
 
