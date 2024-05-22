@@ -38,9 +38,9 @@ public class UserMapper {
             return login(email, password, connectionPool);
 
         } catch (SQLException e) {
-            String msg = "Something went wrong. try again;
+            String msg = "Something went wrong. ";
             if (e.getMessage().startsWith("ERROR: duplicate key value")) {
-                msg = "email allready exist";
+                msg = "Email already exist ";
             }
             throw new DatabaseException(msg, e.getMessage());
         }
