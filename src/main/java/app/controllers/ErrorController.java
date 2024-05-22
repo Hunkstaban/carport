@@ -14,12 +14,12 @@ public class ErrorController {
     private static void html403 (Context ctx, ConnectionPool connectionPool) {
         String msg = "403: ADGANG NÆGTET";
         ctx.attribute("message", msg);
-        ctx.render("errors");
+        ctx.render("errors.html");
     }
 
     private static void html404 (Context ctx, ConnectionPool connectionPool) {
         String msg = "404: SIDEN IKKE FUNDET";
         ctx.attribute("message", msg);
-        ctx.render("errors");
+        ctx.render("errors.html");
     }
 }
