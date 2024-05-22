@@ -341,7 +341,7 @@ public class OrderController {
         try {
             int orderID = OrderMapper.newOrder(user, carportWidthID, carportLengthID, description, shedChosen, remark, productList, orderPrice, carportDrawing, connectionPool);
             ctx.attribute("orderID", orderID);
-            getOrdersByUser(ctx, connectionPool);
+            ctx.redirect("/mine-ordrer");
         } catch (DatabaseException e) {
             throw new RuntimeException(e);
         }
