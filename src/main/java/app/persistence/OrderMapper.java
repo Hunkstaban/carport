@@ -319,15 +319,28 @@ public class OrderMapper {
         }
     }
 
-    public static boolean cancelOrder(ConnectionPool connectionPool, int orderID) {
+    public static boolean cancelOrder(ConnectionPool connectionPool, int orderID, User user) {
 
-        String sql = "UPDATE public.orders SET status_id = ? WHERE order_id = ?";
+        int userRole = 1;
+        int adminRole = 2;
+        String sql = null;
+        int cancelStatusID = 5;
+
+        if (user.getRoleID() == userRole) {
+            sql = "UPDATE public.orders SET status_id = ? WHERE order_id = ? AND user_id = ?";
+        } else if (user.getRoleID() == adminRole) {
+            sql = "UPDATE public.orders SET status_id = ? WHERE order_id = ?";
+        }
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, 5);
+            ps.setInt(1, cancelStatusID);
             ps.setInt(2, orderID);
+
+            if (user.getRoleID() == userRole) {
+                ps.setInt(3, user.getUserID());
+            }
 
 
             int rowsAffected = ps.executeUpdate();

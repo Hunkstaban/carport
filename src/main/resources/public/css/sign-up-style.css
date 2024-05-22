@@ -1,4 +1,9 @@
 
+html, body {
+    background-color: #013D7A;
+    height: 100%;
+    margin: 0px;
+}
 
 .h1-signup-page {
     display: flex;
@@ -21,9 +26,9 @@
 }
 
 .create-user-page {
-    height: 900px;
-    width: 100%;
-    background-color: #013D7A;
+    min-height: 100%;
+    /*width: 100%;*/
+    /*background-color: #013D7A;*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -61,10 +66,10 @@
 
 .name-input {
     align-items: center;
-    font-family: Segoe UI Variable;
-    color: #333333;
-    font-size: large;
-    font-weight: 400;
+    /*font-family: Segoe UI Variable;*/
+    color: #555555;
+    /*font-size: large;*/
+    /*font-weight: 400;*/
     width: 360px;
     height: 50px;
     padding-left: 20px;
@@ -80,10 +85,10 @@
 
 .email-input {
     align-items: center;
-    font-family: Segoe UI Variable;
-    color: #333333;
-    font-size: large;
-    font-weight: 400;
+    /*font-family: Segoe UI Variable;*/
+    color: #555555;
+    /*font-size: large;*/
+    /*font-weight: 400;*/
     width: 360px;
     height: 50px;
     padding-left: 20px;
@@ -98,9 +103,9 @@
 }
 
 .password-input {
-    font-family: Segoe UI Variable;
-    color: #333333;
-    font-size: large;
+    /*font-family: Segoe UI Variable;*/
+    color: #555555;
+    /*font-size: large;*/
     width: 360px;
     height: 50px;
     padding-left: 20px;
@@ -115,13 +120,17 @@
 }
 
 .create-button {
-    color: #dddddd;
-    background-color: #296EC6;
-    width: 226px;
-    height: 50px;
-    /*margin-top: 12px;*/
-    /*margin-left: 52px;*/
-    font-size: large;
+    color: #ffffff;
+    background-color: #296ec6;
+    width: 60%;
+    border: none;
+    border-radius: 2px;
+    padding: 10px 0px;
+    transition: 200ms ease;
+}
+
+.create-button:hover {
+    background-color: #1662c7;
 }
 
 .basic-p {
@@ -144,6 +153,18 @@
     gap: 12px;
     box-sizing: border-box;
 }
+
+@media (max-width: 600px) {
+    .name-input, .email-input, .password-input {
+        width: 300px;
+    }
+
+    .create-user-box {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
 
 
 

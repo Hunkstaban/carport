@@ -55,12 +55,15 @@
                         <input type="hidden" name="orderID" th:value="${order.orderID}">
 
                         <button formaction="orderPaid" class="btn-150px fbody">Betal</button>
+                        <button th:if="${order.status.statusID <= 2}" formaction="annuller" class="btn-150px fbody">Annuller Ordre</button>
+
                     </form>
                     <a class="btn-150px btn-link fbody" th:href="'#popup-details-' + ${order.orderID}">Ordredetaljer</a>
                     <a class="btn-150px btn-link fbody" th:href="'#popup-drawing-' + ${order.orderID}">Se Tegning</a>
                     <a th:if="${order.status.statusID >= 3}" class="btn-150px btn-link fbody"
                        th:href="'#popup-parts-list-' + ${order.orderID}">Se Stykliste</a>
-                    <button th:if="${order.status.statusID < 3}" class="btn-150px fbody" id="grey">Se Stykliste</button>
+
+<!--                    <button th:if="${order.status.statusID < 3}" class="btn-150px fbody" id="grey">Se Stykliste</button>-->
 
                     <!------------Popups------------>
                     <div th:id="'popup-details-' + ${order.orderID}" class="popup">

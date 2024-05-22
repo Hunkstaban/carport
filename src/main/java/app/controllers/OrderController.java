@@ -46,12 +46,13 @@ public class OrderController {
 
     private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) {
 
+        User user = ctx.sessionAttribute("currentUser");
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         User user = ctx.sessionAttribute("currentUser");
         int customer = 1;
         int admin = 2;
 
-        if (OrderMapper.cancelOrder(connectionPool, orderID)) {
+        if (OrderMapper.cancelOrder(connectionPool, orderID, user)) {
 
             ctx.attribute("orderID", orderID);
             if (user.getUserID() == customer) {
