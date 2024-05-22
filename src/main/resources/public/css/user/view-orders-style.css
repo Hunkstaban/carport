@@ -166,7 +166,10 @@
 }
 
 .content-drawing {
-    min-width: 50%;
+    /*min-width: 50%;*/
+    height: 80%;
+    display: flex;
+    justify-content: center;
 }
 
 .drawing {
@@ -192,6 +195,13 @@
     text-decoration: none;
 }
 
+.drawing svg {
+    height: 100%;
+    /*width: 100%;*/
+    /*max-height: 100%;*/
+    /*max-width: 100%;*/
+    /*display: block;*/
+}
 
 
 
@@ -227,5 +237,8 @@
     }
     .elements {
         width: 90%;
+    }
+    .content-drawing {
+        height: auto;
     }
 }

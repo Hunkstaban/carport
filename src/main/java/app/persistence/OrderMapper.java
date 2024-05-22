@@ -95,6 +95,7 @@ public class OrderMapper {
                 int carportWidthID = rs.getInt("carport_width_id");
                 int carportWidth = rs.getInt("carport_width");
                 String description = rs.getString("description");
+                description = description.replace("<br>", " ");
                 int totalPrice = rs.getInt("total_price");
                 String productListRaw = rs.getString("product_list");
                 int statusID1 = rs.getInt("status_id");
