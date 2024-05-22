@@ -280,7 +280,7 @@ public class OrderController {
                     + "<br>Skur: " + (shed ? "Ja" : "Nej")
                     + "<br>Bemærkning: " + remark;
         } catch (DatabaseException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error preparing inquiry", e.getMessage());
         }
 
         List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
