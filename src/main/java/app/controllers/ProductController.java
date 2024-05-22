@@ -104,9 +104,7 @@ public class ProductController {
             ctx.render("admin/storage.html");
 
         } else {
-
-            ctx.attribute("message", "403 adgang nægtet");
-            ctx.render("errors.html");
+            ctx.status(403);
         }
 
 

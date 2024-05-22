@@ -41,7 +41,7 @@ public class LoginController {
     private static void logout(Context ctx) {
 
         ctx.req().getSession().invalidate();
-        ctx.render("user/index.html");
+        ctx.redirect("/");
 
     }
 
@@ -49,7 +49,7 @@ public class LoginController {
 
         ctx.sessionAttribute("currentUser", user);
 
-        ctx.render("admin/orders.html");
+        ctx.redirect("/alle-ordrer");
 
     }
 
@@ -74,7 +74,7 @@ public class LoginController {
     private static void userLogin(Context ctx, ConnectionPool connectionPool, User user) {
 
         ctx.sessionAttribute("currentUser", user);
-        ctx.render("user/index.html");
+        ctx.redirect("/");
 
     }
 
