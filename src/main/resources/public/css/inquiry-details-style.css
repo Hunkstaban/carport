@@ -1,6 +1,9 @@
 html {
 
     background-color: #F5F5F3;
+    font-family: "Segoe UI Variable";
+    margin-block-end: 0px;
+    margin-block-start: 0px;
 }
 
 .page {
