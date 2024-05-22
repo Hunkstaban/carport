@@ -2,6 +2,7 @@ package app.services;
 
 import app.entities.Product;
 import app.entities.ProductListItem;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
 
@@ -43,7 +44,7 @@ public class ProductListCalc {
         this.connectionPool = connectionPool;
     }
 
-    public void calculateProductList() {
+    public void calculateProductList() throws DatabaseException {
         // Add the extra length if shed is true
         if (shed) {
             carportLength += SHED_DIMENSIONS;
@@ -58,7 +59,7 @@ public class ProductListCalc {
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock
 
-    void calcPosts(int carportLength) {
+    void calcPosts(int carportLength) throws DatabaseException {
         Product optimalPost = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
         String postUnit = "Stk.";
@@ -84,7 +85,7 @@ public class ProductListCalc {
     }
 
 
-    void calcBeams(int carportLength) {
+    void calcBeams(int carportLength) throws DatabaseException {
         List<Product> beamList = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
         int totalCarportLength = 2 * carportLength;
         String description = "Remme i sider - sadles ned i stolper";
@@ -138,7 +139,7 @@ public class ProductListCalc {
         }
     }
 
-    void calcRafters(int carportWidth, int carportLength) {
+    void calcRafters(int carportWidth, int carportLength) throws DatabaseException {
         String description = "Spær - monteres på rem";
         String rafterUnit = "Stk.";
         List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
@@ -169,7 +170,7 @@ public class ProductListCalc {
     }
 
 
-    void calcRoof(int carportWidth, int carportLength) {
+    void calcRoof(int carportWidth, int carportLength) throws DatabaseException {
         List<Product> roofList = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
         String description = "Tagplader - monteres på spær";
         String roofUnit = "Stk.";

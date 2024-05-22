@@ -13,7 +13,7 @@ import java.util.List;
 public class OrderMapper {
 
 
-    public static Order getOrderByID(ConnectionPool connectionPool, int orderID) {
+    public static Order getOrderByID(ConnectionPool connectionPool, int orderID) throws DatabaseException {
 
         String sql = "SELECT * FROM public.view_all_orders WHERE order_id = ?";
         Order order = null;
@@ -57,11 +57,11 @@ public class OrderMapper {
             return order;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error: Failed to get order by id. " + e.getMessage());
         }
     }
 
-    public static List<Order> getOrders(ConnectionPool connectionPool, Integer statusID) {
+    public static List<Order> getOrders(ConnectionPool connectionPool, Integer statusID) throws DatabaseException {
 
         String sql;
 
@@ -114,7 +114,7 @@ public class OrderMapper {
             }
             return orderList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error: Failed to get all orders or by type. " + e.getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ public class OrderMapper {
     }
 
 
-    public static List<Status> loadStatusList(ConnectionPool connectionPool) {
+    public static List<Status> loadStatusList(ConnectionPool connectionPool) throws DatabaseException {
 
         String sql = "SELECT * FROM status";
         List<Status> statusList = new ArrayList<>();
@@ -158,7 +158,7 @@ public class OrderMapper {
 
             return statusList;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error: Failed to load status list from Database" + e.getMessage());
         }
     }
 
@@ -218,7 +218,7 @@ public class OrderMapper {
         }
     }
 
-    public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID, int totalPrice) {
+    public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID, int totalPrice) throws DatabaseException {
 
         String sql = "UPDATE public.orders SET status_id = ?, total_price = ? WHERE order_id = ?";
 
@@ -237,13 +237,13 @@ public class OrderMapper {
             }
             return true;
 
-        } catch (DatabaseException | SQLException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public static List<Order> getOrdersByUser(ConnectionPool connectionPool, User user) {
+    public static List<Order> getOrdersByUser(ConnectionPool connectionPool, User user) throws DatabaseException {
 
         String sql = "SELECT * FROM view_all_orders WHERE user_id = ? ORDER BY order_id DESC";
         List<Order> orderList = new ArrayList<>();
@@ -251,8 +251,7 @@ public class OrderMapper {
 
         try (
                 Connection connection = connectionPool.getConnection();
-                PreparedStatement ps = connection.prepareStatement(sql);
-        ) {
+                PreparedStatement ps = connection.prepareStatement(sql)) {
 
             ps.setInt(1, user.getUserID());
             ResultSet rs = ps.executeQuery();
@@ -296,11 +295,11 @@ public class OrderMapper {
             return orderList;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error: Failed to get users orders. " + e.getMessage());
         }
     }
 
-    public static void setOrderPaid(ConnectionPool connectionPool, User user, int orderID) {
+    public static void setOrderPaid(ConnectionPool connectionPool, User user, int orderID) throws DatabaseException {
         int statusPaid = 3;
         String sql = "UPDATE orders SET status_id = ? WHERE user_id = ? AND order_id = ?";
 
@@ -315,11 +314,11 @@ public class OrderMapper {
             ps.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error: Failed to set order status to paid.  " + e.getMessage());
         }
     }
 
-    public static boolean cancelOrder(ConnectionPool connectionPool, int orderID, User user) {
+    public static boolean cancelOrder(ConnectionPool connectionPool, int orderID, User user) throws DatabaseException {
 
         int userRole = 1;
         int adminRole = 2;
@@ -347,13 +346,13 @@ public class OrderMapper {
 
             if (rowsAffected != 1) {
 
-                throw new DatabaseException("Fejl i godkend ordre");
+                throw new DatabaseException("Fejl i annuller ordre");
             }
             return true;
 
 
         } catch (SQLException | DatabaseException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error: Failed to set order status to cancelled. " + e.getMessage());
         }
     }
 }

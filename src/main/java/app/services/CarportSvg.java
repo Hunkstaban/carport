@@ -1,5 +1,6 @@
 package app.services;
 
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 
 public class CarportSvg {
@@ -19,7 +20,7 @@ public class CarportSvg {
     private Svg arrowSvg;
     private ConnectionPool connectionPool;
 
-    public CarportSvg(int clength, int width, boolean shed, ConnectionPool connectionPool) {
+    public CarportSvg(int clength, int width, boolean shed, ConnectionPool connectionPool) throws DatabaseException {
         ProductListCalc productListCalc = new ProductListCalc(width, clength, shed, connectionPool);
         productListCalc.calculateProductList();
         numberOfPosts = productListCalc.getNumberOfPosts();
