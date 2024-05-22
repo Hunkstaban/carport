@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <link rel="stylesheet" href="../../public/css/inquiry-details-style.css" th:href="@{/css/inquiry-details-style.css}">
     <link th:href="@{/css/header-styles.css}" rel="stylesheet"/>
+    <link href="https://fonts.cdnfonts.com/css/segoe-ui-variable" rel="stylesheet">
 </head>
 
 <div th:replace="~{fragments/header :: header(isLoggedIn=${session.currentUser != null})}"></div>
@@ -60,7 +61,7 @@
                     <th>Vare Nummer</th>
                     <th>Navn</th>
                     <th>Længde</th>
-                    <th>Stk. Pris</th>
+                    <th>Pris</th>
                     <th>Antal</th>
                     <th>Enhed</th>
                     </thead>
