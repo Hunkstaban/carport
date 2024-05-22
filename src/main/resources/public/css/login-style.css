@@ -136,6 +136,17 @@ html, body {
     flex-direction: column;
 }
 
+@media (max-width: 600px) {
+    .email-input, .password-input {
+        width: 300px;
+    }
+
+    .login-box {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
 
 
 

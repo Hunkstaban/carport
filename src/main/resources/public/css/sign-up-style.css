@@ -154,5 +154,17 @@ html, body {
     box-sizing: border-box;
 }
 
+@media (max-width: 600px) {
+    .name-input, .email-input, .password-input {
+        width: 300px;
+    }
+
+    .create-user-box {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+
 
 
