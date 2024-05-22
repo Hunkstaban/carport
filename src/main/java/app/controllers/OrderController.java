@@ -44,7 +44,7 @@ public class OrderController {
         return false;
     }
 
-    private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) {
+    private static void cancelOrderByID(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         User user = ctx.sessionAttribute("currentUser");
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
@@ -82,7 +82,7 @@ public class OrderController {
 
     }
 
-    private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) {
+    private static void inquiryDetailsPage(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         int costPrice = 0;
@@ -197,7 +197,7 @@ public class OrderController {
         return ctx;
     }
 
-    private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) {
+    private static boolean approveInquiry(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         int orderID = Integer.parseInt(ctx.formParam("orderID"));
         int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
@@ -213,7 +213,7 @@ public class OrderController {
 
     }
 
-    private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) {
+    private static void prepareInquiry(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int carportWidthID = Integer.parseInt(ctx.formParam("carportWidth"));
         int carportLengthID = Integer.parseInt(ctx.formParam("carportLength"));
         boolean shed = Boolean.parseBoolean(ctx.formParam("shed"));
@@ -299,7 +299,7 @@ public class OrderController {
         }
     }
 
-    private static List<ProductListItem> prepareProductList(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+    private static List<ProductListItem> prepareProductList(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) throws DatabaseException {
         ProductListCalc productListCalc = new ProductListCalc(carportWidth, carportLength, shed, connectionPool);
         productListCalc.calculateProductList();
         return productListCalc.getProductList();
@@ -307,7 +307,7 @@ public class OrderController {
 
     // Will become method to be used with prepareInquiry to receive SVG drawing
 
-    private static String prepareCarportDrawing(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) {
+    private static String prepareCarportDrawing(int carportWidth, int carportLength, boolean shed, ConnectionPool connectionPool) throws DatabaseException {
         Locale.setDefault(new Locale("US"));
         CarportSvg carportSvg = new CarportSvg(carportLength, carportWidth, shed, connectionPool);
 

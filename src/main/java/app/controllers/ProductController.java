@@ -4,6 +4,7 @@ import app.entities.Product;
 import app.entities.Type;
 import app.entities.Unit;
 import app.entities.User;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
 import io.javalin.Javalin;
@@ -34,7 +35,7 @@ public class ProductController {
     }
 
     // controller to take data inputs from the front end and update the database through the ProductMapper.updateProduct mapper method
-    private static void updateProduct(Context ctx, ConnectionPool connectionPool) {
+    private static void updateProduct(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         // method gets all the formparams from the frontend and created a 'product' object to send as a variable to the mapper
         int productID = Integer.parseInt(ctx.formParam("productID"));
@@ -71,7 +72,7 @@ public class ProductController {
         return false;
     }
 
-    private static void deleteProduct(Context ctx, ConnectionPool connectionPool) {
+    private static void deleteProduct(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
         int productID = Integer.parseInt(ctx.formParam("productID"));
 
         ProductMapper.deleteProduct(connectionPool, productID);
@@ -82,7 +83,7 @@ public class ProductController {
     }
 
     // takes input from the frontend to get the 'filter' parameter to dertemine which type to load from the database
-    private static void filterByType(Context ctx, ConnectionPool connectionPool) {
+    private static void filterByType(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
         int typeID = Integer.parseInt(ctx.formParam("filter"));
 
@@ -94,7 +95,7 @@ public class ProductController {
     }
 
     // loads all products from the database and sends an attribute to the frontend for the admin
-    private static void loadProducts(Context ctx, ConnectionPool connectionPool) {
+    private static void loadProducts(Context ctx, ConnectionPool connectionPool) throws DatabaseException {
 
 
         if (verifyAdmin(ctx)) {
@@ -112,7 +113,7 @@ public class ProductController {
 
 
 
-    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID) {
+    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID) throws DatabaseException {
 
         List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
         List<Product> productList = ProductMapper.getProducts(typeID, connectionPool);

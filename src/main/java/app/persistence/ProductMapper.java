@@ -17,7 +17,7 @@ import java.util.TreeMap;
 public class ProductMapper {
 
 
-    public static List<Type> loadFilters(ConnectionPool connectionPool) {
+    public static List<Type> loadFilters(ConnectionPool connectionPool) throws DatabaseException {
 
         // gets all the types from the DB and returns a List which is used in the filter controller
         // to filter by the chosen type on the frontend.
@@ -38,11 +38,11 @@ public class ProductMapper {
             return filters;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to load filter types.", e.getMessage());
         }
     }
 
-    public static List<Unit> loadUnits(ConnectionPool connectionPool) {
+    public static List<Unit> loadUnits(ConnectionPool connectionPool) throws DatabaseException {
 
         // gets all the types from the DB and returns a List which is used in the filter controller
         // to filter by the chosen type on the frontend.
@@ -63,12 +63,14 @@ public class ProductMapper {
             return units;
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to load Units. ", e.getMessage());
         }
     }
 
 
-    public static List<Product> getProducts(Integer typeID, ConnectionPool connectionPool) {
+    // gets products from the database, is dynamic and can either retrieve all products
+    // or if given a type id only the specific product types.
+    public static List<Product> getProducts(Integer typeID, ConnectionPool connectionPool) throws DatabaseException {
 
         String sql;
 
@@ -112,13 +114,13 @@ public class ProductMapper {
                 productList.add(new Product(productID, name, description, height, width, length, unit, type, price, costPrice, quantity));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Failed to get products", e.getMessage());
         }
 
         return productList;
     }
 
-    public static void updateProduct(Product product, ConnectionPool connectionPool) {
+    public static void updateProduct(Product product, ConnectionPool connectionPool) throws DatabaseException {
 
         // recieves a Product object with all the values from the frontend and updates the database with the new values.
 
@@ -150,12 +152,12 @@ public class ProductMapper {
             }
 
         } catch (SQLException | DatabaseException e) {
-            throw new RuntimeException(e);
+            throw new DatabaseException("Error updating product.", e.getMessage());
         }
 
     }
 
-    public static void deleteProduct(ConnectionPool connectionPool, int productID) {
+    public static void deleteProduct(ConnectionPool connectionPool, int productID) throws DatabaseException {
         String sql = "DELETE FROM public.products WHERE product_id = ?";
 
         try (
@@ -167,11 +169,11 @@ public class ProductMapper {
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected != 1) {
-                throw new DatabaseException("Fejl ved sletning af produkt");
+                throw new DatabaseException("Error in deleteting product.");
             }
 
-        } catch (SQLException | DatabaseException e) {
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new DatabaseException("Error in deleteting product.", e.getMessage());
         }
     }
 
