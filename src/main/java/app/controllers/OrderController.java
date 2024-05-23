@@ -115,9 +115,11 @@ public class OrderController {
         try {
 
             Order order = OrderMapper.getOrderByID(connectionPool, orderID);
-            String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
+            String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(),
+                    order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
-            List<ProductListItem> productList = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
+            List<ProductListItem> productList = prepareProductList(order.getCarportWidth().getWidth(),
+                    order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
             if ((ctx.formParam("costPrice")) == null) {
 
@@ -246,7 +248,6 @@ public class OrderController {
         int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
 
         try {
-
 
             if (OrderMapper.ApproveOrder(connectionPool, orderID, totalPrice)) {
 

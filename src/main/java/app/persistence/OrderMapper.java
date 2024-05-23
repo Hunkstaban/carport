@@ -221,7 +221,8 @@ public class OrderMapper {
 
     public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID, int totalPrice) throws DatabaseException {
 
-        String sql = "UPDATE public.orders SET status_id = ?, total_price = ? WHERE order_id = ?";
+        String sql = "UPDATE public.orders SET status_id = ?," +
+                " total_price = ? WHERE order_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
