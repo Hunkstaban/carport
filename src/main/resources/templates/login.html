@@ -28,7 +28,7 @@
 
     <div class="login-box">
         <div class="all-item-inside-login-box">
-            <img src="/images/foglogo.png" alt="Logo">
+            <a href="/" style="text-align: center"><img src="/images/foglogo.png" alt="Logo"></a>
             <h1 class="h1-login-page fontfix">Log på</h1>
 
             <form class="user-box-form" method="post">
@@ -50,8 +50,8 @@
 
                     <button class="login-button fbody" type="submit" formaction="login">Log ind</button>
                     <div th:if="${loginError}">
-                        <p class="fbody fontfix" th:text="${loginError}"></p>
-                        <p class="fbody fontfix">Har du glemt dit kodeord. Kontakt kundeservice</p>
+                        <p class="fbody fontfix error-text" th:text="${loginError}"></p>
+                        <p class="fbody fontfix error-text">Har du glemt dit kodeord. Kontakt kundeservice</p>
                     </div>
                 </div>
             </form>

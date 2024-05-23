@@ -48,7 +48,7 @@ public class UserMapper {
 
     public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
 
-        String sql = "SELECT * FROM users WHERE email = ? AND password = ? ";
+        String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
 
         try (
                 Connection connection = connectionPool.getConnection();
