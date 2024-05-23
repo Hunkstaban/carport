@@ -116,16 +116,11 @@ public class OrderController {
             Order order = OrderMapper.getOrderByID(connectionPool, orderID);
             String svgDrawing = prepareCarportDrawing(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
-            List<ProductListItem> productListItems = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
-
-
-            for (ProductListItem productListItem : productListItems) {
-                costPrice += productListItem.getCostPrice();
-            }
+            List<ProductListItem> productList = prepareProductList(order.getCarportWidth().getWidth(), order.getCarportLength().getLength(), order.isShed(), connectionPool);
 
             if ((ctx.formParam("costPrice")) == null) {
 
-                preparePriceDetails(ctx, order.getTotalPrice(), costPrice);
+                preparePriceDetails(ctx, order.getTotalPrice(), productList);
 
             } else {
                 int totalPrice = Integer.parseInt(ctx.formParam("totalPrice"));
@@ -135,7 +130,7 @@ public class OrderController {
             }
 
             ctx.attribute("svgDrawing", svgDrawing);
-            ctx.attribute("productListItems", productListItems);
+            ctx.attribute("productListItems", productList);
             ctx.attribute("order", order);
             ctx.render("admin/inquiry-details.html");
 
@@ -147,8 +142,12 @@ public class OrderController {
     }
 
 
-    private static Context preparePriceDetails(Context ctx, int orderPrice, int costPrice) {
+    private static Context preparePriceDetails(Context ctx, int orderPrice, List <ProductListItem> productList) {
+        int costPrice = 0;
 
+        for (ProductListItem productListItem : productList) {
+            costPrice += productListItem.getCostPrice();
+        }
         int profitPrice = orderPrice - PROCESSING_FEE;
         double degreeOfCoverage = (((double) profitPrice / costPrice) - 1) * 100;
         degreeOfCoverage = Math.round(degreeOfCoverage * 100.0) / 100.0;
@@ -284,10 +283,7 @@ public class OrderController {
         }
 
         List<ProductListItem> productList = prepareProductList(carportWidth, carportLength, shed, connectionPool);
-        for (ProductListItem productListItem : productList) {
-            estimatedPrice += productListItem.getCostPrice();
-        }
-        estimatedPrice = calculateOrderPrice(estimatedPrice);
+        estimatedPrice = calculateOrderPrice(productList);
         String carportDrawing = prepareCarportDrawing(carportWidth, carportLength, shed, connectionPool);
         prepareOrderAttributes(ctx, carportWidthID, carportLengthID, inquiryDescription, shed, remark, productList, carportDrawing, estimatedPrice);
 
@@ -375,8 +371,13 @@ public class OrderController {
         return ctx;
     }
 
-    private static int calculateOrderPrice(int costPrice) {
-        int carportPrice = (int) (((costPrice * DEGREE_OF_COVERAGE) + costPrice) + PROCESSING_FEE);
+    private static int calculateOrderPrice(List<ProductListItem> productList) {
+        int costPrice = 0;
+        int carportPrice;
+        for (ProductListItem productListItem : productList) {
+             costPrice += productListItem.getCostPrice();
+        }
+        carportPrice = (int) (((costPrice * DEGREE_OF_COVERAGE) + costPrice) + PROCESSING_FEE);
 
         return carportPrice;
     }
