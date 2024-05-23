@@ -127,14 +127,14 @@
                            th:value="${product.description}"/>
                     <input class="product-type" type="text" th:value="${product.type.name}" disabled/>
                     <input type="hidden" name="typeID" th:value="${product.type.typeID}"/>
-                    <input class="product-width" type="text" name="width" th:value="${product.width}"/>
-                    <input class="product-height" type="text" name="height" th:value="${product.height}"/>
-                    <input class="product-length" type="text" name="length" th:value="${product.length}"/>
+                    <input class="product-width" type="number" name="width" th:value="${product.width}"/>
+                    <input class="product-height" type="number" name="height" th:value="${product.height}"/>
+                    <input class="product-length" type="number" name="length" th:value="${product.length}"/>
                     <input class="product-unit" type="text" th:value="${product.unit.name}" disabled/>
                     <input type="hidden" name="unitID" th:value="${product.unit.unitID}"/>
-                    <input class="product-price" type="text" name="price" th:value="${product.price}"/>
+                    <input class="product-price" type="number" name="price" th:value="${product.price}"/>
                     <input type="hidden" name="costPrice" th:value="${product.costPrice}"/>
-                    <input class="product-amount" type="text" name="quantity" th:value="${product.quantity}"/>
+                    <input class="product-amount" type="number" name="quantity" th:value="${product.quantity}"/>
 
                     <button class="product-update" type="submit" formaction="updateProduct" title="Update Changes">
                         <i class="fa-solid fa-arrows-rotate"></i></button>
