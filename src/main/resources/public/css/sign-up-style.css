@@ -159,6 +159,10 @@ html, body {
     box-sizing: border-box;
 }
 
+.error-text {
+    color: #FF0000;
+}
+
 @media (max-width: 600px) {
     .name-input, .email-input, .password-input {
         width: 300px;

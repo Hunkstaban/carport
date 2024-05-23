@@ -142,6 +142,10 @@ html, body {
     object-fit: contain;
 }
 
+.error-text {
+    color: #FF0000;
+}
+
 @media (max-width: 600px) {
     .email-input, .password-input {
         width: 300px;

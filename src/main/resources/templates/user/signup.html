@@ -21,7 +21,7 @@
 
 
         <form class="user-box-form" method="post">
-            <img src="/images/foglogo.png" alt="Logo">
+            <a href="/" style="text-align: center"><img src="/images/foglogo.png" alt="Logo"></a>
             <h1 class="h1-signup-page fontfix">Opret FOG konto</h1>
             <div class="all-inputs">
                 <input class="name-input" placeholder="Navn" type="text" name="username" required>
@@ -39,7 +39,7 @@
             <button class="create-button fbody" type="submit" formaction="createUser">Opret bruger</button>
 
             <div th:if="${alreadyExist}">
-                <p class="fbody fontfix" th:text="${alreadyExist}"></p>
+                <p class="fbody fontfix error-text" th:text="${alreadyExist}"></p>
             </div>
 
 
