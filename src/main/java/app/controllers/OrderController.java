@@ -14,6 +14,7 @@ import app.services.ProductListCalc;
 import io.javalin.Javalin;
 import io.javalin.http.Context;
 
+import javax.xml.crypto.Data;
 import java.util.List;
 import java.util.Locale;
 
@@ -53,7 +54,6 @@ public class OrderController {
 
         try {
 
-
             if (OrderMapper.cancelOrder(connectionPool, orderID, user)) {
 
                 ctx.attribute("orderID", orderID);
@@ -69,7 +69,8 @@ public class OrderController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failure in cancel order", e.getMessage());
+
         }
     }
 
@@ -85,7 +86,7 @@ public class OrderController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failed to set order status to paid.", e.getMessage());
         }
 
     }
@@ -101,7 +102,7 @@ public class OrderController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failed to get orders by user", e.getMessage());
         }
 
     }
@@ -137,7 +138,12 @@ public class OrderController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failure in inquiry details page.", e.getMessage());
+        }
+        catch (NullPointerException e) {
+            System.err.println("NullPointerException in inquiryDetailsPage");
+            System.err.println(e.getMessage());
+            ctx.status(500);
         }
     }
 
@@ -254,7 +260,7 @@ public class OrderController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failed to approve inquiry.", e.getMessage());
         }
         return false;
 

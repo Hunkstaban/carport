@@ -57,7 +57,7 @@ public class OrderMapper {
             return order;
 
         } catch (SQLException e) {
-            throw new DatabaseException("Error: Failed to get order by id. " + e.getMessage());
+            throw new DatabaseException("Error: Failed to get order by id. ", e.getMessage());
         }
     }
 
@@ -343,17 +343,18 @@ public class OrderMapper {
             }
 
 
-            int rowsAffected = ps.executeUpdate();
+            ps.executeUpdate();
 
-            if (rowsAffected != 1) {
+//            if (rowsAffected != 1) {
+//
+//                throw new DatabaseException("Fejl i annuller ordre");
+//            }
 
-                throw new DatabaseException("Fejl i annuller ordre");
-            }
             return true;
 
-
-        } catch (SQLException | DatabaseException e) {
-            throw new DatabaseException("Error: Failed to set order status to cancelled. " + e.getMessage());
+        } catch (SQLException e) {
+            throw new DatabaseException("Error: Failed to set order status to cancelled. ", e.getMessage());
         }
+
     }
 }

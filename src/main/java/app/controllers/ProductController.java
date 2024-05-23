@@ -63,7 +63,7 @@ public class ProductController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failure in updating product." , e.getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ public class ProductController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failure in deleting product.", e.getMessage());
         }
     }
 
@@ -140,7 +140,7 @@ public class ProductController {
 
         } catch (DatabaseException e) {
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failed to retrieve globalStorageAttributes from database" + e.getMessage());
         }
         return ctx;
     }
