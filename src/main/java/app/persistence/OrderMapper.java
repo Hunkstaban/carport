@@ -57,7 +57,7 @@ public class OrderMapper {
             return order;
 
         } catch (SQLException e) {
-            throw new DatabaseException("Error: Failed to get order by id. " + e.getMessage());
+            throw new DatabaseException("Error: Failed to get order by id. ", e.getMessage());
         }
     }
 
@@ -221,7 +221,8 @@ public class OrderMapper {
 
     public static boolean ApproveOrder(ConnectionPool connectionPool, int orderID, int totalPrice) throws DatabaseException {
 
-        String sql = "UPDATE public.orders SET status_id = ?, total_price = ? WHERE order_id = ?";
+        String sql = "UPDATE public.orders SET status_id = ?," +
+                " total_price = ? WHERE order_id = ?";
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -343,17 +344,18 @@ public class OrderMapper {
             }
 
 
-            int rowsAffected = ps.executeUpdate();
+            ps.executeUpdate();
 
-            if (rowsAffected != 1) {
+//            if (rowsAffected != 1) {
+//
+//                throw new DatabaseException("Fejl i annuller ordre");
+//            }
 
-                throw new DatabaseException("Fejl i annuller ordre");
-            }
             return true;
 
-
-        } catch (SQLException | DatabaseException e) {
-            throw new DatabaseException("Error: Failed to set order status to cancelled. " + e.getMessage());
+        } catch (SQLException e) {
+            throw new DatabaseException("Error: Failed to set order status to cancelled. ", e.getMessage());
         }
+
     }
 }
