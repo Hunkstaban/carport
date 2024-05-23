@@ -6,6 +6,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.ProductMapper;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +45,7 @@ public class ProductListCalc {
         this.connectionPool = connectionPool;
     }
 
-    public void calculateProductList() throws DatabaseException {
+    public void calculateProductList() {
         // Add the extra length if shed is true
         if (shed) {
             carportLength += SHED_DIMENSIONS;
@@ -59,12 +60,17 @@ public class ProductListCalc {
     // TODO: Handle exceptions and error handling if it can't add a product to the product list
     // TODO: Potentially add a check to see if the chosen product and amount is in stock
 
-    void calcPosts(int carportLength) throws DatabaseException {
+    void calcPosts(int carportLength) {
         Product optimalPost = null;
         String description = "Stolper - nedgraves 90 cm. i jord";
         String postUnit = "Stk.";
         int costPrice;
-        List<Product> postOptions = ProductMapper.getProducts(POST_TYPEID, connectionPool);
+        List<Product> postOptions = null;
+        try {
+            postOptions = ProductMapper.getProducts(POST_TYPEID, connectionPool);
+        } catch (DatabaseException e) {
+            new DatabaseException("Failed to retrieve product with post type_id from database", e.getMessage());
+        }
 
 
         // Currently only one post option exist on the DB, so we populate postName and -Length with a loop
@@ -85,8 +91,13 @@ public class ProductListCalc {
     }
 
 
-    void calcBeams(int carportLength) throws DatabaseException {
-        List<Product> beamList = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
+    void calcBeams(int carportLength) {
+        List<Product> beamList = null;
+        try {
+            beamList = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
+        } catch (DatabaseException e) {
+            new DatabaseException("Failed to retrieve products with beams type_id from database", e.getMessage());
+        }
         int totalCarportLength = 2 * carportLength;
         String description = "Remme i sider - sadles ned i stolper";
         String beamUnit = "Stk.";
@@ -139,10 +150,15 @@ public class ProductListCalc {
         }
     }
 
-    void calcRafters(int carportWidth, int carportLength) throws DatabaseException {
+    void calcRafters(int carportWidth, int carportLength) {
         String description = "Spær - monteres på rem";
         String rafterUnit = "Stk.";
-        List<Product> rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
+        List<Product> rafterOptions = null;
+        try {
+            rafterOptions = ProductMapper.getProducts(RAFTER_AND_BEAM_TYPEID, connectionPool);
+        } catch (DatabaseException e) {
+            new DatabaseException("Failed to retrieve products with rafter type_id from database", e.getMessage());
+        }
         int costPrice;
 
         // Variables to keep track of and store the optimal rafter option
@@ -170,8 +186,13 @@ public class ProductListCalc {
     }
 
 
-    void calcRoof(int carportWidth, int carportLength) throws DatabaseException {
-        List<Product> roofList = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
+    void calcRoof(int carportWidth, int carportLength) {
+        List<Product> roofList = null;
+        try {
+            roofList = ProductMapper.getProducts(ROOF_TYPEID, connectionPool);
+        } catch (DatabaseException e) {
+            new DatabaseException("Failed to retrieve products with roof type_id from database", e.getMessage());
+        }
         String description = "Tagplader - monteres på spær";
         String roofUnit = "Stk.";
         int price;

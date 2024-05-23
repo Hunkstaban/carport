@@ -115,7 +115,7 @@ public class OrderMapper {
             }
             return orderList;
         } catch (SQLException e) {
-            throw new DatabaseException("Error: Failed to get all orders or by type. " + e.getMessage());
+            throw new DatabaseException("Error: Failed to retrieve orders ", e.getMessage());
         }
     }
 

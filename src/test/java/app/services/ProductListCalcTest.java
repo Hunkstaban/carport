@@ -33,7 +33,7 @@ class ProductListCalcTest {
         productListCalc.calculateProductList();
         productList = productListCalc.getProductList();
 
-        // We add posts, beams, rafters and roof plates objects, so we expect the product list has 4 objects
+        // We add post, beam, rafter and roof plate objects, so we expect the product list has 4 objects
 
         // Expected
         int expectedPListSize = 4;

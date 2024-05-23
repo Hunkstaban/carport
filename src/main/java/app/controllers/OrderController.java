@@ -231,7 +231,7 @@ public class OrderController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            System.err.println("DatabaseException: " + e.getMessage());
+            new DatabaseException("Failed to retrieve global order attributes from database", e.getMessage());
         }
         return ctx;
     }
