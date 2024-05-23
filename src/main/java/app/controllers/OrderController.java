@@ -139,8 +139,7 @@ public class OrderController {
 
             ctx.status(500);
             new DatabaseException("Failure in inquiry details page.", e.getMessage());
-        }
-        catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             System.err.println("NullPointerException in inquiryDetailsPage");
             System.err.println(e.getMessage());
             ctx.status(500);
@@ -148,7 +147,7 @@ public class OrderController {
     }
 
 
-    private static Context preparePriceDetails(Context ctx, int orderPrice, List <ProductListItem> productList) {
+    private static Context preparePriceDetails(Context ctx, int orderPrice, List<ProductListItem> productList) {
         int costPrice = 0;
 
         for (ProductListItem productListItem : productList) {
@@ -381,7 +380,7 @@ public class OrderController {
         int costPrice = 0;
         int carportPrice;
         for (ProductListItem productListItem : productList) {
-             costPrice += productListItem.getCostPrice();
+            costPrice += productListItem.getCostPrice();
         }
         carportPrice = (int) (((costPrice * DEGREE_OF_COVERAGE) + costPrice) + PROCESSING_FEE);
 

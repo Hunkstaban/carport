@@ -63,7 +63,7 @@ public class ProductController {
         } catch (DatabaseException e) {
 
             ctx.status(500);
-            new DatabaseException("Failure in updating product." , e.getMessage());
+            new DatabaseException("Failure in updating product.", e.getMessage());
         }
     }
 
@@ -101,9 +101,9 @@ public class ProductController {
         int typeID = Integer.parseInt(ctx.formParam("filter"));
 
         // loads the different types from the database to filter the productList
-            globalStorageAttributes(ctx, connectionPool, typeID);
+        globalStorageAttributes(ctx, connectionPool, typeID);
 
-            ctx.render("admin/storage.html");
+        ctx.render("admin/storage.html");
 
 
     }
@@ -126,17 +126,17 @@ public class ProductController {
     }
 
 
-    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID)  {
+    private static Context globalStorageAttributes(Context ctx, ConnectionPool connectionPool, Integer typeID) {
 
         try {
 
-        List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
-        List<Product> productList = ProductMapper.getProducts(typeID, connectionPool);
-        List<Unit> unitList = ProductMapper.loadUnits(connectionPool);
+            List<Type> filtersList = ProductMapper.loadFilters(connectionPool);
+            List<Product> productList = ProductMapper.getProducts(typeID, connectionPool);
+            List<Unit> unitList = ProductMapper.loadUnits(connectionPool);
 
-        ctx.attribute("filtersList", filtersList);
-        ctx.attribute("productList", productList);
-        ctx.attribute("unitList", unitList);
+            ctx.attribute("filtersList", filtersList);
+            ctx.attribute("productList", productList);
+            ctx.attribute("unitList", unitList);
 
         } catch (DatabaseException e) {
             ctx.status(500);
